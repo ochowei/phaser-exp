@@ -12,13 +12,23 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.speed = 300;
     }
 
-    update(keys) {
+    update(keys, joystick) {
         this.setVelocity(0);
 
-        if (keys.left.isDown || keys.leftArrow.isDown) this.setVelocityX(-this.speed);
-        else if (keys.right.isDown || keys.rightArrow.isDown) this.setVelocityX(this.speed);
+        let vx = 0, vy = 0;
 
-        if (keys.up.isDown || keys.upArrow.isDown) this.setVelocityY(-this.speed);
-        else if (keys.down.isDown || keys.downArrow.isDown) this.setVelocityY(this.speed);
+        if (keys.left.isDown || keys.leftArrow.isDown) vx = -this.speed;
+        else if (keys.right.isDown || keys.rightArrow.isDown) vx = this.speed;
+
+        if (keys.up.isDown || keys.upArrow.isDown) vy = -this.speed;
+        else if (keys.down.isDown || keys.downArrow.isDown) vy = this.speed;
+
+        if (joystick && joystick.active) {
+            if (Math.abs(joystick.dx) > 0.1) vx = joystick.dx * this.speed;
+            if (Math.abs(joystick.dy) > 0.1) vy = joystick.dy * this.speed;
+        }
+
+        this.setVelocityX(vx);
+        this.setVelocityY(vy);
     }
 }

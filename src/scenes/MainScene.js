@@ -122,6 +122,64 @@ export default class MainScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        // 虛擬搖桿（手機觸控）
+        this.joystick = { dx: 0, dy: 0, active: false, pointerId: null, startX: 0, startY: 0 };
+        const joystickRadius = 60;
+        const thumbRadius = 25;
+
+        this.joystickBaseGfx = this.add.graphics();
+        this.joystickBaseGfx.fillStyle(0xffffff, 0.2);
+        this.joystickBaseGfx.fillCircle(0, 0, joystickRadius);
+        this.joystickBaseGfx.lineStyle(2, 0xffffff, 0.4);
+        this.joystickBaseGfx.strokeCircle(0, 0, joystickRadius);
+        this.joystickBaseGfx.setVisible(false).setDepth(10);
+
+        this.joystickThumbGfx = this.add.graphics();
+        this.joystickThumbGfx.fillStyle(0xffffff, 0.5);
+        this.joystickThumbGfx.fillCircle(0, 0, thumbRadius);
+        this.joystickThumbGfx.setVisible(false).setDepth(11);
+
+        this.input.on('pointerdown', (pointer) => {
+            if (this.gameOver) return;
+            if (!this.joystick.active) {
+                this.joystick.active = true;
+                this.joystick.pointerId = pointer.id;
+                this.joystick.startX = pointer.x;
+                this.joystick.startY = pointer.y;
+                this.joystick.dx = 0;
+                this.joystick.dy = 0;
+                this.joystickBaseGfx.setPosition(pointer.x, pointer.y).setVisible(true);
+                this.joystickThumbGfx.setPosition(pointer.x, pointer.y).setVisible(true);
+            }
+        });
+
+        this.input.on('pointermove', (pointer) => {
+            if (!this.joystick.active || pointer.id !== this.joystick.pointerId) return;
+            const dx = pointer.x - this.joystick.startX;
+            const dy = pointer.y - this.joystick.startY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist > joystickRadius) {
+                this.joystick.dx = dx / dist;
+                this.joystick.dy = dy / dist;
+            } else {
+                this.joystick.dx = dx / joystickRadius;
+                this.joystick.dy = dy / joystickRadius;
+            }
+            const clampedX = this.joystick.startX + this.joystick.dx * joystickRadius;
+            const clampedY = this.joystick.startY + this.joystick.dy * joystickRadius;
+            this.joystickThumbGfx.setPosition(clampedX, clampedY);
+        });
+
+        this.input.on('pointerup', (pointer) => {
+            if (pointer.id === this.joystick.pointerId) {
+                this.joystick.active = false;
+                this.joystick.dx = 0;
+                this.joystick.dy = 0;
+                this.joystickBaseGfx.setVisible(false);
+                this.joystickThumbGfx.setVisible(false);
+            }
+        });
     }
 
     update(time, delta) {
@@ -133,7 +191,7 @@ export default class MainScene extends Phaser.Scene {
         this.bg1.tilePositionX += 1.0;
 
         // 玩家移動
-        this.player.update(this.keys);
+        this.player.update(this.keys, this.joystick);
 
         // 處理發射子彈
         if (time > this.lastFired) {
