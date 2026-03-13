@@ -9,6 +9,44 @@ export default class StartScene extends Phaser.Scene {
         const width = this.cameras.main.width;
         const height = this.cameras.main.height;
 
+        const graphics = this.add.graphics();
+        this.cameras.main.setBackgroundColor('#090b22');
+
+        // 建立與 MainScene 風格一致的星空紋理（若已存在則重用）
+        if (!this.textures.exists('start_bg_stars_far')) {
+            graphics.fillStyle(0x24306d, 1);
+            for (let i = 0; i < 220; i++) {
+                graphics.fillRect(Phaser.Math.Between(0, 512), Phaser.Math.Between(0, 512), 2, 2);
+            }
+            graphics.generateTexture('start_bg_stars_far', 512, 512);
+            graphics.clear();
+        }
+
+        if (!this.textures.exists('start_bg_stars_mid')) {
+            graphics.fillStyle(0x6a4ab4, 1);
+            for (let i = 0; i < 140; i++) {
+                graphics.fillRect(Phaser.Math.Between(0, 512), Phaser.Math.Between(0, 512), 2, 2);
+            }
+            graphics.generateTexture('start_bg_stars_mid', 512, 512);
+            graphics.clear();
+        }
+
+        if (!this.textures.exists('start_bg_stars_near')) {
+            graphics.fillStyle(0xe8e7ff, 1);
+            for (let i = 0; i < 80; i++) {
+                graphics.fillRect(Phaser.Math.Between(0, 512), Phaser.Math.Between(0, 512), 2, 2);
+            }
+            graphics.generateTexture('start_bg_stars_near', 512, 512);
+            graphics.clear();
+        }
+
+        graphics.destroy();
+
+        // 背景視差層（先建立避免覆蓋 UI）
+        this.bgFar = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_far');
+        this.bgMid = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_mid');
+        this.bgNear = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_near');
+
         // Title
         this.add.text(width / 2, height / 2 - 100, 'SPACE SHOOTER', {
             fontSize: '48px',
@@ -41,5 +79,17 @@ export default class StartScene extends Phaser.Scene {
         .on('pointerover', () => aboutBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
         .on('pointerout', () => aboutBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
         .on('pointerdown', () => window.open('https://phaser.io', '_blank'));
+    }
+
+    update() {
+        if (!this.bgFar || !this.bgMid || !this.bgNear) return;
+
+        this.bgFar.tilePositionY += 0.15;
+        this.bgMid.tilePositionY += 0.35;
+        this.bgNear.tilePositionY += 0.65;
+
+        this.bgFar.tilePositionX += 0.05;
+        this.bgMid.tilePositionX += 0.12;
+        this.bgNear.tilePositionX += 0.2;
     }
 }
