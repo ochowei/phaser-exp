@@ -3,6 +3,180 @@ import * as Phaser from 'phaser';
 export default class StartScene extends Phaser.Scene {
     constructor() {
         super('StartScene');
+        this.menuButtons = [];
+        this.focusedButtonIndex = 0;
+    }
+
+    createMenuButton(x, y, label, baseColor, onClick) {
+        const buttonWidth = 320;
+        const buttonHeight = 70;
+        const cornerRadius = 18;
+
+        const palette = {
+            baseBg: Phaser.Display.Color.HexStringToColor('#101737').color,
+            hoverBg: Phaser.Display.Color.HexStringToColor('#1f2b61').color,
+            downBg: Phaser.Display.Color.HexStringToColor('#2f3f82').color,
+            textBase: Phaser.Display.Color.HexStringToColor(baseColor).color,
+            textHover: Phaser.Display.Color.HexStringToColor('#ffffff').color,
+            textDown: Phaser.Display.Color.HexStringToColor('#dbe4ff').color,
+            borderBase: Phaser.Display.Color.HexStringToColor('#33408c').color,
+            borderFocus: Phaser.Display.Color.HexStringToColor('#ffd166').color
+        };
+
+        const toHexColor = (value) => `#${value.toString(16).padStart(6, '0')}`;
+
+        const bg = this.add.graphics();
+        const labelText = this.add.text(0, 0, label, {
+            fontSize: '30px',
+            fontFamily: 'Arial',
+            fontStyle: 'bold',
+            color: toHexColor(palette.textBase)
+        }).setOrigin(0.5);
+
+        const button = this.add.container(x, y, [bg, labelText]);
+        button.setSize(buttonWidth, buttonHeight);
+        button.setInteractive(new Phaser.Geom.Rectangle(-buttonWidth / 2, -buttonHeight / 2, buttonWidth, buttonHeight), Phaser.Geom.Rectangle.Contains);
+
+        const state = {
+            bgColor: palette.baseBg,
+            textColor: palette.textBase,
+            borderColor: palette.borderBase,
+            scale: 1,
+            isFocused: false,
+            isPressed: false,
+            onClick
+        };
+
+        const redrawButton = () => {
+            bg.clear();
+            bg.lineStyle(state.isFocused ? 4 : 2, state.isFocused ? palette.borderFocus : state.borderColor, 1);
+            bg.fillStyle(state.bgColor, 0.94);
+            bg.fillRoundedRect(-buttonWidth / 2, -buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
+            bg.strokeRoundedRect(-buttonWidth / 2, -buttonHeight / 2, buttonWidth, buttonHeight, cornerRadius);
+
+            labelText.setColor(toHexColor(state.textColor));
+        };
+
+        const tweenToState = (to) => {
+            this.tweens.killTweensOf(state);
+            this.tweens.killTweensOf(button);
+
+            this.tweens.add({
+                targets: state,
+                bgColor: to.bgColor,
+                textColor: to.textColor,
+                borderColor: to.borderColor,
+                duration: to.duration ?? 120,
+                ease: 'Sine.easeOut',
+                onUpdate: redrawButton
+            });
+
+            this.tweens.add({
+                targets: button,
+                scaleX: to.scale,
+                scaleY: to.scale,
+                duration: to.duration ?? 120,
+                ease: 'Sine.easeOut'
+            });
+        };
+
+        const applyVisualState = () => {
+            if (state.isPressed) {
+                tweenToState({
+                    bgColor: palette.downBg,
+                    textColor: palette.textDown,
+                    borderColor: palette.borderBase,
+                    scale: 0.98,
+                    duration: 80
+                });
+                return;
+            }
+
+            if (state.isFocused) {
+                tweenToState({
+                    bgColor: palette.hoverBg,
+                    textColor: palette.textHover,
+                    borderColor: palette.borderFocus,
+                    scale: 1.06,
+                    duration: 120
+                });
+                return;
+            }
+
+            tweenToState({
+                bgColor: palette.baseBg,
+                textColor: palette.textBase,
+                borderColor: palette.borderBase,
+                scale: 1,
+                duration: 140
+            });
+        };
+
+        button.setDataEnabled();
+        button.setData('setFocused', (focused) => {
+            state.isFocused = focused;
+            applyVisualState();
+        });
+        button.setData('trigger', () => state.onClick());
+
+        button.on('pointerover', () => {
+            const buttonIndex = this.menuButtons.indexOf(button);
+            if (buttonIndex >= 0) {
+                this.focusedButtonIndex = buttonIndex;
+                this.updateFocusState();
+            }
+        });
+        button.on('pointerout', () => {
+            state.isPressed = false;
+            applyVisualState();
+        });
+        button.on('pointerdown', () => {
+            state.isPressed = true;
+            applyVisualState();
+        });
+        button.on('pointerup', () => {
+            state.isPressed = false;
+            applyVisualState();
+            state.onClick();
+        });
+
+        redrawButton();
+        return button;
+    }
+
+    updateFocusState() {
+        this.menuButtons.forEach((button, index) => {
+            const setFocused = button.getData('setFocused');
+            setFocused(index === this.focusedButtonIndex);
+        });
+    }
+
+    setupMenuKeyboardControls() {
+        this.input.keyboard.on('keydown-UP', () => {
+            this.focusedButtonIndex = Phaser.Math.Wrap(this.focusedButtonIndex - 1, 0, this.menuButtons.length);
+            this.updateFocusState();
+        });
+
+        this.input.keyboard.on('keydown-DOWN', () => {
+            this.focusedButtonIndex = Phaser.Math.Wrap(this.focusedButtonIndex + 1, 0, this.menuButtons.length);
+            this.updateFocusState();
+        });
+
+        this.input.keyboard.on('keydown-TAB', (event) => {
+            event.preventDefault();
+            this.focusedButtonIndex = Phaser.Math.Wrap(this.focusedButtonIndex + 1, 0, this.menuButtons.length);
+            this.updateFocusState();
+        });
+
+        const triggerFocusedButton = () => {
+            const button = this.menuButtons[this.focusedButtonIndex];
+            if (!button) return;
+            const trigger = button.getData('trigger');
+            trigger();
+        };
+
+        this.input.keyboard.on('keydown-ENTER', triggerFocusedButton);
+        this.input.keyboard.on('keydown-SPACE', triggerFocusedButton);
     }
 
     create() {
@@ -79,31 +253,25 @@ export default class StartScene extends Phaser.Scene {
             fontStyle: 'normal'
         }).setOrigin(0.5);
 
-        // Start Game Button
-        const startBtn = this.add.text(width / 2, height / 2, 'Start Game', {
-            fontSize: '32px',
-            fill: '#0f0',
-            backgroundColor: '#000',
-            padding: { x: 20, y: 10 }
-        })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => startBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => startBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-        .on('pointerdown', () => this.scene.start('MainScene'));
+        const startButton = this.createMenuButton(
+            width / 2,
+            height / 2,
+            'Start Game',
+            '#52ff8e',
+            () => this.scene.start('MainScene')
+        );
 
-        // About Phaser Button
-        const aboutBtn = this.add.text(width / 2, height / 2 + 80, 'About Phaser', {
-            fontSize: '32px',
-            fill: '#0af',
-            backgroundColor: '#000',
-            padding: { x: 20, y: 10 }
-        })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => aboutBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => aboutBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
-        .on('pointerdown', () => window.open('https://phaser.io', '_blank'));
+        const aboutButton = this.createMenuButton(
+            width / 2,
+            height / 2 + 86,
+            'About Phaser',
+            '#63c7ff',
+            () => window.open('https://phaser.io', '_blank')
+        );
+
+        this.menuButtons = [startButton, aboutButton];
+        this.updateFocusState();
+        this.setupMenuKeyboardControls();
     }
 
     update() {
