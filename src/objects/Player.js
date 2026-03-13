@@ -10,6 +10,8 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
         this.setCollideWorldBounds(true);
         this.speed = 300;
+        this.maxHealth = 3;
+        this.health = 3;
     }
 
     update(keys, joystick) {

@@ -112,6 +112,7 @@ export default class MainScene extends Phaser.Scene {
         // UI 文字
         this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '24px', fill: '#fff', fontStyle: 'bold' });
         this.highScoreText = this.add.text(16, 44, 'High Score: ' + this.highScore, { fontSize: '18px', fill: '#aaa' });
+        this.healthText = this.add.text(16, 70, 'HP: ❤️❤️❤️', { fontSize: '20px', fill: '#ff4444' });
         this.tripleShotText = this.add.text(16, 560, 'TRIPLE SHOT ACTIVE!', { fontSize: '20px', fill: '#00ff00', fontStyle: 'bold' });
         this.tripleShotText.setVisible(false);
 
@@ -279,36 +280,61 @@ export default class MainScene extends Phaser.Scene {
         }
     }
 
+    updateHealthText() {
+        const hp = this.player.health;
+        const hearts = '❤️'.repeat(hp) + '🖤'.repeat(this.player.maxHealth - hp);
+        this.healthText.setText('HP: ' + hearts);
+    }
+
     hitPlayer(player, enemy) {
-        this.physics.pause();
-        this.player.setTint(0xff0000);
-        this.gameOver = true;
-        this.enemySpawnTimer.remove();
-        
-        this.cameras.main.shake(300, 0.015);
-        this.tripleShotText.setVisible(false);
+        if (player.invincible) return;
 
-        let gameOverText = this.add.text(400, 250, 'GAME OVER', { fontSize: '64px', fill: '#ff3333', fontStyle: 'bold' });
-        gameOverText.setOrigin(0.5);
+        enemy.destroy();
+        player.health -= 1;
+        this.updateHealthText();
+        this.cameras.main.shake(150, 0.008);
 
-        // Restart 按鈕
-        const restartBtn = this.add.text(300, 350, 'Restart', {
-            fontSize: '28px', fill: '#0f0', backgroundColor: '#000', padding: { x: 15, y: 10 }
-        })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => restartBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => restartBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-        .on('pointerdown', () => this.scene.restart());
+        if (player.health <= 0) {
+            this.physics.pause();
+            this.player.setTint(0xff0000);
+            this.gameOver = true;
+            this.enemySpawnTimer.remove();
 
-        // Main Menu 按鈕
-        const menuBtn = this.add.text(500, 350, 'Main Menu', {
-            fontSize: '28px', fill: '#0af', backgroundColor: '#000', padding: { x: 15, y: 10 }
-        })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => menuBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => menuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
-        .on('pointerdown', () => this.scene.start('StartScene'));
+            this.cameras.main.shake(300, 0.015);
+            this.tripleShotText.setVisible(false);
+
+            let gameOverText = this.add.text(400, 250, 'GAME OVER', { fontSize: '64px', fill: '#ff3333', fontStyle: 'bold' });
+            gameOverText.setOrigin(0.5);
+
+            // Restart 按鈕
+            const restartBtn = this.add.text(300, 350, 'Restart', {
+                fontSize: '28px', fill: '#0f0', backgroundColor: '#000', padding: { x: 15, y: 10 }
+            })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => restartBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => restartBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
+            .on('pointerdown', () => this.scene.restart());
+
+            // Main Menu 按鈕
+            const menuBtn = this.add.text(500, 350, 'Main Menu', {
+                fontSize: '28px', fill: '#0af', backgroundColor: '#000', padding: { x: 15, y: 10 }
+            })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => menuBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => menuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
+            .on('pointerdown', () => this.scene.start('StartScene'));
+        } else {
+            // 短暫無敵並閃爍
+            player.invincible = true;
+            player.setTint(0xff6666);
+            this.time.delayedCall(1000, () => {
+                if (player.active) {
+                    player.clearTint();
+                    player.invincible = false;
+                }
+            });
+        }
     }
 }
