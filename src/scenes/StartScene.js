@@ -3,6 +3,7 @@ import * as Phaser from 'phaser';
 export default class StartScene extends Phaser.Scene {
     constructor() {
         super('StartScene');
+        this.isStarting = false;
     }
 
     create() {
@@ -90,7 +91,18 @@ export default class StartScene extends Phaser.Scene {
         .setInteractive({ useHandCursor: true })
         .on('pointerover', () => startBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
         .on('pointerout', () => startBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-        .on('pointerdown', () => this.scene.start('MainScene'));
+        .on('pointerdown', () => {
+            if (this.isStarting) return;
+
+            this.isStarting = true;
+            startBtn.disableInteractive();
+
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.start('MainScene');
+            });
+
+            this.cameras.main.fadeOut(300, 0, 0, 0);
+        });
 
         // About Phaser Button
         const aboutBtn = this.add.text(width / 2, height / 2 + 80, 'About Phaser', {
