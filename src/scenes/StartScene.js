@@ -48,10 +48,35 @@ export default class StartScene extends Phaser.Scene {
         this.bgNear = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_near');
 
         // Title
-        this.add.text(width / 2, height / 2 - 100, 'SPACE SHOOTER', {
-            fontSize: '48px',
-            fill: '#fff',
-            fontStyle: 'bold'
+        const titleText = this.add.text(width / 2, height / 2 - 110, 'SPACE SHOOTER', {
+            fontSize: '56px',
+            fill: '#f4f8ff',
+            fontStyle: 'bold',
+            stroke: '#5368ff',
+            strokeThickness: 7,
+            shadow: {
+                offsetX: 0,
+                offsetY: 8,
+                color: '#101537',
+                blur: 12,
+                stroke: true,
+                fill: true
+            }
+        }).setOrigin(0.5);
+
+        this.tweens.add({
+            targets: titleText,
+            y: titleText.y - 10,
+            duration: 1800,
+            ease: 'Sine.easeInOut',
+            yoyo: true,
+            repeat: -1
+        });
+
+        this.add.text(width / 2, titleText.y + 32, 'Press Start to Begin', {
+            fontSize: '24px',
+            fill: '#a6afd9',
+            fontStyle: 'normal'
         }).setOrigin(0.5);
 
         // Start Game Button
