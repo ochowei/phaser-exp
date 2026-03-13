@@ -13,6 +13,8 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.cameras.main.fadeIn(300, 0, 0, 0);
+
         const graphics = this.add.graphics();
         
         // 背景雜訊紋理
