@@ -12,6 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.speed = 300;
         this.maxHealth = 3;
         this.health = 3;
+        this.maxBankAngle = 20;
     }
 
     update(keys, joystick) {
@@ -32,5 +33,9 @@ export default class Player extends Phaser.Physics.Arcade.Image {
 
         this.setVelocityX(vx);
         this.setVelocityY(vy);
+
+        // 左右移動時機身傾斜，停止後平滑回正
+        const targetAngle = Phaser.Math.Clamp((vx / this.speed) * this.maxBankAngle, -this.maxBankAngle, this.maxBankAngle);
+        this.setAngle(Phaser.Math.Linear(this.angle, targetAngle, 0.25));
     }
 }
