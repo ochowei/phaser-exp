@@ -327,16 +327,7 @@ export default class MainScene extends Phaser.Scene {
         bullet.setVisible(false);
         bullet.body.stop();
 
-        // 掉落道具
-        if (enemy.isDropPowerup) {
-            let powerup = new Powerup(this, enemy.x, enemy.y, 'powerupTexture');
-            this.powerups.add(powerup);
-            powerup.setVelocityX(-100);
-        }
-
-        enemy.destroy();
-        this.cameras.main.shake(100, 0.005);
-        this.updateScore(10);
+        enemy.takeHit();
     }
 
     collectPowerup(player, powerup) {
@@ -376,12 +367,20 @@ export default class MainScene extends Phaser.Scene {
     hitPlayer(player, enemy) {
         if (player.invincible) return;
 
-        enemy.destroy();
-        player.health -= 1;
+        enemy.hitPlayer(player);
+    }
+
+    spawnPowerup(x, y) {
+        let powerup = new Powerup(this, x, y, 'powerupTexture');
+        this.powerups.add(powerup);
+        powerup.setVelocityX(-100);
+    }
+
+    onPlayerDamaged() {
         this.updateHealthText();
         this.cameras.main.shake(150, 0.008);
 
-        if (player.health <= 0) {
+        if (this.player.health <= 0) {
             this.physics.pause();
             this.player.setTint(0xff0000);
             this.gameOver = true;
@@ -415,14 +414,15 @@ export default class MainScene extends Phaser.Scene {
             .on('pointerdown', () => this.scene.start('StartScene'));
         } else {
             // 短暫無敵並閃爍
-            player.invincible = true;
-            player.setTint(0xff6666);
+            this.player.invincible = true;
+            this.player.setTint(0xff6666);
             this.time.delayedCall(1000, () => {
-                if (player.active) {
-                    player.clearTint();
-                    player.invincible = false;
+                if (this.player.active) {
+                    this.player.clearTint();
+                    this.player.invincible = false;
                 }
             });
         }
     }
 }
+
