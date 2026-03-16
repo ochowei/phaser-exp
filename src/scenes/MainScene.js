@@ -38,9 +38,23 @@ export default class MainScene extends Phaser.Scene {
         this.bg2 = this.add.tileSprite(400, 300, 800, 600, 'bg_stars2');
         this.bg1 = this.add.tileSprite(400, 300, 800, 600, 'bg_stars1');
 
-        // 玩家紋理
-        graphics.fillStyle(0x0088ff, 1);
-        graphics.fillRect(0, 0, 32, 32);
+        // 玩家紋理（科幻戰機）
+        graphics.fillStyle(0x0f172a, 1);
+        graphics.fillTriangle(4, 16, 28, 4, 28, 28);
+
+        graphics.fillStyle(0x2563eb, 1);
+        graphics.fillTriangle(8, 16, 24, 8, 24, 24);
+
+        graphics.fillStyle(0x38bdf8, 1);
+        graphics.fillTriangle(7, 16, 20, 2, 22, 10);
+        graphics.fillTriangle(7, 16, 20, 30, 22, 22);
+
+        graphics.fillStyle(0xe0f2fe, 1);
+        graphics.fillEllipse(20, 16, 7, 10);
+
+        graphics.fillStyle(0xf59e0b, 1);
+        graphics.fillRect(2, 12, 4, 8);
+
         graphics.generateTexture('playerTexture', 32, 32);
         graphics.clear();
 
@@ -78,6 +92,20 @@ export default class MainScene extends Phaser.Scene {
 
         // 加入玩家實體
         this.player = new Player(this, 100, 300, 'playerTexture');
+
+        // 玩家噴射尾焰
+        this.playerTrail = this.add.particles(0, 0, 'bullet', {
+            speed: { min: 30, max: 120 },
+            angle: { min: 150, max: 210 },
+            scale: { start: 0.35, end: 0 },
+            alpha: { start: 0.8, end: 0 },
+            tint: [0xfff59d, 0xffc107, 0xff6f00],
+            lifespan: 240,
+            quantity: 1,
+            frequency: 35,
+            blendMode: 'ADD'
+        });
+        this.playerTrail.startFollow(this.player, -14, 0);
 
         // 鍵盤輸入
         this.keys = this.input.keyboard.addKeys({
@@ -304,6 +332,7 @@ export default class MainScene extends Phaser.Scene {
 
             this.cameras.main.shake(300, 0.015);
             this.tripleShotText.setVisible(false);
+            this.playerTrail.stop();
 
             let gameOverText = this.add.text(400, 250, 'GAME OVER', { fontSize: '64px', fill: '#ff3333', fontStyle: 'bold' });
             gameOverText.setOrigin(0.5);
