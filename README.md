@@ -5,17 +5,18 @@
 ## 截圖
 
 ```
-[ 開始畫面 ]          [ 遊戲畫面 ]
-  Phaser Shooter       ★  ★  ★  ★  ★
-  [Start Game]         Score: 120
-  [About Phaser]          ▶ PLAYER
-                       ●●●  ENEMY  ●●●
+[ 開始畫面 ]      [ 模式選擇 ]        [ 遊戲畫面 ]
+  Phaser Shooter    無盡模式            ★  ★  ★  ★  ★
+  [Start Game]      [Endless Mode]      Score: 120
+  [About Phaser]    [Stage Mode] 🚧        ▶ PLAYER
+                                        ●●●  ENEMY  ●●●
 ```
 
 ## 功能特色
 
 - **視差捲動背景** — 三層星空以不同速度滾動，營造深度感
-- **玩家移動** — 支援 WASD 或方向鍵操控
+- **遊戲模式** — 無盡模式（可遊玩）與關卡模式（開發中）
+- **玩家移動** — 支援 WASD 或方向鍵操控；行動裝置支援虛擬搖桿
 - **射擊系統** — 預設單發，拾取道具可升級為三連發（持續 10 秒）
 - **兩種敵人** — 普通紅色敵人與攜帶道具的紫色特殊敵人（20% 出現率）
 - **道具系統** — 拾取道具獲得三連發能力及 50 分加成
@@ -32,8 +33,9 @@ phaser-exp/
 └── src/
     ├── main.js         # 遊戲初始化與設定
     ├── scenes/
-    │   ├── StartScene.js   # 開始畫面
-    │   └── MainScene.js    # 主遊戲場景
+    │   ├── StartScene.js       # 開始畫面
+    │   ├── ModeSelectScene.js  # 模式選擇畫面（無盡 / 關卡）
+    │   └── MainScene.js        # 主遊戲場景
     └── objects/
         ├── Player.js       # 玩家物件
         ├── Enemy.js        # 敵人物件
