@@ -13,6 +13,14 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.maxHealth = 3;
         this.health = 3;
         this.maxBankAngle = 20;
+        this.invincible = false;
+    }
+
+    receiveDamage() {
+        if (this.invincible || !this.active) return;
+
+        this.health -= 1;
+        this.scene.onPlayerDamaged();
     }
 
     update(keys, joystick) {
