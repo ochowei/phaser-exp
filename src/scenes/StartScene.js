@@ -98,7 +98,7 @@ export default class StartScene extends Phaser.Scene {
             startBtn.disableInteractive();
 
             this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.start('MainScene');
+                this.scene.start('ModeSelectScene');
             });
 
             this.cameras.main.fadeOut(300, 0, 0, 0);
