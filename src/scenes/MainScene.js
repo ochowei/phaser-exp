@@ -180,7 +180,7 @@ export default class MainScene extends Phaser.Scene {
             .setDepth(26)
             .setVisible(false);
 
-        this.pauseMenuBtn = this.add.text(400, 410, '返回開始畫面', {
+        this.pauseMenuBtn = this.add.text(400, 410, 'Main Menu', {
             fontSize: '26px',
             fill: '#0af',
             backgroundColor: '#000',

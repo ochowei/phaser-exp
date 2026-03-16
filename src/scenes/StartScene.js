@@ -7,6 +7,7 @@ export default class StartScene extends Phaser.Scene {
     }
 
     create() {
+        this.isStarting = false;
         const width = this.cameras.main.width;
         const height = this.cameras.main.height;
 
