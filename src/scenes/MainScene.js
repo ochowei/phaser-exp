@@ -180,6 +180,23 @@ export default class MainScene extends Phaser.Scene {
             .setDepth(26)
             .setVisible(false);
 
+        this.pauseMenuBtn = this.add.text(400, 410, '返回開始畫面', {
+            fontSize: '26px',
+            fill: '#0af',
+            backgroundColor: '#000',
+            padding: { x: 20, y: 10 }
+        })
+            .setOrigin(0.5)
+            .setDepth(26)
+            .setVisible(false)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => this.pauseMenuBtn.setStyle({ fill: '#fff', backgroundColor: '#1a3a4a' }))
+            .on('pointerout', () => this.pauseMenuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                this.isPaused = false;
+                this.scene.start('StartScene');
+            });
+
         this.input.keyboard.on('keydown-P', () => this.togglePause());
         this.input.keyboard.on('keydown-ESC', () => this.togglePause());
 
@@ -294,6 +311,7 @@ export default class MainScene extends Phaser.Scene {
         this.pauseOverlay.setVisible(this.isPaused);
         this.pauseText.setVisible(this.isPaused);
         this.pauseHintText.setVisible(this.isPaused);
+        this.pauseMenuBtn.setVisible(this.isPaused);
     }
 
     fireSingleBullet(velocityY) {
