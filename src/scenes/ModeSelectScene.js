@@ -7,6 +7,7 @@ export default class ModeSelectScene extends Phaser.Scene {
     }
 
     create() {
+        this.isTransitioning = false;
         const width = this.cameras.main.width;
         const height = this.cameras.main.height;
 
