@@ -84,6 +84,7 @@ export default class MainScene extends Phaser.Scene {
 
         // 遊戲狀態與變數
         this.gameOver = false;
+        this.isPaused = false;
         this.score = 0;
         this.highScore = localStorage.getItem('phaserShooterHighScore') || 0;
         this.hasTripleShot = false;
@@ -145,6 +146,42 @@ export default class MainScene extends Phaser.Scene {
         this.healthText = this.add.text(16, 70, 'HP: ❤️❤️❤️', { fontSize: '20px', fill: '#ff4444' });
         this.tripleShotText = this.add.text(16, 560, 'TRIPLE SHOT ACTIVE!', { fontSize: '20px', fill: '#00ff00', fontStyle: 'bold' });
         this.tripleShotText.setVisible(false);
+
+        // 暫停 UI
+        this.pauseButton = this.add.text(784, 16, '⏸', {
+            fontSize: '28px',
+            fill: '#fff',
+            backgroundColor: '#000',
+            padding: { x: 10, y: 6 }
+        })
+        .setOrigin(1, 0)
+        .setDepth(30)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => this.togglePause())
+        .on('pointerover', () => this.pauseButton.setStyle({ backgroundColor: '#333' }))
+        .on('pointerout', () => this.pauseButton.setStyle({ backgroundColor: '#000' }));
+
+        this.pauseOverlay = this.add.rectangle(400, 300, 800, 600, 0x000000, 0.45)
+            .setDepth(25)
+            .setVisible(false);
+        this.pauseText = this.add.text(400, 280, 'PAUSED', {
+            fontSize: '64px',
+            fill: '#ffffff',
+            fontStyle: 'bold'
+        })
+            .setOrigin(0.5)
+            .setDepth(26)
+            .setVisible(false);
+        this.pauseHintText = this.add.text(400, 345, '按 P / ESC 或右上角按鈕繼續', {
+            fontSize: '24px',
+            fill: '#dddddd'
+        })
+            .setOrigin(0.5)
+            .setDepth(26)
+            .setVisible(false);
+
+        this.input.keyboard.on('keydown-P', () => this.togglePause());
+        this.input.keyboard.on('keydown-ESC', () => this.togglePause());
 
         // 敵人生成計時器
         this.enemySpawnTimer = this.time.addEvent({
@@ -214,7 +251,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        if (this.gameOver) return;
+        if (this.gameOver || this.isPaused) return;
 
         // 背景捲動
         this.bg3.tilePositionX += 0.2;
@@ -237,6 +274,26 @@ export default class MainScene extends Phaser.Scene {
         }
 
         // 移除先前的 debugText 覆蓋
+    }
+
+    togglePause() {
+        if (this.gameOver) return;
+
+        this.isPaused = !this.isPaused;
+        this.physics.world.isPaused = this.isPaused;
+        this.enemySpawnTimer.paused = this.isPaused;
+
+        if (this.isPaused) {
+            this.playerTrail.pause();
+            this.pauseButton.setText('▶');
+        } else {
+            this.playerTrail.resume();
+            this.pauseButton.setText('⏸');
+        }
+
+        this.pauseOverlay.setVisible(this.isPaused);
+        this.pauseText.setVisible(this.isPaused);
+        this.pauseHintText.setVisible(this.isPaused);
     }
 
     fireSingleBullet(velocityY) {
