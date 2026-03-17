@@ -81,7 +81,7 @@ export default class MainScene extends Phaser.Scene {
         this.highScore = localStorage.getItem('phaserShooterHighScore') || 0;
         this.hasTripleShot = false;
         this.lastFired = 0;
-        this.fireRate = 260;
+        this.fireRate = 380;
 
         // 加入玩家實體
         this.player = new Player(this, 100, 300, 'playerTexture');
