@@ -110,14 +110,40 @@ export default class StartScene extends Phaser.Scene {
             this.cameras.main.fadeOut(300, 0, 0, 0);
         });
 
+        // 從 localStorage 讀取音量設定
+        let savedVolume = parseFloat(localStorage.getItem('bgmVolume'));
+        if (isNaN(savedVolume)) savedVolume = 0.5;
+        const isMuted = localStorage.getItem('bgmMuted') === 'true';
+        this.sound.volume = isMuted ? 0 : savedVolume;
+
         // 播放選單背景音樂（若尚未播放）
         if (!this.sound.get('bgm_menu') || !this.sound.get('bgm_menu').isPlaying) {
             this.sound.stopAll();
-            this.sound.add('bgm_menu', { loop: true, volume: 0.5 }).play();
+            this.sound.add('bgm_menu', { loop: true, volume: 1 }).play();
         }
 
+        // Options Button
+        const optionsBtn = this.add.text(width / 2, height / 2 + 60, 'Options', {
+            fontSize: '32px',
+            fill: '#f80',
+            backgroundColor: '#000',
+            padding: { x: 20, y: 10 }
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerover', () => optionsBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+        .on('pointerout', () => optionsBtn.setStyle({ fill: '#f80', backgroundColor: '#000' }))
+        .on('pointerdown', () => {
+            if (this.isStarting) return;
+            this.isStarting = true;
+            this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.scene.start('OptionScene');
+            });
+            this.cameras.main.fadeOut(300, 0, 0, 0);
+        });
+
         // About Phaser Button
-        const aboutBtn = this.add.text(width / 2, height / 2 + 80, 'About Phaser', {
+        const aboutBtn = this.add.text(width / 2, height / 2 + 120, 'About Phaser', {
             fontSize: '32px',
             fill: '#0af',
             backgroundColor: '#000',
