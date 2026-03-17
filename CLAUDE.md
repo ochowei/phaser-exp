@@ -42,6 +42,26 @@ Any code change — whether it's a new feature, bug fix, or refactor — **must 
    - Remove any exports, translation keys, or profile entries that become unused
    - Confirm no dead code or orphan files are left behind
 
+5. **CHANGELOG.md** — follows [Keep a Changelog](https://keepachangelog.com/) format, must be updated whenever:
+   - A user-facing feature is added → `### Added`
+   - Existing behavior is changed or enhanced → `### Changed`
+   - A bug is fixed → `### Fixed`
+   - A feature or file is removed → `### Removed`
+   - Refactoring or internal changes that don't affect users → no CHANGELOG entry needed
+   - Group entries under an `## [Unreleased]` section; move them to a versioned section upon release
+
+6. **Version number** (`package.json` version) — follows [Semantic Versioning](https://semver.org/):
+   - **PATCH** (x.x.+1): bug fixes, typo corrections
+   - **MINOR** (x.+1.0): new features, new game modes, new aircraft profiles (backwards-compatible)
+   - **MAJOR** (+1.0.0): breaking changes (save format incompatibility, removed features, major architecture overhaul)
+   - Bump version in `package.json` and create a matching `## [x.y.z]` section in CHANGELOG.md in the same commit
+
+7. **CLAUDE.md** itself must be updated whenever:
+   - Development commands change (new scripts, different package manager)
+   - Code conventions change (e.g. adopting TypeScript, new base classes)
+   - Project architecture changes introduce a new category of files that need sync rules
+   - Existing sync rules become outdated or insufficient
+
 ## Code Conventions
 
 - Language: vanilla JavaScript (ES6 modules), no TypeScript
