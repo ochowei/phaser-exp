@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-17
+
+### Added
+- Unit testing infrastructure with Vitest
+- Unit tests for `i18n.js` module (translation lookup, language switching, localStorage persistence)
+- Unit tests for `aircraftProfiles.js` module (profile lookup, fallback behavior, data validation)
+- `npm test` and `npm run test:watch` scripts
+
 ## [1.0.0] - 2026-03-17
 
 ### Added

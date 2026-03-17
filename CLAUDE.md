@@ -7,10 +7,12 @@ Phaser 3 browser-based space shooter game built with ES6 modules and Vite.
 ## Development Commands
 
 ```bash
-npm install    # Install dependencies
-npm run dev    # Start dev server (http://localhost:5173)
-npm run build  # Build to dist/
-npm run preview # Preview production build
+npm install      # Install dependencies
+npm run dev      # Start dev server (http://localhost:5173)
+npm run build    # Build to dist/
+npm run preview  # Preview production build
+npm test         # Run unit tests (Vitest)
+npm run test:watch # Run tests in watch mode
 ```
 
 ## Documentation Sync Rules
@@ -69,3 +71,5 @@ Any code change — whether it's a new feature, bug fix, or refactor — **must 
 - Textures are procedurally generated via `Phaser.GameObjects.Graphics` (no image assets)
 - User preferences (high score, volume, mute, language) are persisted in `localStorage`
 - Comments and variable names may be in Chinese or English
+- Unit tests use [Vitest](https://vitest.dev/) and live in `src/__tests__/`
+- Test files follow the `<module>.test.js` naming convention

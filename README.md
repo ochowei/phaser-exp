@@ -51,11 +51,14 @@ phaser-exp/
     │   ├── ModeSelectScene.js   # 模式選擇畫面（無盡 / 關卡）
     │   ├── OptionScene.js       # 設定畫面（音量 / 語言）
     │   └── MainScene.js         # 主遊戲場景
-    └── objects/
-        ├── Player.js       # 玩家物件
-        ├── Enemy.js        # 敵人物件
-        ├── Bullet.js       # 子彈物件
-        └── Powerup.js      # 道具物件
+    ├── objects/
+    │   ├── Player.js       # 玩家物件
+    │   ├── Enemy.js        # 敵人物件
+    │   ├── Bullet.js       # 子彈物件
+    │   └── Powerup.js      # 道具物件
+    └── __tests__/
+        ├── i18n.test.js              # i18n 模組單元測試
+        └── aircraftProfiles.test.js  # 戰機 Profile 單元測試
 ```
 
 ## 快速開始
@@ -75,6 +78,16 @@ npm run dev
 ```
 
 開啟瀏覽器前往 `http://localhost:5173` 即可遊玩。
+
+### 執行測試
+
+```bash
+# 執行所有單元測試
+npm test
+
+# 以 watch 模式執行測試
+npm run test:watch
+```
 
 ### 建置正式版
 
@@ -108,6 +121,7 @@ npm run preview
 |------|------|------|
 | [Phaser 3](https://phaser.io/) | 3.90.0 | 遊戲框架（渲染、物理、輸入） |
 | [Vite](https://vitejs.dev/) | 7.3.1 | 開發伺服器與打包工具 |
+| [Vitest](https://vitest.dev/) | 4.1.0 | 單元測試框架 |
 | ES6 Modules | — | 模組化程式碼管理 |
 
 ## 授權
