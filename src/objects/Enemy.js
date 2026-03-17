@@ -1,20 +1,62 @@
 import * as Phaser from 'phaser';
 
 export default class Enemy extends Phaser.Physics.Arcade.Image {
-    constructor(scene, x, y, texture, isSpecial = false) {
+    constructor(scene, x, y, texture, config = {}) {
         super(scene, x, y, texture);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        this.isDropPowerup = isSpecial;
-        this.scoreValue = isSpecial ? 20 : 10;
-        this.powerupDropRate = isSpecial ? 1 : 0;
+        const {
+            isSpecial = false,
+            hp = 1,
+            scoreValue = null,
+            isBoss = false,
+        } = config;
+
+        this.maxHp = hp;
+        this.hp = hp;
+        this.isBoss = isBoss;
+        this.isDropPowerup = isSpecial || isBoss;
+        this.scoreValue = scoreValue ?? (isSpecial ? 20 : 10);
+        this.powerupDropRate = (isSpecial || isBoss) ? 1 : 0;
         this.startY = y;
-        this.moveType = Phaser.Math.Between(0, 1); // 0:直線 1:曲線
+        this.moveType = isBoss ? 2 : Phaser.Math.Between(0, 1); // 0:直線 1:曲線 2:Boss
         this.timeOffset = scene.time.now;
 
-        // 給予向左隨機速度 (改由 MainScene add 後設定)
+        this.healthBar = null;
+        this.healthBarBg = null;
+
+        if (isBoss) {
+            this._createHealthBar(scene);
+        }
+    }
+
+    _createHealthBar(scene) {
+        this.healthBarBg = scene.add.rectangle(this.x, this.y - 35, 50, 6, 0x333333);
+        this.healthBarBg.setDepth(20);
+        this.healthBar = scene.add.rectangle(this.x, this.y - 35, 50, 6, 0x00ff00);
+        this.healthBar.setDepth(21);
+    }
+
+    _updateHealthBar() {
+        if (this.healthBar) {
+            const ratio = this.hp / this.maxHp;
+            this.healthBar.width = 50 * ratio;
+            const color = ratio > 0.5 ? 0x00ff00 : (ratio > 0.25 ? 0xffff00 : 0xff0000);
+            this.healthBar.setFillStyle(color);
+        }
+    }
+
+    _destroyHealthBar() {
+        if (this.healthBar) {
+            this.healthBar.destroy();
+            this.healthBar = null;
+        }
+        if (this.healthBarBg) {
+            this.healthBarBg.destroy();
+            this.healthBarBg = null;
+        }
     }
 
     takeHit() {
@@ -22,17 +64,30 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
 
         const { scene } = this;
 
-        if (this.shouldDropPowerup()) {
-            scene.spawnPowerup(this.x, this.y);
-        }
+        this.hp -= 1;
 
-        scene.cameras.main.shake(100, 0.005);
-        scene.updateScore(this.scoreValue);
-        this.destroy();
+        if (this.hp <= 0) {
+            if (this.shouldDropPowerup()) {
+                scene.spawnPowerup(this.x, this.y);
+            }
+            scene.cameras.main.shake(this.isBoss ? 200 : 100, this.isBoss ? 0.01 : 0.005);
+            scene.updateScore(this.scoreValue);
+            this._destroyHealthBar();
+            this.destroy();
+        } else {
+            // 受擊閃白
+            this.setTint(0xffffff);
+            scene.time.delayedCall(80, () => {
+                if (this.active) this.clearTint();
+            });
+            scene.cameras.main.shake(50, 0.003);
+            this._updateHealthBar();
+        }
     }
 
     hitPlayer(player) {
         if (!this.active) return;
+        this._destroyHealthBar();
         this.destroy();
         player.receiveDamage();
     }
@@ -42,15 +97,35 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
     }
 
     update(time, delta) {
+        if (!this.active) return;
 
-        if (this.active) {
-            // 超出邊界自動銷毀
-            if (this.x < -32) {
-                this.destroy();
-            } else if (this.moveType === 1) {
-                // 產生正弦波曲線位移
-                this.y = this.startY + Math.sin((time - this.timeOffset) * 0.005) * 100;
-            }
+        const boundaryX = this.isBoss ? -64 : -32;
+        if (this.x < boundaryX) {
+            this._destroyHealthBar();
+            this.destroy();
+            return;
         }
+
+        if (this.moveType === 1) {
+            // 正弦波曲線位移
+            this.y = this.startY + Math.sin((time - this.timeOffset) * 0.005) * 100;
+        } else if (this.moveType === 2) {
+            // Boss: 較慢的正弦波，較大振幅，限制在畫面內
+            this.y = Phaser.Math.Clamp(
+                this.startY + Math.sin((time - this.timeOffset) * 0.002) * 150,
+                40, 560
+            );
+        }
+
+        // 更新血條位置
+        if (this.healthBar && this.healthBarBg) {
+            this.healthBar.setPosition(this.x, this.y - 35);
+            this.healthBarBg.setPosition(this.x, this.y - 35);
+        }
+    }
+
+    destroy(fromScene) {
+        this._destroyHealthBar();
+        super.destroy(fromScene);
     }
 }

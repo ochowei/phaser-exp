@@ -68,6 +68,18 @@ export default class MainScene extends Phaser.Scene {
         graphics.generateTexture(enemySpecialProfile.textureKey, enemySpecialProfile.textureSize.width, enemySpecialProfile.textureSize.height);
         graphics.clear();
 
+        // 迷你Boss紋理（從 profile 繪製）
+        const bossProfile = getAircraftProfile('EN_BOSS_GREEN');
+        bossProfile.draw(graphics);
+        graphics.generateTexture(bossProfile.textureKey, bossProfile.textureSize.width, bossProfile.textureSize.height);
+        graphics.clear();
+
+        // 敵人子彈紋理（紅色圓形）
+        graphics.fillStyle(0xff3333, 1);
+        graphics.fillCircle(4, 4, 4);
+        graphics.generateTexture('enemy_bullet', 8, 8);
+        graphics.clear();
+
         // 道具紋理
         graphics.fillStyle(0x00ff00, 1);
         graphics.fillCircle(10, 10, 10);
@@ -116,11 +128,13 @@ export default class MainScene extends Phaser.Scene {
         this.powerups = this.physics.add.group({
             runChildUpdate: true
         });
+        this.enemyBullets = this.physics.add.group();
 
         // 碰撞事件
         this.physics.add.overlap(this.bullets, this.enemies, this.hitEnemy, null, this);
         this.physics.add.overlap(this.player, this.enemies, this.hitPlayer, null, this);
         this.physics.add.overlap(this.player, this.powerups, this.collectPowerup, null, this);
+        this.physics.add.overlap(this.player, this.enemyBullets, this.hitPlayerByBullet, null, this);
 
         // UI 文字
         this.scoreText = this.add.text(16, 16, t('score') + ': 0', { fontSize: '24px', fill: '#fff', fontStyle: 'bold' });
@@ -190,6 +204,19 @@ export default class MainScene extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        // 迷你Boss生成計時器（每30秒）
+        this.bossSpawnTimer = this.time.addEvent({
+            delay: 30000,
+            callback: this.spawnMiniBoss,
+            callbackScope: this,
+            loop: true
+        });
+
+        // Boss警告文字
+        this.bossWarningText = this.add.text(400, 300, t('miniBossWarning'), {
+            fontSize: '36px', fill: '#ff0', fontStyle: 'bold'
+        }).setOrigin(0.5).setDepth(20).setVisible(false);
 
         // 虛擬搖桿（手機觸控）
         this.joystick = { dx: 0, dy: 0, active: false, pointerId: null, startX: 0, startY: 0 };
@@ -292,6 +319,7 @@ export default class MainScene extends Phaser.Scene {
         this.isPaused = !this.isPaused;
         this.physics.world.isPaused = this.isPaused;
         this.enemySpawnTimer.paused = this.isPaused;
+        if (this.bossSpawnTimer) this.bossSpawnTimer.paused = this.isPaused;
 
         if (this.isPaused) {
             this.playerTrail.pause();
@@ -326,12 +354,69 @@ export default class MainScene extends Phaser.Scene {
         let enemyKey = isSpecialEnemy ? 'enemy_special' : 'enemy_normal';
         
         // 生成敵人物件並加進群組 (Phaser.Physics.Arcade.Group.add)
-        let enemy = new Enemy(this, 850, y, enemyKey, isSpecialEnemy);
+        let enemy = new Enemy(this, 850, y, enemyKey, { isSpecial: isSpecialEnemy });
         this.enemies.add(enemy);
         
         // 加入群組後再給予速度，避免被 group default override
         let speed = Phaser.Math.Between(-150, -350);
         enemy.setVelocityX(speed);
+    }
+
+    spawnMiniBoss() {
+        if (this.gameOver) return;
+
+        const y = Phaser.Math.Between(80, 520);
+        const enemy = new Enemy(this, 850, y, 'enemy_boss', {
+            isBoss: true,
+            hp: 5,
+            scoreValue: 100,
+        });
+        this.enemies.add(enemy);
+        enemy.setVelocityX(-60);
+
+        // Boss尾焰粒子
+        const bossProfile = getAircraftProfile('EN_BOSS_GREEN');
+        const trail = this.add.particles(0, 0, 'bullet', bossProfile.trail);
+        trail.startFollow(enemy, bossProfile.trailOffset.x, bossProfile.trailOffset.y);
+        enemy.once('destroy', () => trail.destroy());
+
+        // Boss每1.5秒發射子彈
+        const fireTimer = this.time.addEvent({
+            delay: 1500,
+            callback: () => {
+                if (enemy.active) {
+                    this.spawnEnemyBullet(enemy.x - 24, enemy.y);
+                } else {
+                    fireTimer.remove();
+                }
+            },
+            loop: true
+        });
+        enemy.once('destroy', () => fireTimer.remove());
+
+        // 顯示警告文字
+        this.bossWarningText.setVisible(true);
+        this.time.delayedCall(2000, () => {
+            this.bossWarningText.setVisible(false);
+        });
+    }
+
+    spawnEnemyBullet(x, y) {
+        const bullet = this.add.image(x, y, 'enemy_bullet');
+        this.physics.add.existing(bullet);
+        bullet.body.setVelocityX(-300);
+        this.enemyBullets.add(bullet);
+
+        // 離開畫面後自動銷毀
+        this.time.delayedCall(3000, () => {
+            if (bullet.active) bullet.destroy();
+        });
+    }
+
+    hitPlayerByBullet(player, bullet) {
+        if (player.invincible) return;
+        bullet.destroy();
+        player.receiveDamage();
     }
 
     hitEnemy(bullet, enemy) {
@@ -398,6 +483,7 @@ export default class MainScene extends Phaser.Scene {
             this.player.setTint(0xff0000);
             this.gameOver = true;
             this.enemySpawnTimer.remove();
+            if (this.bossSpawnTimer) this.bossSpawnTimer.remove();
 
             this.cameras.main.shake(300, 0.015);
             this.tripleShotText.setVisible(false);

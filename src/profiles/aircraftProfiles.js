@@ -145,6 +145,51 @@ const aircraftProfiles = {
 
         trailOffset: { x: 14, y: 0 },
     },
+
+    /** 迷你Boss — 綠色系，體型較大，配備重裝甲 */
+    EN_BOSS_GREEN: {
+        name: 'G-50 Leviathan',
+        description: '綠色迷你Boss戰機，體型較大，配備重裝甲',
+        textureKey: 'enemy_boss',
+        textureSize: { width: 48, height: 48 },
+
+        draw(graphics) {
+            // 深色重裝甲外殼（面朝左，更大輪廓）
+            graphics.fillStyle(0x003300, 1);
+            graphics.fillTriangle(42, 24, 4, 4, 4, 44);
+
+            // 綠色核心機體
+            graphics.fillStyle(0x22c55e, 1);
+            graphics.fillTriangle(36, 24, 10, 10, 10, 38);
+
+            // 淺綠色機翼（上翼 + 下翼，展幅更大）
+            graphics.fillStyle(0x4ade80, 1);
+            graphics.fillTriangle(38, 24, 14, 2, 12, 14);
+            graphics.fillTriangle(38, 24, 14, 46, 12, 34);
+
+            // 淺色駕駛艙
+            graphics.fillStyle(0xbbf7d0, 1);
+            graphics.fillEllipse(18, 24, 9, 14);
+
+            // 金色排氣口（較大）
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillRect(40, 17, 6, 14);
+        },
+
+        trail: {
+            speed: { min: 40, max: 150 },
+            angle: { min: -30, max: 30 },
+            scale: { start: 0.45, end: 0 },
+            alpha: { start: 0.8, end: 0 },
+            tint: [0x4ade80, 0x22c55e, 0x166534],
+            lifespan: 280,
+            quantity: 2,
+            frequency: 35,
+            blendMode: 'ADD',
+        },
+
+        trailOffset: { x: 20, y: 0 },
+    },
 };
 
 /** 預設使用的 profile key */

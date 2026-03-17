@@ -14,11 +14,11 @@ describe('aircraftProfiles', () => {
     describe('profile data', () => {
         it('contains the expected profile keys', () => {
             expect(Object.keys(aircraftProfiles)).toEqual(
-                expect.arrayContaining(['S63HP', 'EN_RED', 'EN_PURPLE']),
+                expect.arrayContaining(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN']),
             );
         });
 
-        it.each(['S63HP', 'EN_RED', 'EN_PURPLE'])(
+        it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN'])(
             '%s has required fields',
             (key) => {
                 const profile = aircraftProfiles[key];
@@ -59,8 +59,16 @@ describe('aircraftProfiles', () => {
         });
     });
 
+    describe('boss profile', () => {
+        it('EN_BOSS_GREEN has larger texture size', () => {
+            const profile = aircraftProfiles['EN_BOSS_GREEN'];
+            expect(profile.textureSize.width).toBeGreaterThan(32);
+            expect(profile.textureSize.height).toBeGreaterThan(32);
+        });
+    });
+
     describe('trail configuration', () => {
-        it.each(['S63HP', 'EN_RED', 'EN_PURPLE'])(
+        it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN'])(
             '%s has valid trail settings',
             (key) => {
                 const { trail } = aircraftProfiles[key];

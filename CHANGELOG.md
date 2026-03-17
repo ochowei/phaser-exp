@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-03-17
+
+### Added
+- Mini-boss enemy (G-50 Leviathan) spawns every 30 seconds in endless mode
+- Enemy HP system with visual health bar for multi-hit enemies
+- Mini-boss fires red bullets at the player every 1.5 seconds
+- Boss incoming warning notification (i18n: en/zh)
+- New aircraft profile: EN_BOSS_GREEN (48×48 green armored fighter)
+
 ## [1.3.1] - 2026-03-17
 
 ### Changed
