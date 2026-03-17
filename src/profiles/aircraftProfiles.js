@@ -62,6 +62,7 @@ const aircraftProfiles = {
         description: '紅色敵方戰機，面朝左飛行',
         textureKey: 'enemy_normal',
         textureSize: { width: 32, height: 32 },
+        hp: 1,
 
         draw(graphics) {
             // 深色機身外殼（面朝左）
@@ -107,6 +108,7 @@ const aircraftProfiles = {
         description: '紫色精英戰機，寬翼掠翼設計',
         textureKey: 'enemy_special',
         textureSize: { width: 32, height: 32 },
+        hp: 3,
 
         draw(graphics) {
             // 深紫機身外殼（更寬的掠翼輪廓）
@@ -152,6 +154,7 @@ const aircraftProfiles = {
         description: '綠色迷你Boss戰機，體型較大，配備重裝甲',
         textureKey: 'enemy_boss',
         textureSize: { width: 48, height: 48 },
+        hp: 10,
 
         draw(graphics) {
             // 深色重裝甲外殼（面朝左，更大輪廓）

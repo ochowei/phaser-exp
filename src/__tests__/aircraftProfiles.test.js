@@ -67,6 +67,22 @@ describe('aircraftProfiles', () => {
         });
     });
 
+    describe('enemy hp values', () => {
+        it('each enemy profile has an hp property', () => {
+            expect(aircraftProfiles['EN_RED'].hp).toBe(1);
+            expect(aircraftProfiles['EN_PURPLE'].hp).toBe(3);
+            expect(aircraftProfiles['EN_BOSS_GREEN'].hp).toBe(10);
+        });
+
+        it('enemy hp values are in ascending order by threat level', () => {
+            const red = aircraftProfiles['EN_RED'].hp;
+            const purple = aircraftProfiles['EN_PURPLE'].hp;
+            const boss = aircraftProfiles['EN_BOSS_GREEN'].hp;
+            expect(red).toBeLessThan(purple);
+            expect(purple).toBeLessThan(boss);
+        });
+    });
+
     describe('trail configuration', () => {
         it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN'])(
             '%s has valid trail settings',
