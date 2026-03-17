@@ -34,6 +34,29 @@ const translations = {
         gameOver: 'GAME OVER',
         restart: 'Restart',
         miniBossWarning: 'MINI-BOSS INCOMING!',
+
+        // StageSelectScene
+        stageSelect: 'SELECT STAGE',
+        stage1Name: 'Asteroid Belt',
+        stage2Name: 'Nebula Frontier',
+        stage3Name: 'Dark Core',
+        stageLocked: 'Locked',
+        stageCompleted: 'Completed',
+
+        // StageScene
+        waveLabel: 'Wave',
+        bossLabel: 'BOSS',
+        restLabel: 'REST',
+        bossWarning: 'WARNING — BOSS INCOMING!',
+        stageClear: 'STAGE CLEAR!',
+        nextStage: 'Next Stage',
+        retry: 'Retry',
+        allClear: 'ALL STAGES CLEAR!',
+
+        // Boss 名稱
+        bossSTAGE1Name: 'Crimson Commander',
+        bossSTAGE2Name: 'Violet Overlord',
+        bossSTAGE3Name: 'Emerald Tyrant',
     },
     zh: {
         // StartScene
@@ -70,6 +93,29 @@ const translations = {
         gameOver: '遊戲結束',
         restart: '重新開始',
         miniBossWarning: '迷你Boss來襲！',
+
+        // StageSelectScene
+        stageSelect: '選擇關卡',
+        stage1Name: '小行星帶',
+        stage2Name: '星雲前線',
+        stage3Name: '黑暗核心',
+        stageLocked: '鎖定',
+        stageCompleted: '已完成',
+
+        // StageScene
+        waveLabel: '波次',
+        bossLabel: 'BOSS',
+        restLabel: '休息',
+        bossWarning: '警告 — Boss 來襲！',
+        stageClear: '關卡通過！',
+        nextStage: '下一關',
+        retry: '重試',
+        allClear: '全關卡通關！',
+
+        // Boss 名稱
+        bossSTAGE1Name: '赤紅指揮官',
+        bossSTAGE2Name: '紫夜霸主',
+        bossSTAGE3Name: '翠綠暴君',
     }
 };
 

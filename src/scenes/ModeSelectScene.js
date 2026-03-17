@@ -72,7 +72,13 @@ export default class ModeSelectScene extends Phaser.Scene {
             .on('pointerout', () => stageBtn.setStyle({ fill: '#f4a800', backgroundColor: '#000' }))
             .on('pointerdown', () => {
                 if (this.isTransitioning) return;
-                this._showUnderConstruction();
+                this.isTransitioning = true;
+                stageBtn.disableInteractive();
+
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.start('StageSelectScene');
+                });
+                this.cameras.main.fadeOut(300, 0, 0, 0);
             });
 
         // Back Button
@@ -99,49 +105,6 @@ export default class ModeSelectScene extends Phaser.Scene {
 
         // Fade in on enter
         this.cameras.main.fadeIn(300, 0, 0, 0);
-    }
-
-    _showUnderConstruction() {
-        const width = this.cameras.main.width;
-        const height = this.cameras.main.height;
-
-        // Overlay
-        const overlay = this.add.rectangle(width / 2, height / 2, width, height, 0x000000, 0.7)
-            .setInteractive();
-
-        // Dialog box
-        const box = this.add.rectangle(width / 2, height / 2, 360, 200, 0x1a1f4e)
-            .setStrokeStyle(2, 0x5368ff);
-
-        // Icon + text
-        const icon = this.add.text(width / 2, height / 2 - 45, '🚧', {
-            fontSize: '40px'
-        }).setOrigin(0.5);
-
-        const msg = this.add.text(width / 2, height / 2 + 10, t('underConstruction'), {
-            fontSize: '24px',
-            fill: '#f4f8ff',
-            align: 'center'
-        }).setOrigin(0.5);
-
-        // Close button
-        const closeBtn = this.add.text(width / 2, height / 2 + 75, t('close'), {
-            fontSize: '20px',
-            fill: '#0f0',
-            backgroundColor: '#000',
-            padding: { x: 16, y: 6 }
-        })
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => closeBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-            .on('pointerout', () => closeBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-            .on('pointerdown', () => {
-                overlay.destroy();
-                box.destroy();
-                icon.destroy();
-                msg.destroy();
-                closeBtn.destroy();
-            });
     }
 
     update() {

@@ -12,11 +12,13 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
             hp = 1,
             scoreValue = null,
             isBoss = false,
+            isStageBoss = false,
         } = config;
 
         this.maxHp = hp;
         this.hp = hp;
-        this.isBoss = isBoss;
+        this.isBoss = isBoss || isStageBoss;
+        this.isStageBoss = isStageBoss;
         this.isDropPowerup = isSpecial || isBoss;
         this.scoreValue = scoreValue ?? (isSpecial ? 20 : 10);
         this.powerupDropRate = (isSpecial || isBoss) ? 1 : 0;
@@ -78,6 +80,12 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
             scene.cameras.main.shake(this.isBoss ? 200 : 100, this.isBoss ? 0.01 : 0.005);
             scene.updateScore(this.scoreValue);
             this._destroyHealthBar();
+
+            // 關卡 Boss 被擊敗時通知場景
+            if (this.isStageBoss && scene.onStageBossDefeated) {
+                scene.onStageBossDefeated();
+            }
+
             this.destroy();
         } else {
             // 受擊閃白

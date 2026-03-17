@@ -8,18 +8,26 @@
 [ 開始畫面 ]      [ 模式選擇 ]        [ 遊戲畫面 ]
   SPACE SHOOTER     無盡模式            ★  ★  ★  ★  ★
   [Start Game]      [Endless Mode]      Score: 120  HP: ❤️❤️❤️
-  [Options]         [Stage Mode] 🚧        ▶ PLAYER
+  [Options]         [Stage Mode]           ▶ PLAYER
                                         ●●●  ENEMY  ●●●
+
+[ 關卡選擇 ]      [ 關卡模式 ]
+  SELECT STAGE      Wave 2/3    BOSS HP ████░░
+  [1] Asteroid Belt ✓   ▶ PLAYER
+  [2] Nebula Frontier   ●●● BOSS ●●●
+  [3] Dark Core 🔒      STAGE CLEAR!
 ```
 
 ## 功能特色
 
 - **視差捲動背景** — 三層星空以不同速度滾動，營造深度感
-- **遊戲模式** — 無盡模式（可遊玩）與關卡模式（開發中）
+- **遊戲模式** — 無盡模式與關卡模式（3 關，混合波次制 + Boss 戰）
 - **玩家移動** — 支援 WASD 或方向鍵操控；行動裝置支援虛擬搖桿
 - **射擊系統** — 預設單發，拾取道具可升級為三連發（持續 10 秒）
 - **HP 系統** — 玩家擁有 3 條命，受傷後短暫無敵（1 秒閃爍）
 - **三種敵人** — 普通紅色敵人（R-71 Crimson, 1 HP）、攜帶道具的紫色特殊敵人（X-99 Phantom, 3 HP，20% 出現率）、迷你Boss（G-50 Leviathan, 10 HP，每 30 秒出現）
+- **關卡模式** — 3 個關卡，各有預設波次與獨特 Boss（瞄準射擊 / 扇形散射 / 追蹤彈），關卡選擇畫面支援解鎖進度與重玩
+- **關卡 Boss** — Crimson Commander（20 HP）、Violet Overlord（30 HP）、Emerald Tyrant（40 HP），各有獨特攻擊模式
 - **敵人血量差異** — 不同敵機擁有不同血量，HP > 1 的敵人會顯示血條
 - **迷你Boss** — 綠色大型戰機，擁有 10 HP 血條、會發射紅色子彈，擊敗獲 100 分及道具掉落
 - **飛機外觀 Profile** — 模組化的戰機外觀定義系統，支援自訂繪製、尾焰粒子效果
@@ -51,12 +59,20 @@ phaser-exp/
     ├── main.js             # 遊戲初始化與設定
     ├── i18n.js             # 多語系（中 / 英）
     ├── profiles/
-    │   └── aircraftProfiles.js  # 戰機外觀 Profile 定義（4 組：玩家、普通敵人、特殊敵人、迷你Boss）
+    │   └── aircraftProfiles.js  # 戰機外觀 Profile 定義（7 組：玩家、普通敵人、特殊敵人、迷你Boss、3 關卡Boss）
+    ├── data/
+    │   └── stageData.js         # 關卡模式設定資料（波次、Boss）
+    ├── systems/
+    │   └── WaveManager.js       # 波次進行控制器
+    ├── utils/
+    │   └── sceneHelpers.js      # 場景共用函式（紋理、背景、輸入、暫停等）
     ├── scenes/
     │   ├── StartScene.js        # 開始畫面
     │   ├── ModeSelectScene.js   # 模式選擇畫面（無盡 / 關卡）
     │   ├── OptionScene.js       # 設定畫面（音量 / 語言）
-    │   └── MainScene.js         # 主遊戲場景
+    │   ├── MainScene.js         # 無盡模式遊戲場景
+    │   ├── StageSelectScene.js  # 關卡選擇畫面（解鎖 / 重玩）
+    │   └── StageScene.js        # 關卡模式遊戲場景
     ├── objects/
     │   ├── Player.js       # 玩家物件
     │   ├── Enemy.js        # 敵人物件
@@ -64,7 +80,8 @@ phaser-exp/
     │   └── Powerup.js      # 道具物件
     └── __tests__/
         ├── i18n.test.js              # i18n 模組單元測試
-        └── aircraftProfiles.test.js  # 戰機 Profile 單元測試
+        ├── aircraftProfiles.test.js  # 戰機 Profile 單元測試
+        └── stageData.test.js         # 關卡資料單元測試
 ```
 
 ## 快速開始
@@ -138,6 +155,9 @@ npm run preview
 | 迷你Boss 速度 | 60 px/s |
 | 迷你Boss 射擊間隔 | 1500 ms |
 | 拾取道具得分 | 50 分 |
+| 第1關 Boss HP | 20（瞄準射擊） |
+| 第2關 Boss HP | 30（扇形散射） |
+| 第3關 Boss HP | 40（追蹤彈） |
 
 ## 技術棧
 
