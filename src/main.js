@@ -25,3 +25,6 @@ const config = {
 
 // eslint-disable-next-line no-unused-vars
 const game = new Phaser.Game(config);
+
+const loadingEl = document.getElementById('loading');
+if (loadingEl) loadingEl.remove();

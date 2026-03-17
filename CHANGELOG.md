@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.6.1] - 2026-03-17
+
+### Added
+- HTML loading indicator shown while the browser downloads and initializes the Phaser bundle, with i18n support (en/zh)
+
 ## [1.6.0] - 2026-03-17
 
 ### Added
