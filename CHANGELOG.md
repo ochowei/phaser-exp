@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.3.1] - 2026-03-17
+
+### Changed
+- Reduced player bullet fire rate from 180ms to 380ms interval
+- Reduced player bullet size from radius 8 (16×16 texture) to radius 5 (10×10 texture)
+
 ## [1.3.0] - 2026-03-17
 
 ### Added

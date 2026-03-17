@@ -52,8 +52,8 @@ export default class MainScene extends Phaser.Scene {
 
         // 子彈紋理
         graphics.fillStyle(0xffff00, 1);
-        graphics.fillCircle(8, 8, 8);
-        graphics.generateTexture('bullet', 16, 16);
+        graphics.fillCircle(5, 5, 5);
+        graphics.generateTexture('bullet', 10, 10);
         graphics.clear();
 
         // 普通敵人紋理（從 profile 繪製）
@@ -81,7 +81,7 @@ export default class MainScene extends Phaser.Scene {
         this.highScore = localStorage.getItem('phaserShooterHighScore') || 0;
         this.hasTripleShot = false;
         this.lastFired = 0;
-        this.fireRate = 180;
+        this.fireRate = 380;
 
         // 加入玩家實體
         this.player = new Player(this, 100, 300, 'playerTexture');
