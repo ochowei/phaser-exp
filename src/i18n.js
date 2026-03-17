@@ -33,6 +33,7 @@ const translations = {
         mainMenu: 'Main Menu',
         gameOver: 'GAME OVER',
         restart: 'Restart',
+        miniBossWarning: 'MINI-BOSS INCOMING!',
     },
     zh: {
         // StartScene
@@ -68,6 +69,7 @@ const translations = {
         mainMenu: '主選單',
         gameOver: '遊戲結束',
         restart: '重新開始',
+        miniBossWarning: '迷你Boss來襲！',
     }
 };
 
