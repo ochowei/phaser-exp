@@ -193,6 +193,150 @@ const aircraftProfiles = {
 
         trailOffset: { x: 20, y: 0 },
     },
+
+    /** 第1關Boss — 深紅色系，瞄準射擊 */
+    EN_BOSS_STAGE1: {
+        name: 'Crimson Commander',
+        description: '深紅色Boss戰機，精準瞄準射擊',
+        textureKey: 'enemy_boss_stage1',
+        textureSize: { width: 48, height: 48 },
+        hp: 20,
+        attackPattern: 'aimed',
+
+        draw(graphics) {
+            // 深紅重裝甲外殼
+            graphics.fillStyle(0x4a0000, 1);
+            graphics.fillTriangle(42, 24, 4, 4, 4, 44);
+
+            // 赤紅核心機體
+            graphics.fillStyle(0xdc2626, 1);
+            graphics.fillTriangle(36, 24, 10, 10, 10, 38);
+
+            // 亮紅機翼
+            graphics.fillStyle(0xef4444, 1);
+            graphics.fillTriangle(38, 24, 14, 2, 12, 14);
+            graphics.fillTriangle(38, 24, 14, 46, 12, 34);
+
+            // 淺紅駕駛艙
+            graphics.fillStyle(0xfca5a5, 1);
+            graphics.fillEllipse(18, 24, 9, 14);
+
+            // 橙紅排氣口
+            graphics.fillStyle(0xff4500, 1);
+            graphics.fillRect(40, 17, 6, 14);
+        },
+
+        trail: {
+            speed: { min: 40, max: 150 },
+            angle: { min: -30, max: 30 },
+            scale: { start: 0.45, end: 0 },
+            alpha: { start: 0.8, end: 0 },
+            tint: [0xff6666, 0xdc2626, 0x8b0000],
+            lifespan: 280,
+            quantity: 2,
+            frequency: 35,
+            blendMode: 'ADD',
+        },
+
+        trailOffset: { x: 20, y: 0 },
+    },
+
+    /** 第2關Boss — 深紫色系，扇形散射 */
+    EN_BOSS_STAGE2: {
+        name: 'Violet Overlord',
+        description: '紫色Boss戰機，扇形散射攻擊',
+        textureKey: 'enemy_boss_stage2',
+        textureSize: { width: 48, height: 48 },
+        hp: 30,
+        attackPattern: 'scatter',
+
+        draw(graphics) {
+            // 深紫重裝甲外殼
+            graphics.fillStyle(0x2d0054, 1);
+            graphics.fillTriangle(42, 24, 4, 4, 4, 44);
+
+            // 紫色核心機體
+            graphics.fillStyle(0x7c3aed, 1);
+            graphics.fillTriangle(36, 24, 10, 10, 10, 38);
+
+            // 亮紫機翼
+            graphics.fillStyle(0xa855f7, 1);
+            graphics.fillTriangle(38, 24, 14, 2, 12, 14);
+            graphics.fillTriangle(38, 24, 14, 46, 12, 34);
+
+            // 淺紫駕駛艙
+            graphics.fillStyle(0xe0b0ff, 1);
+            graphics.fillEllipse(18, 24, 9, 14);
+
+            // 紫色排氣口
+            graphics.fillStyle(0xc084fc, 1);
+            graphics.fillRect(40, 17, 6, 14);
+        },
+
+        trail: {
+            speed: { min: 40, max: 150 },
+            angle: { min: -30, max: 30 },
+            scale: { start: 0.45, end: 0 },
+            alpha: { start: 0.8, end: 0 },
+            tint: [0xe0b0ff, 0x7c3aed, 0x2d0054],
+            lifespan: 280,
+            quantity: 2,
+            frequency: 35,
+            blendMode: 'ADD',
+        },
+
+        trailOffset: { x: 20, y: 0 },
+    },
+
+    /** 第3關Boss — 墨綠/金色系，追蹤彈 */
+    EN_BOSS_STAGE3: {
+        name: 'Emerald Tyrant',
+        description: '墨綠色Boss戰機，發射追蹤子彈',
+        textureKey: 'enemy_boss_stage3',
+        textureSize: { width: 48, height: 48 },
+        hp: 40,
+        attackPattern: 'tracking',
+
+        draw(graphics) {
+            // 墨綠重裝甲外殼
+            graphics.fillStyle(0x003d00, 1);
+            graphics.fillTriangle(42, 24, 4, 4, 4, 44);
+
+            // 翠綠核心機體
+            graphics.fillStyle(0x16a34a, 1);
+            graphics.fillTriangle(36, 24, 10, 10, 10, 38);
+
+            // 亮綠機翼
+            graphics.fillStyle(0x4ade80, 1);
+            graphics.fillTriangle(38, 24, 14, 2, 12, 14);
+            graphics.fillTriangle(38, 24, 14, 46, 12, 34);
+
+            // 淺綠駕駛艙
+            graphics.fillStyle(0xbbf7d0, 1);
+            graphics.fillEllipse(18, 24, 9, 14);
+
+            // 金色排氣口（加大 + 金色裝飾線）
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillRect(40, 15, 7, 18);
+            // 金色裝飾條
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillRect(6, 22, 30, 4);
+        },
+
+        trail: {
+            speed: { min: 40, max: 150 },
+            angle: { min: -30, max: 30 },
+            scale: { start: 0.5, end: 0 },
+            alpha: { start: 0.85, end: 0 },
+            tint: [0x4ade80, 0xfbbf24, 0x166534],
+            lifespan: 320,
+            quantity: 2,
+            frequency: 30,
+            blendMode: 'ADD',
+        },
+
+        trailOffset: { x: 20, y: 0 },
+    },
 };
 
 /** 預設使用的 profile key */

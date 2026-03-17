@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] - 2026-03-17
+
+### Added
+- Stage Mode with 3 playable stages, each featuring mixed wave-based enemy spawning and a unique boss fight
+- Stage Select screen with unlock progression (localStorage persistence) and replay support
+- 3 new boss profiles: Crimson Commander (aimed shots, 20 HP), Violet Overlord (scatter shots, 30 HP), Emerald Tyrant (tracking bullets, 40 HP)
+- Wave Manager system for controlling enemy wave spawning, rest periods, and boss phase transitions
+- Boss HP bar displayed at the top center of the screen during boss fights
+- Wave indicator HUD showing current wave progress
+- Stage clear screen with score summary and next stage / stage select options
+- New i18n keys for stage mode UI in both English and Chinese
+- Unit tests for stage data structure validation
+- Shared scene helper utilities extracted from MainScene for code reuse
+
+### Changed
+- Refactored MainScene to use shared utility functions from sceneHelpers.js
+- ModeSelectScene Stage Mode button now navigates to Stage Select (previously showed "Under Construction")
+
 ## [1.5.0] - 2026-03-17
 
 ### Changed

@@ -14,11 +14,14 @@ describe('aircraftProfiles', () => {
     describe('profile data', () => {
         it('contains the expected profile keys', () => {
             expect(Object.keys(aircraftProfiles)).toEqual(
-                expect.arrayContaining(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN']),
+                expect.arrayContaining([
+                    'S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN',
+                    'EN_BOSS_STAGE1', 'EN_BOSS_STAGE2', 'EN_BOSS_STAGE3',
+                ]),
             );
         });
 
-        it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN'])(
+        it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN', 'EN_BOSS_STAGE1', 'EN_BOSS_STAGE2', 'EN_BOSS_STAGE3'])(
             '%s has required fields',
             (key) => {
                 const profile = aircraftProfiles[key];
@@ -83,8 +86,35 @@ describe('aircraftProfiles', () => {
         });
     });
 
+    describe('stage boss profiles', () => {
+        it.each(['EN_BOSS_STAGE1', 'EN_BOSS_STAGE2', 'EN_BOSS_STAGE3'])(
+            '%s has 48x48 texture size',
+            (key) => {
+                const profile = aircraftProfiles[key];
+                expect(profile.textureSize.width).toBe(48);
+                expect(profile.textureSize.height).toBe(48);
+            },
+        );
+
+        it.each(['EN_BOSS_STAGE1', 'EN_BOSS_STAGE2', 'EN_BOSS_STAGE3'])(
+            '%s has an attackPattern',
+            (key) => {
+                const profile = aircraftProfiles[key];
+                expect(['aimed', 'scatter', 'tracking']).toContain(profile.attackPattern);
+            },
+        );
+
+        it('stage boss hp values increase across stages', () => {
+            const s1 = aircraftProfiles['EN_BOSS_STAGE1'].hp;
+            const s2 = aircraftProfiles['EN_BOSS_STAGE2'].hp;
+            const s3 = aircraftProfiles['EN_BOSS_STAGE3'].hp;
+            expect(s1).toBeLessThan(s2);
+            expect(s2).toBeLessThan(s3);
+        });
+    });
+
     describe('trail configuration', () => {
-        it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN'])(
+        it.each(['S63HP', 'EN_RED', 'EN_PURPLE', 'EN_BOSS_GREEN', 'EN_BOSS_STAGE1', 'EN_BOSS_STAGE2', 'EN_BOSS_STAGE3'])(
             '%s has valid trail settings',
             (key) => {
                 const { trail } = aircraftProfiles[key];
