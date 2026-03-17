@@ -8,6 +8,7 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
 
     fire(x, y, velocityY = 0) {
         this.body.reset(x, y);
+        this.startX = x;
 
         this.setActive(true);
         this.setVisible(true);
@@ -17,7 +18,8 @@ export default class Bullet extends Phaser.Physics.Arcade.Image {
     }
 
     update(time, delta) {
-        if (this.active && (this.x > 800 || this.y < 0 || this.y > 600)) {
+        const maxRange = 400;
+        if (this.active && (this.x - this.startX > maxRange || this.y < 0 || this.y > 600)) {
             // 回收子彈
             this.setActive(false);
             this.setVisible(false);
