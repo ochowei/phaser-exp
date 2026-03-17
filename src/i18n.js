@@ -73,7 +73,7 @@ const translations = {
     }
 };
 
-let currentLang = localStorage.getItem('gameLang') || 'zh';
+let currentLang = localStorage.getItem('gameLang') || 'en';
 
 export function t(key) {
     return translations[currentLang]?.[key] || translations['en'][key] || key;
