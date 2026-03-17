@@ -3,6 +3,7 @@ import Player from '../objects/Player.js';
 import Enemy from '../objects/Enemy.js';
 import Bullet from '../objects/Bullet.js';
 import Powerup from '../objects/Powerup.js';
+import { t } from '../i18n.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -145,10 +146,10 @@ export default class MainScene extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.powerups, this.collectPowerup, null, this);
 
         // UI 文字
-        this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '24px', fill: '#fff', fontStyle: 'bold' });
-        this.highScoreText = this.add.text(16, 44, 'High Score: ' + this.highScore, { fontSize: '18px', fill: '#aaa' });
+        this.scoreText = this.add.text(16, 16, t('score') + ': 0', { fontSize: '24px', fill: '#fff', fontStyle: 'bold' });
+        this.highScoreText = this.add.text(16, 44, t('highScore') + ': ' + this.highScore, { fontSize: '18px', fill: '#aaa' });
         this.healthText = this.add.text(16, 70, 'HP: ❤️❤️❤️', { fontSize: '20px', fill: '#ff4444' });
-        this.tripleShotText = this.add.text(16, 560, 'TRIPLE SHOT ACTIVE!', { fontSize: '20px', fill: '#00ff00', fontStyle: 'bold' });
+        this.tripleShotText = this.add.text(16, 560, t('tripleShotActive'), { fontSize: '20px', fill: '#00ff00', fontStyle: 'bold' });
         this.tripleShotText.setVisible(false);
 
         // 暫停 UI
@@ -168,7 +169,7 @@ export default class MainScene extends Phaser.Scene {
         this.pauseOverlay = this.add.rectangle(400, 300, 800, 600, 0x000000, 0.45)
             .setDepth(25)
             .setVisible(false);
-        this.pauseText = this.add.text(400, 280, 'PAUSED', {
+        this.pauseText = this.add.text(400, 280, t('paused'), {
             fontSize: '64px',
             fill: '#ffffff',
             fontStyle: 'bold'
@@ -176,7 +177,7 @@ export default class MainScene extends Phaser.Scene {
             .setOrigin(0.5)
             .setDepth(26)
             .setVisible(false);
-        this.pauseHintText = this.add.text(400, 345, '按 P / ESC 或右上角按鈕繼續', {
+        this.pauseHintText = this.add.text(400, 345, t('pauseHint'), {
             fontSize: '24px',
             fill: '#dddddd'
         })
@@ -184,7 +185,7 @@ export default class MainScene extends Phaser.Scene {
             .setDepth(26)
             .setVisible(false);
 
-        this.pauseMenuBtn = this.add.text(400, 410, 'Main Menu', {
+        this.pauseMenuBtn = this.add.text(400, 410, t('mainMenu'), {
             fontSize: '26px',
             fill: '#0af',
             backgroundColor: '#000',
@@ -384,11 +385,11 @@ export default class MainScene extends Phaser.Scene {
 
     updateScore(points) {
         this.score += points;
-        this.scoreText.setText('Score: ' + this.score);
-        
+        this.scoreText.setText(t('score') + ': ' + this.score);
+
         if (this.score > this.highScore) {
             this.highScore = this.score;
-            this.highScoreText.setText('High Score: ' + this.highScore);
+            this.highScoreText.setText(t('highScore') + ': ' + this.highScore);
             localStorage.setItem('phaserShooterHighScore', this.highScore);
         }
     }
@@ -426,11 +427,11 @@ export default class MainScene extends Phaser.Scene {
             this.playerTrail.stop();
             if (this.bgm) this.bgm.stop();
 
-            let gameOverText = this.add.text(400, 250, 'GAME OVER', { fontSize: '64px', fill: '#ff3333', fontStyle: 'bold' });
+            let gameOverText = this.add.text(400, 250, t('gameOver'), { fontSize: '64px', fill: '#ff3333', fontStyle: 'bold' });
             gameOverText.setOrigin(0.5);
 
             // Restart 按鈕
-            const restartBtn = this.add.text(300, 350, 'Restart', {
+            const restartBtn = this.add.text(300, 350, t('restart'), {
                 fontSize: '28px', fill: '#0f0', backgroundColor: '#000', padding: { x: 15, y: 10 }
             })
             .setOrigin(0.5)
@@ -440,7 +441,7 @@ export default class MainScene extends Phaser.Scene {
             .on('pointerdown', () => this.scene.restart());
 
             // Main Menu 按鈕
-            const menuBtn = this.add.text(500, 350, 'Main Menu', {
+            const menuBtn = this.add.text(500, 350, t('mainMenu'), {
                 fontSize: '28px', fill: '#0af', backgroundColor: '#000', padding: { x: 15, y: 10 }
             })
             .setOrigin(0.5)

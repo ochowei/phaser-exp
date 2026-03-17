@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { t, getLang, setLang } from '../i18n.js';
 
 export default class OptionScene extends Phaser.Scene {
     constructor() {
@@ -17,13 +18,74 @@ export default class OptionScene extends Phaser.Scene {
         this.bgNear = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_near');
 
         // 標題
-        this.add.text(width / 2, 80, 'OPTIONS', {
+        this.add.text(width / 2, 60, t('optionsTitle'), {
             fontSize: '48px',
             fill: '#f4f8ff',
             fontStyle: 'bold',
             stroke: '#5368ff',
             strokeThickness: 5
         }).setOrigin(0.5);
+
+        // --- 語言選擇區域 ---
+        const langY = 140;
+
+        this.add.text(width / 2, langY, t('language'), {
+            fontSize: '28px',
+            fill: '#a6afd9'
+        }).setOrigin(0.5);
+
+        const currentLang = getLang();
+        const btnSpacing = 100;
+
+        // English 按鈕
+        this.enBtn = this.add.text(width / 2 - btnSpacing, langY + 45, t('langEn'), {
+            fontSize: '24px',
+            fill: currentLang === 'en' ? '#fff' : '#667',
+            backgroundColor: currentLang === 'en' ? '#5368ff' : '#1a1a2e',
+            padding: { x: 16, y: 8 }
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerover', () => {
+            if (getLang() !== 'en') this.enBtn.setStyle({ fill: '#ccc', backgroundColor: '#333' });
+        })
+        .on('pointerout', () => {
+            const active = getLang() === 'en';
+            this.enBtn.setStyle({
+                fill: active ? '#fff' : '#667',
+                backgroundColor: active ? '#5368ff' : '#1a1a2e'
+            });
+        })
+        .on('pointerdown', () => {
+            if (getLang() === 'en') return;
+            setLang('en');
+            this.scene.restart();
+        });
+
+        // 中文按鈕
+        this.zhBtn = this.add.text(width / 2 + btnSpacing, langY + 45, t('langZh'), {
+            fontSize: '24px',
+            fill: currentLang === 'zh' ? '#fff' : '#667',
+            backgroundColor: currentLang === 'zh' ? '#5368ff' : '#1a1a2e',
+            padding: { x: 16, y: 8 }
+        })
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true })
+        .on('pointerover', () => {
+            if (getLang() !== 'zh') this.zhBtn.setStyle({ fill: '#ccc', backgroundColor: '#333' });
+        })
+        .on('pointerout', () => {
+            const active = getLang() === 'zh';
+            this.zhBtn.setStyle({
+                fill: active ? '#fff' : '#667',
+                backgroundColor: active ? '#5368ff' : '#1a1a2e'
+            });
+        })
+        .on('pointerdown', () => {
+            if (getLang() === 'zh') return;
+            setLang('zh');
+            this.scene.restart();
+        });
 
         // 從 localStorage 讀取音量設定
         let savedVolume = parseFloat(localStorage.getItem('bgmVolume'));
@@ -37,13 +99,13 @@ export default class OptionScene extends Phaser.Scene {
         this.sound.volume = this.isMuted ? 0 : this.currentVolume;
 
         // --- 音量控制區域 ---
-        const sliderY = height / 2 - 30;
+        const sliderY = height / 2 + 10;
         const sliderX = width / 2 - 150;
         const sliderWidth = 300;
         const sliderHeight = 8;
 
         // 「BGM Volume」標籤
-        this.add.text(width / 2, sliderY - 50, 'BGM Volume', {
+        this.add.text(width / 2, sliderY - 50, t('bgmVolume'), {
             fontSize: '28px',
             fill: '#a6afd9'
         }).setOrigin(0.5);
@@ -150,7 +212,7 @@ export default class OptionScene extends Phaser.Scene {
         });
 
         // --- Back 按鈕 ---
-        const backBtn = this.add.text(width / 2, height - 80, 'Back', {
+        const backBtn = this.add.text(width / 2, height - 60, t('back'), {
             fontSize: '32px',
             fill: '#a6afd9',
             backgroundColor: '#000',
@@ -201,11 +263,11 @@ export default class OptionScene extends Phaser.Scene {
     }
 
     getVolumeLabel() {
-        if (this.isMuted) return 'Muted';
+        if (this.isMuted) return t('muted');
         return `${Math.round(this.currentVolume * 100)}%`;
     }
 
     getMuteLabel() {
-        return this.isMuted ? '🔇 Unmute' : '🔊 Mute';
+        return this.isMuted ? t('muteOn') : t('muteOff');
     }
 }

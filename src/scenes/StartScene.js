@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { t } from '../i18n.js';
 
 export default class StartScene extends Phaser.Scene {
     constructor() {
@@ -80,14 +81,14 @@ export default class StartScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.add.text(width / 2, titleText.y + 32, 'Press Start to Begin', {
+        this.add.text(width / 2, titleText.y + 32, t('pressStart'), {
             fontSize: '24px',
             fill: '#a6afd9',
             fontStyle: 'normal'
         }).setOrigin(0.5);
 
         // Start Game Button
-        const startBtn = this.add.text(width / 2, height / 2, 'Start Game', {
+        const startBtn = this.add.text(width / 2, height / 2, t('startGame'), {
             fontSize: '32px',
             fill: '#0f0',
             backgroundColor: '#000',
@@ -123,7 +124,7 @@ export default class StartScene extends Phaser.Scene {
         }
 
         // Options Button
-        const optionsBtn = this.add.text(width / 2, height / 2 + 60, 'Options', {
+        const optionsBtn = this.add.text(width / 2, height / 2 + 60, t('options'), {
             fontSize: '32px',
             fill: '#f80',
             backgroundColor: '#000',
@@ -143,7 +144,7 @@ export default class StartScene extends Phaser.Scene {
         });
 
         // About Phaser Button
-        const aboutBtn = this.add.text(width / 2, height / 2 + 120, 'About Phaser', {
+        const aboutBtn = this.add.text(width / 2, height / 2 + 120, t('aboutPhaser'), {
             fontSize: '32px',
             fill: '#0af',
             backgroundColor: '#000',
