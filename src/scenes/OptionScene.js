@@ -1,9 +1,16 @@
 import * as Phaser from 'phaser';
 import { t, getLang, setLang } from '../i18n.js';
+import { createMenuStarTextures } from '../utils/sceneHelpers.js';
 
 export default class OptionScene extends Phaser.Scene {
     constructor() {
         super('OptionScene');
+    }
+
+    preload() {
+        if (!this.cache.audio.exists('bgm_menu')) {
+            this.load.audio('bgm_menu', 'assets/audio/bgm_menu.wav');
+        }
     }
 
     create() {
@@ -12,7 +19,7 @@ export default class OptionScene extends Phaser.Scene {
 
         this.cameras.main.setBackgroundColor('#090b22');
 
-        // 重用 StartScene 已建立的星空紋理作為背景
+        createMenuStarTextures(this);
         this.bgFar = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_far');
         this.bgMid = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_mid');
         this.bgNear = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_near');
@@ -97,6 +104,12 @@ export default class OptionScene extends Phaser.Scene {
 
         // 套用全域音量
         this.sound.volume = this.isMuted ? 0 : this.currentVolume;
+
+        // 播放選單背景音樂（若尚未播放）
+        if (!this.sound.get('bgm_menu') || !this.sound.get('bgm_menu').isPlaying) {
+            this.sound.stopAll();
+            this.sound.add('bgm_menu', { loop: true, volume: 1 }).play();
+        }
 
         // --- 音量控制區域 ---
         const sliderY = height / 2 + 10;

@@ -1,6 +1,7 @@
 import * as Phaser from 'phaser';
 import { t } from '../i18n.js';
 import { stages } from '../data/stageData.js';
+import { createMenuStarTextures } from '../utils/sceneHelpers.js';
 
 export default class StageSelectScene extends Phaser.Scene {
     constructor() {
@@ -15,7 +16,7 @@ export default class StageSelectScene extends Phaser.Scene {
 
         this.cameras.main.setBackgroundColor('#090b22');
 
-        // 重用 StartScene 的星空紋理
+        createMenuStarTextures(this);
         this.bgFar = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_far');
         this.bgMid = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_mid');
         this.bgNear = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_near');

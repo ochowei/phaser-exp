@@ -109,6 +109,43 @@ export function createBossTextures(scene, profileKeys) {
 }
 
 /**
+ * 產生選單場景共用的星空紋理（start_bg_stars_far/mid/near）
+ * 原本由 StartScene 產生，React 遷移後改由此函式提供
+ */
+export function createMenuStarTextures(scene) {
+    const graphics = scene.add.graphics();
+
+    if (!scene.textures.exists('start_bg_stars_far')) {
+        graphics.fillStyle(0x24306d, 1);
+        for (let i = 0; i < 220; i++) {
+            graphics.fillRect(Phaser.Math.Between(0, 512), Phaser.Math.Between(0, 512), 2, 2);
+        }
+        graphics.generateTexture('start_bg_stars_far', 512, 512);
+        graphics.clear();
+    }
+
+    if (!scene.textures.exists('start_bg_stars_mid')) {
+        graphics.fillStyle(0x6a4ab4, 1);
+        for (let i = 0; i < 140; i++) {
+            graphics.fillRect(Phaser.Math.Between(0, 512), Phaser.Math.Between(0, 512), 2, 2);
+        }
+        graphics.generateTexture('start_bg_stars_mid', 512, 512);
+        graphics.clear();
+    }
+
+    if (!scene.textures.exists('start_bg_stars_near')) {
+        graphics.fillStyle(0xe8e7ff, 1);
+        for (let i = 0; i < 80; i++) {
+            graphics.fillRect(Phaser.Math.Between(0, 512), Phaser.Math.Between(0, 512), 2, 2);
+        }
+        graphics.generateTexture('start_bg_stars_near', 512, 512);
+        graphics.clear();
+    }
+
+    graphics.destroy();
+}
+
+/**
  * 建立 3 層視差背景
  */
 export function createParallaxBackground(scene) {
