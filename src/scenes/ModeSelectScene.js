@@ -1,4 +1,5 @@
 import * as Phaser from 'phaser';
+import { t } from '../i18n.js';
 
 export default class ModeSelectScene extends Phaser.Scene {
     constructor() {
@@ -19,7 +20,7 @@ export default class ModeSelectScene extends Phaser.Scene {
         this.bgNear = this.add.tileSprite(width / 2, height / 2, width, height, 'start_bg_stars_near');
 
         // Title
-        this.add.text(width / 2, height / 2 - 160, 'SELECT MODE', {
+        this.add.text(width / 2, height / 2 - 160, t('selectMode'), {
             fontSize: '48px',
             fill: '#f4f8ff',
             fontStyle: 'bold',
@@ -36,7 +37,7 @@ export default class ModeSelectScene extends Phaser.Scene {
         }).setOrigin(0.5);
 
         // Endless Mode Button
-        const endlessBtn = this.add.text(width / 2, height / 2 - 40, 'Endless Mode', {
+        const endlessBtn = this.add.text(width / 2, height / 2 - 40, t('endlessMode'), {
             fontSize: '32px',
             fill: '#0f0',
             backgroundColor: '#000',
@@ -59,7 +60,7 @@ export default class ModeSelectScene extends Phaser.Scene {
         });
 
         // Stage Mode Button
-        const stageBtn = this.add.text(width / 2, height / 2 + 60, '關卡模式', {
+        const stageBtn = this.add.text(width / 2, height / 2 + 60, t('stageMode'), {
             fontSize: '32px',
             fill: '#f4a800',
             backgroundColor: '#000',
@@ -75,7 +76,7 @@ export default class ModeSelectScene extends Phaser.Scene {
         });
 
         // Back Button
-        const backBtn = this.add.text(width / 2, height / 2 + 160, '← 返回', {
+        const backBtn = this.add.text(width / 2, height / 2 + 160, t('backArrow'), {
             fontSize: '24px',
             fill: '#a6afd9',
             backgroundColor: '#000',
@@ -117,14 +118,14 @@ export default class ModeSelectScene extends Phaser.Scene {
             fontSize: '40px'
         }).setOrigin(0.5);
 
-        const msg = this.add.text(width / 2, height / 2 + 10, '施工中\nUnder Construction', {
+        const msg = this.add.text(width / 2, height / 2 + 10, t('underConstruction'), {
             fontSize: '24px',
             fill: '#f4f8ff',
             align: 'center'
         }).setOrigin(0.5);
 
         // Close button
-        const closeBtn = this.add.text(width / 2, height / 2 + 75, '關閉', {
+        const closeBtn = this.add.text(width / 2, height / 2 + 75, t('close'), {
             fontSize: '20px',
             fill: '#0f0',
             backgroundColor: '#000',
