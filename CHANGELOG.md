@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.3.0] - 2026-03-17
+
+### Added
+- ESLint integration with flat config format for code style enforcement
+- `npm run lint` and `npm run lint:fix` scripts
+- Enforced rules: single quotes, semicolons, 4-space indentation, unused variable warnings
 
 ## [1.2.0] - 2026-03-17
 

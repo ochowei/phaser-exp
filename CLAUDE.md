@@ -13,6 +13,8 @@ npm run build    # Build to dist/
 npm run preview  # Preview production build
 npm test         # Run unit tests (Vitest)
 npm run test:watch # Run tests in watch mode
+npm run lint     # Check code style (ESLint)
+npm run lint:fix # Auto-fix lint issues
 ```
 
 ## Documentation Sync Rules
@@ -73,3 +75,5 @@ Any code change — whether it's a new feature, bug fix, or refactor — **must 
 - Comments and variable names may be in Chinese or English
 - Unit tests use [Vitest](https://vitest.dev/) and live in `src/__tests__/`
 - Test files follow the `<module>.test.js` naming convention
+- Code style is enforced by ESLint (flat config in `eslint.config.js`)
+- ESLint rules: single quotes, semicolons required, 4-space indentation

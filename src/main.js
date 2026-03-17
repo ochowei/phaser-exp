@@ -21,4 +21,5 @@ const config = {
     scene: [StartScene, ModeSelectScene, OptionScene, MainScene]
 };
 
+// eslint-disable-next-line no-unused-vars
 const game = new Phaser.Game(config);

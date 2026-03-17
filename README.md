@@ -37,6 +37,7 @@ phaser-exp/
 ├── .github/
 │   └── workflows/
 │       └── ci.yml              # GitHub Actions CI（測試 + 建置）
+├── eslint.config.js        # ESLint 設定（flat config）
 ├── index.html              # 頁面入口
 ├── package.json            # 依賴套件與腳本
 ├── public/
@@ -92,6 +93,16 @@ npm test
 npm run test:watch
 ```
 
+### 程式碼檢查
+
+```bash
+# 檢查程式碼風格
+npm run lint
+
+# 自動修正可修復的問題
+npm run lint:fix
+```
+
 ### 建置正式版
 
 ```bash
@@ -125,6 +136,7 @@ npm run preview
 | [Phaser 3](https://phaser.io/) | 3.90.0 | 遊戲框架（渲染、物理、輸入） |
 | [Vite](https://vitejs.dev/) | 7.3.1 | 開發伺服器與打包工具 |
 | [Vitest](https://vitest.dev/) | 4.1.0 | 單元測試框架 |
+| [ESLint](https://eslint.org/) | 10.0.3 | 程式碼風格檢查 |
 | ES6 Modules | — | 模組化程式碼管理 |
 
 ## 授權

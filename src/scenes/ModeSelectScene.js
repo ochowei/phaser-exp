@@ -43,21 +43,21 @@ export default class ModeSelectScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 24, y: 12 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => endlessBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => endlessBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            if (this.isTransitioning) return;
-            this.isTransitioning = true;
-            endlessBtn.disableInteractive();
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => endlessBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => endlessBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                if (this.isTransitioning) return;
+                this.isTransitioning = true;
+                endlessBtn.disableInteractive();
 
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.sound.stopByKey('bgm_menu');
-                this.scene.start('MainScene');
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.sound.stopByKey('bgm_menu');
+                    this.scene.start('MainScene');
+                });
+                this.cameras.main.fadeOut(300, 0, 0, 0);
             });
-            this.cameras.main.fadeOut(300, 0, 0, 0);
-        });
 
         // Stage Mode Button
         const stageBtn = this.add.text(width / 2, height / 2 + 60, t('stageMode'), {
@@ -66,14 +66,14 @@ export default class ModeSelectScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 24, y: 12 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => stageBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => stageBtn.setStyle({ fill: '#f4a800', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            if (this.isTransitioning) return;
-            this._showUnderConstruction();
-        });
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => stageBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => stageBtn.setStyle({ fill: '#f4a800', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                if (this.isTransitioning) return;
+                this._showUnderConstruction();
+            });
 
         // Back Button
         const backBtn = this.add.text(width / 2, height / 2 + 160, t('backArrow'), {
@@ -82,20 +82,20 @@ export default class ModeSelectScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 18, y: 8 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => backBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => backBtn.setStyle({ fill: '#a6afd9', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            if (this.isTransitioning) return;
-            this.isTransitioning = true;
-            backBtn.disableInteractive();
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => backBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => backBtn.setStyle({ fill: '#a6afd9', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                if (this.isTransitioning) return;
+                this.isTransitioning = true;
+                backBtn.disableInteractive();
 
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.start('StartScene');
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.start('StartScene');
+                });
+                this.cameras.main.fadeOut(300, 0, 0, 0);
             });
-            this.cameras.main.fadeOut(300, 0, 0, 0);
-        });
 
         // Fade in on enter
         this.cameras.main.fadeIn(300, 0, 0, 0);
@@ -131,17 +131,17 @@ export default class ModeSelectScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 16, y: 6 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => closeBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => closeBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            overlay.destroy();
-            box.destroy();
-            icon.destroy();
-            msg.destroy();
-            closeBtn.destroy();
-        });
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => closeBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => closeBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                overlay.destroy();
+                box.destroy();
+                icon.destroy();
+                msg.destroy();
+                closeBtn.destroy();
+            });
     }
 
     update() {
