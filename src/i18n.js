@@ -4,7 +4,6 @@ const translations = {
         pressStart: 'Press Start to Begin',
         startGame: 'Start Game',
         options: 'Options',
-        aboutPhaser: 'About Phaser',
 
         // OptionScene
         optionsTitle: 'OPTIONS',
@@ -40,7 +39,6 @@ const translations = {
         pressStart: '按下開始以遊玩',
         startGame: '開始遊戲',
         options: '設定',
-        aboutPhaser: '關於 Phaser',
 
         // OptionScene
         optionsTitle: '設定',
