@@ -55,6 +55,96 @@ const aircraftProfiles = {
         /** 尾焰跟隨偏移 */
         trailOffset: { x: -14, y: 0 },
     },
+
+    /** 普通敵機 — 紅色系，玩家戰機的水平鏡像 */
+    EN_RED: {
+        name: 'R-71 Crimson',
+        description: '紅色敵方戰機，面朝左飛行',
+        textureKey: 'enemy_normal',
+        textureSize: { width: 32, height: 32 },
+
+        draw(graphics) {
+            // 深色機身外殼（面朝左）
+            graphics.fillStyle(0x1a0000, 1);
+            graphics.fillTriangle(28, 16, 4, 4, 4, 28);
+
+            // 紅色核心機體
+            graphics.fillStyle(0xdc2626, 1);
+            graphics.fillTriangle(24, 16, 8, 8, 8, 24);
+
+            // 暗紅色機翼（上翼 + 下翼）
+            graphics.fillStyle(0xef4444, 1);
+            graphics.fillTriangle(25, 16, 12, 2, 10, 10);
+            graphics.fillTriangle(25, 16, 12, 30, 10, 22);
+
+            // 淺紅駕駛艙 / 感測器
+            graphics.fillStyle(0xfca5a5, 1);
+            graphics.fillEllipse(12, 16, 7, 10);
+
+            // 橙色排氣口
+            graphics.fillStyle(0xf59e0b, 1);
+            graphics.fillRect(26, 12, 4, 8);
+        },
+
+        trail: {
+            speed: { min: 30, max: 120 },
+            angle: { min: -30, max: 30 },
+            scale: { start: 0.3, end: 0 },
+            alpha: { start: 0.7, end: 0 },
+            tint: [0xff6666, 0xff3333, 0xcc0000],
+            lifespan: 200,
+            quantity: 1,
+            frequency: 45,
+            blendMode: 'ADD',
+        },
+
+        trailOffset: { x: 14, y: 0 },
+    },
+
+    /** 特殊敵機 — 紫色系，機翼更寬更具威脅感 */
+    EN_PURPLE: {
+        name: 'X-99 Phantom',
+        description: '紫色精英戰機，寬翼掠翼設計',
+        textureKey: 'enemy_special',
+        textureSize: { width: 32, height: 32 },
+
+        draw(graphics) {
+            // 深紫機身外殼（更寬的掠翼輪廓）
+            graphics.fillStyle(0x1a002e, 1);
+            graphics.fillTriangle(28, 16, 2, 2, 2, 30);
+
+            // 紫色核心機體
+            graphics.fillStyle(0x9333ea, 1);
+            graphics.fillTriangle(24, 16, 6, 7, 6, 25);
+
+            // 洋紅色機翼（展幅更大）
+            graphics.fillStyle(0xc026d3, 1);
+            graphics.fillTriangle(26, 16, 10, 0, 8, 10);
+            graphics.fillTriangle(26, 16, 10, 32, 8, 22);
+
+            // 淺紫駕駛艙 / 感測器
+            graphics.fillStyle(0xf0abfc, 1);
+            graphics.fillEllipse(12, 16, 6, 8);
+
+            // 粉紅排氣口（略大）
+            graphics.fillStyle(0xf472b6, 1);
+            graphics.fillRect(26, 11, 5, 10);
+        },
+
+        trail: {
+            speed: { min: 30, max: 120 },
+            angle: { min: -30, max: 30 },
+            scale: { start: 0.35, end: 0 },
+            alpha: { start: 0.8, end: 0 },
+            tint: [0xf0abfc, 0xc026d3, 0x7e22ce],
+            lifespan: 240,
+            quantity: 1,
+            frequency: 35,
+            blendMode: 'ADD',
+        },
+
+        trailOffset: { x: 14, y: 0 },
+    },
 };
 
 /** 預設使用的 profile key */
