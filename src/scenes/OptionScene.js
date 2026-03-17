@@ -44,23 +44,23 @@ export default class OptionScene extends Phaser.Scene {
             backgroundColor: currentLang === 'en' ? '#5368ff' : '#1a1a2e',
             padding: { x: 16, y: 8 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => {
-            if (getLang() !== 'en') this.enBtn.setStyle({ fill: '#ccc', backgroundColor: '#333' });
-        })
-        .on('pointerout', () => {
-            const active = getLang() === 'en';
-            this.enBtn.setStyle({
-                fill: active ? '#fff' : '#667',
-                backgroundColor: active ? '#5368ff' : '#1a1a2e'
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => {
+                if (getLang() !== 'en') this.enBtn.setStyle({ fill: '#ccc', backgroundColor: '#333' });
+            })
+            .on('pointerout', () => {
+                const active = getLang() === 'en';
+                this.enBtn.setStyle({
+                    fill: active ? '#fff' : '#667',
+                    backgroundColor: active ? '#5368ff' : '#1a1a2e'
+                });
+            })
+            .on('pointerdown', () => {
+                if (getLang() === 'en') return;
+                setLang('en');
+                this.scene.restart();
             });
-        })
-        .on('pointerdown', () => {
-            if (getLang() === 'en') return;
-            setLang('en');
-            this.scene.restart();
-        });
 
         // 中文按鈕
         this.zhBtn = this.add.text(width / 2 + btnSpacing, langY + 45, t('langZh'), {
@@ -69,23 +69,23 @@ export default class OptionScene extends Phaser.Scene {
             backgroundColor: currentLang === 'zh' ? '#5368ff' : '#1a1a2e',
             padding: { x: 16, y: 8 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => {
-            if (getLang() !== 'zh') this.zhBtn.setStyle({ fill: '#ccc', backgroundColor: '#333' });
-        })
-        .on('pointerout', () => {
-            const active = getLang() === 'zh';
-            this.zhBtn.setStyle({
-                fill: active ? '#fff' : '#667',
-                backgroundColor: active ? '#5368ff' : '#1a1a2e'
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => {
+                if (getLang() !== 'zh') this.zhBtn.setStyle({ fill: '#ccc', backgroundColor: '#333' });
+            })
+            .on('pointerout', () => {
+                const active = getLang() === 'zh';
+                this.zhBtn.setStyle({
+                    fill: active ? '#fff' : '#667',
+                    backgroundColor: active ? '#5368ff' : '#1a1a2e'
+                });
+            })
+            .on('pointerdown', () => {
+                if (getLang() === 'zh') return;
+                setLang('zh');
+                this.scene.restart();
             });
-        })
-        .on('pointerdown', () => {
-            if (getLang() === 'zh') return;
-            setLang('zh');
-            this.scene.restart();
-        });
 
         // 從 localStorage 讀取音量設定
         let savedVolume = parseFloat(localStorage.getItem('bgmVolume'));
@@ -191,25 +191,25 @@ export default class OptionScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 20, y: 10 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => this.muteBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => this.muteBtn.setStyle({
-            fill: this.isMuted ? '#f55' : '#0f0',
-            backgroundColor: '#000'
-        }))
-        .on('pointerdown', () => {
-            this.isMuted = !this.isMuted;
-            this.sound.volume = this.isMuted ? 0 : this.currentVolume;
-            localStorage.setItem('bgmMuted', this.isMuted.toString());
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => this.muteBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => this.muteBtn.setStyle({
+                fill: this.isMuted ? '#f55' : '#0f0',
+                backgroundColor: '#000'
+            }))
+            .on('pointerdown', () => {
+                this.isMuted = !this.isMuted;
+                this.sound.volume = this.isMuted ? 0 : this.currentVolume;
+                localStorage.setItem('bgmMuted', this.isMuted.toString());
 
-            this.muteBtn.setText(this.getMuteLabel());
-            this.muteBtn.setStyle({
-                fill: '#fff',
-                backgroundColor: '#333'
+                this.muteBtn.setText(this.getMuteLabel());
+                this.muteBtn.setStyle({
+                    fill: '#fff',
+                    backgroundColor: '#333'
+                });
+                this.volumeText.setText(this.getVolumeLabel());
             });
-            this.volumeText.setText(this.getVolumeLabel());
-        });
 
         // --- Back 按鈕 ---
         const backBtn = this.add.text(width / 2, height - 60, t('back'), {
@@ -218,16 +218,16 @@ export default class OptionScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 20, y: 10 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => backBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => backBtn.setStyle({ fill: '#a6afd9', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.start('StartScene');
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => backBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => backBtn.setStyle({ fill: '#a6afd9', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.start('StartScene');
+                });
+                this.cameras.main.fadeOut(300, 0, 0, 0);
             });
-            this.cameras.main.fadeOut(300, 0, 0, 0);
-        });
     }
 
     update() {

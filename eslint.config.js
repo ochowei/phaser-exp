@@ -1,0 +1,21 @@
+import js from '@eslint/js';
+import globals from 'globals';
+
+export default [
+    js.configs.recommended,
+    {
+        languageOptions: {
+            ecmaVersion: 'latest',
+            sourceType: 'module',
+            globals: {
+                ...globals.browser,
+            },
+        },
+        rules: {
+            'quotes': ['error', 'single', { avoidEscape: true }],
+            'semi': ['error', 'always'],
+            'indent': ['error', 4],
+            'no-unused-vars': ['warn', { args: 'none' }],
+        },
+    },
+];

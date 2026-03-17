@@ -136,12 +136,12 @@ export default class MainScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 10, y: 6 }
         })
-        .setOrigin(1, 0)
-        .setDepth(30)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => this.togglePause())
-        .on('pointerover', () => this.pauseButton.setStyle({ backgroundColor: '#333' }))
-        .on('pointerout', () => this.pauseButton.setStyle({ backgroundColor: '#000' }));
+            .setOrigin(1, 0)
+            .setDepth(30)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => this.togglePause())
+            .on('pointerover', () => this.pauseButton.setStyle({ backgroundColor: '#333' }))
+            .on('pointerout', () => this.pauseButton.setStyle({ backgroundColor: '#000' }));
 
         this.pauseOverlay = this.add.rectangle(400, 300, 800, 600, 0x000000, 0.45)
             .setDepth(25)
@@ -411,21 +411,21 @@ export default class MainScene extends Phaser.Scene {
             const restartBtn = this.add.text(300, 350, t('restart'), {
                 fontSize: '28px', fill: '#0f0', backgroundColor: '#000', padding: { x: 15, y: 10 }
             })
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => restartBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-            .on('pointerout', () => restartBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-            .on('pointerdown', () => this.scene.restart());
+                .setOrigin(0.5)
+                .setInteractive({ useHandCursor: true })
+                .on('pointerover', () => restartBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+                .on('pointerout', () => restartBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
+                .on('pointerdown', () => this.scene.restart());
 
             // Main Menu 按鈕
             const menuBtn = this.add.text(500, 350, t('mainMenu'), {
                 fontSize: '28px', fill: '#0af', backgroundColor: '#000', padding: { x: 15, y: 10 }
             })
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
-            .on('pointerover', () => menuBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-            .on('pointerout', () => menuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
-            .on('pointerdown', () => this.scene.start('StartScene'));
+                .setOrigin(0.5)
+                .setInteractive({ useHandCursor: true })
+                .on('pointerover', () => menuBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+                .on('pointerout', () => menuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
+                .on('pointerdown', () => this.scene.start('StartScene'));
         } else {
             // 短暫無敵並閃爍
             this.player.invincible = true;

@@ -88,22 +88,22 @@ export default class StartScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 20, y: 10 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => startBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => startBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            if (this.isStarting) return;
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => startBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => startBtn.setStyle({ fill: '#0f0', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                if (this.isStarting) return;
 
-            this.isStarting = true;
-            startBtn.disableInteractive();
+                this.isStarting = true;
+                startBtn.disableInteractive();
 
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.start('ModeSelectScene');
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.start('ModeSelectScene');
+                });
+
+                this.cameras.main.fadeOut(300, 0, 0, 0);
             });
-
-            this.cameras.main.fadeOut(300, 0, 0, 0);
-        });
 
         // 從 localStorage 讀取音量設定
         let savedVolume = parseFloat(localStorage.getItem('bgmVolume'));
@@ -124,18 +124,18 @@ export default class StartScene extends Phaser.Scene {
             backgroundColor: '#000',
             padding: { x: 20, y: 10 }
         })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => optionsBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => optionsBtn.setStyle({ fill: '#f80', backgroundColor: '#000' }))
-        .on('pointerdown', () => {
-            if (this.isStarting) return;
-            this.isStarting = true;
-            this.cameras.main.once('camerafadeoutcomplete', () => {
-                this.scene.start('OptionScene');
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerover', () => optionsBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
+            .on('pointerout', () => optionsBtn.setStyle({ fill: '#f80', backgroundColor: '#000' }))
+            .on('pointerdown', () => {
+                if (this.isStarting) return;
+                this.isStarting = true;
+                this.cameras.main.once('camerafadeoutcomplete', () => {
+                    this.scene.start('OptionScene');
+                });
+                this.cameras.main.fadeOut(300, 0, 0, 0);
             });
-            this.cameras.main.fadeOut(300, 0, 0, 0);
-        });
 
     }
 
