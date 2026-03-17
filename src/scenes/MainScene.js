@@ -56,16 +56,16 @@ export default class MainScene extends Phaser.Scene {
         graphics.generateTexture('bullet', 16, 16);
         graphics.clear();
 
-        // 普通敵人紋理
-        graphics.fillStyle(0xff3333, 1);
-        graphics.fillRect(0, 0, 32, 32);
-        graphics.generateTexture('enemy_normal', 32, 32);
+        // 普通敵人紋理（從 profile 繪製）
+        const enemyNormalProfile = getAircraftProfile('EN_RED');
+        enemyNormalProfile.draw(graphics);
+        graphics.generateTexture(enemyNormalProfile.textureKey, enemyNormalProfile.textureSize.width, enemyNormalProfile.textureSize.height);
         graphics.clear();
 
-        // 特殊敵人紋理
-        graphics.fillStyle(0xcc00ff, 1);
-        graphics.fillRect(0, 0, 32, 32);
-        graphics.generateTexture('enemy_special', 32, 32);
+        // 特殊敵人紋理（從 profile 繪製）
+        const enemySpecialProfile = getAircraftProfile('EN_PURPLE');
+        enemySpecialProfile.draw(graphics);
+        graphics.generateTexture(enemySpecialProfile.textureKey, enemySpecialProfile.textureSize.width, enemySpecialProfile.textureSize.height);
         graphics.clear();
 
         // 道具紋理
