@@ -27,22 +27,27 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
         this.healthBar = null;
         this.healthBarBg = null;
 
-        if (isBoss) {
+        if (this.maxHp > 1) {
             this._createHealthBar(scene);
         }
     }
 
     _createHealthBar(scene) {
-        this.healthBarBg = scene.add.rectangle(this.x, this.y - 35, 50, 6, 0x333333);
+        const barWidth = this.isBoss ? 50 : 30;
+        const barHeight = this.isBoss ? 6 : 4;
+        const offsetY = this.isBoss ? -35 : -22;
+        this._healthBarWidth = barWidth;
+        this._healthBarOffsetY = offsetY;
+        this.healthBarBg = scene.add.rectangle(this.x, this.y + offsetY, barWidth, barHeight, 0x333333);
         this.healthBarBg.setDepth(20);
-        this.healthBar = scene.add.rectangle(this.x, this.y - 35, 50, 6, 0x00ff00);
+        this.healthBar = scene.add.rectangle(this.x, this.y + offsetY, barWidth, barHeight, 0x00ff00);
         this.healthBar.setDepth(21);
     }
 
     _updateHealthBar() {
         if (this.healthBar) {
             const ratio = this.hp / this.maxHp;
-            this.healthBar.width = 50 * ratio;
+            this.healthBar.width = this._healthBarWidth * ratio;
             const color = ratio > 0.5 ? 0x00ff00 : (ratio > 0.25 ? 0xffff00 : 0xff0000);
             this.healthBar.setFillStyle(color);
         }
@@ -119,8 +124,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
 
         // 更新血條位置
         if (this.healthBar && this.healthBarBg) {
-            this.healthBar.setPosition(this.x, this.y - 35);
-            this.healthBarBg.setPosition(this.x, this.y - 35);
+            this.healthBar.setPosition(this.x, this.y + this._healthBarOffsetY);
+            this.healthBarBg.setPosition(this.x, this.y + this._healthBarOffsetY);
         }
     }
 

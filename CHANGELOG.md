@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] - 2026-03-17
+
+### Changed
+- Different enemy types now have distinct HP values: EN_RED (1 HP), EN_PURPLE (3 HP), EN_BOSS_GREEN (10 HP)
+- Health bars now appear on all enemies with HP > 1 (previously only on bosses)
+- Boss HP increased from 5 to 10
+
 ## [1.4.0] - 2026-03-17
 
 ### Added

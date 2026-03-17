@@ -350,11 +350,12 @@ export default class MainScene extends Phaser.Scene {
         let y = Phaser.Math.Between(50, 550);
         
         // 20% 機率生成帶著升級道具的紫色特殊敵人
-        let isSpecialEnemy = Phaser.Math.Between(1, 100) <= 20; 
-        let enemyKey = isSpecialEnemy ? 'enemy_special' : 'enemy_normal';
-        
+        let isSpecialEnemy = Phaser.Math.Between(1, 100) <= 20;
+        let profileKey = isSpecialEnemy ? 'EN_PURPLE' : 'EN_RED';
+        let profile = getAircraftProfile(profileKey);
+
         // 生成敵人物件並加進群組 (Phaser.Physics.Arcade.Group.add)
-        let enemy = new Enemy(this, 850, y, enemyKey, { isSpecial: isSpecialEnemy });
+        let enemy = new Enemy(this, 850, y, profile.textureKey, { isSpecial: isSpecialEnemy, hp: profile.hp });
         this.enemies.add(enemy);
         
         // 加入群組後再給予速度，避免被 group default override
@@ -366,16 +367,16 @@ export default class MainScene extends Phaser.Scene {
         if (this.gameOver) return;
 
         const y = Phaser.Math.Between(80, 520);
-        const enemy = new Enemy(this, 850, y, 'enemy_boss', {
+        const bossProfile = getAircraftProfile('EN_BOSS_GREEN');
+        const enemy = new Enemy(this, 850, y, bossProfile.textureKey, {
             isBoss: true,
-            hp: 5,
+            hp: bossProfile.hp,
             scoreValue: 100,
         });
         this.enemies.add(enemy);
         enemy.setVelocityX(-60);
 
         // Boss尾焰粒子
-        const bossProfile = getAircraftProfile('EN_BOSS_GREEN');
         const trail = this.add.particles(0, 0, 'bullet', bossProfile.trail);
         trail.startFollow(enemy, bossProfile.trailOffset.x, bossProfile.trailOffset.y);
         enemy.once('destroy', () => trail.destroy());
