@@ -12,7 +12,7 @@ export default class MainScene extends Phaser.Scene {
     preload() {
         // 若音效尚未被 StartScene 載入（安全防護）
         if (!this.cache.audio.exists('bgm_game')) {
-            this.load.audio('bgm_game', 'assets/audio/bgm_game.mp3');
+            this.load.audio('bgm_game', 'assets/audio/bgm_game.wav');
         }
     }
 

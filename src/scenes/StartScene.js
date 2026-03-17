@@ -7,8 +7,8 @@ export default class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.audio('bgm_menu', 'assets/audio/bgm_menu.mp3');
-        this.load.audio('bgm_game', 'assets/audio/bgm_game.mp3');
+        this.load.audio('bgm_menu', 'assets/audio/bgm_menu.wav');
+        this.load.audio('bgm_game', 'assets/audio/bgm_game.wav');
     }
 
     create() {
