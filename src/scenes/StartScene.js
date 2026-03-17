@@ -81,12 +81,6 @@ export default class StartScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.add.text(width / 2, titleText.y + 32, t('pressStart'), {
-            fontSize: '24px',
-            fill: '#a6afd9',
-            fontStyle: 'normal'
-        }).setOrigin(0.5);
-
         // Start Game Button
         const startBtn = this.add.text(width / 2, height / 2, t('startGame'), {
             fontSize: '32px',
@@ -143,18 +137,6 @@ export default class StartScene extends Phaser.Scene {
             this.cameras.main.fadeOut(300, 0, 0, 0);
         });
 
-        // About Phaser Button
-        const aboutBtn = this.add.text(width / 2, height / 2 + 120, t('aboutPhaser'), {
-            fontSize: '32px',
-            fill: '#0af',
-            backgroundColor: '#000',
-            padding: { x: 20, y: 10 }
-        })
-        .setOrigin(0.5)
-        .setInteractive({ useHandCursor: true })
-        .on('pointerover', () => aboutBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
-        .on('pointerout', () => aboutBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
-        .on('pointerdown', () => window.open('https://phaser.io', '_blank'));
     }
 
     update() {
