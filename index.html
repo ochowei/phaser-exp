@@ -23,10 +23,34 @@
             border: 2px solid #444;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #111;
+            z-index: 9999;
+            font-size: 24px;
+            letter-spacing: 2px;
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 
 <body>
+    <div id="loading">
+        <script>
+            var lang = localStorage.getItem('gameLang') || 'en';
+            document.write(lang === 'zh' ? '載入中…' : 'Loading…');
+        </script>
+    </div>
     <script type="module" src="./src/main.js"></script>
 </body>
 
