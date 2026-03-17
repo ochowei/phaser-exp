@@ -224,7 +224,7 @@ export default class OptionScene extends Phaser.Scene {
             .on('pointerout', () => backBtn.setStyle({ fill: '#a6afd9', backgroundColor: '#000' }))
             .on('pointerdown', () => {
                 this.cameras.main.once('camerafadeoutcomplete', () => {
-                    this.scene.start('StartScene');
+                    this.game.events.emit('returnToMenu');
                 });
                 this.cameras.main.fadeOut(300, 0, 0, 0);
             });

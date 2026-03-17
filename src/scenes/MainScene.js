@@ -300,7 +300,7 @@ export default class MainScene extends Phaser.Scene {
                 .setInteractive({ useHandCursor: true })
                 .on('pointerover', () => menuBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
                 .on('pointerout', () => menuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
-                .on('pointerdown', () => this.scene.start('StartScene'));
+                .on('pointerdown', () => this.game.events.emit('returnToMenu'));
         } else {
             // 短暫無敵並閃爍
             this.player.invincible = true;

@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Phaser 3 browser-based space shooter game built with ES6 modules and Vite.
+Phaser 3 browser-based space shooter game built with ES6 modules, React, and Vite. Uses a hybrid architecture: React renders the start screen UI, and Phaser handles gameplay scenes.
 
 ## Development Commands
 
@@ -68,8 +68,11 @@ Any code change — whether it's a new feature, bug fix, or refactor — **must 
 
 ## Code Conventions
 
-- Language: vanilla JavaScript (ES6 modules), no TypeScript
-- All scenes extend `Phaser.Scene`, all game objects extend `Phaser.Physics.Arcade.Image`
+- Language: vanilla JavaScript (ES6 modules) + JSX for React components, no TypeScript
+- UI screens use React components (`.jsx` files in `src/components/`)
+- Gameplay scenes extend `Phaser.Scene`, game objects extend `Phaser.Physics.Arcade.Image`
+- Phaser is wrapped in `GameCanvas.jsx` and initialized on demand (create/destroy pattern)
+- Scenes return to React via `this.game.events.emit('returnToMenu')`
 - Textures are procedurally generated via `Phaser.GameObjects.Graphics` (no image assets)
 - User preferences (high score, volume, mute, language) are persisted in `localStorage`
 - Comments and variable names may be in Chinese or English

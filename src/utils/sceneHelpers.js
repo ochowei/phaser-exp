@@ -293,7 +293,11 @@ export function setupPauseSystem(scene, menuDestination) {
         .on('pointerdown', () => {
             scene.isPaused = false;
             if (scene.bgm) scene.bgm.stop();
-            scene.scene.start(menuDestination);
+            if (menuDestination === 'StartScene') {
+                scene.game.events.emit('returnToMenu');
+            } else {
+                scene.scene.start(menuDestination);
+            }
         });
 
     scene.input.keyboard.on('keydown-P', () => scene.togglePause());
