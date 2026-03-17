@@ -271,8 +271,14 @@ export default class MainScene extends Phaser.Scene {
             }
         });
 
+        // 從 localStorage 讀取音量設定
+        let savedVolume = parseFloat(localStorage.getItem('bgmVolume'));
+        if (isNaN(savedVolume)) savedVolume = 0.5;
+        const isMuted = localStorage.getItem('bgmMuted') === 'true';
+        this.sound.volume = isMuted ? 0 : savedVolume;
+
         // 播放遊戲背景音樂
-        this.bgm = this.sound.add('bgm_game', { loop: true, volume: 0.5 });
+        this.bgm = this.sound.add('bgm_game', { loop: true, volume: 1 });
         this.bgm.play();
     }
 
