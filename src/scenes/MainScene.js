@@ -4,6 +4,7 @@ import Enemy from '../objects/Enemy.js';
 import Bullet from '../objects/Bullet.js';
 import Powerup from '../objects/Powerup.js';
 import { t } from '../i18n.js';
+import { getAircraftProfile, DEFAULT_AIRCRAFT } from '../profiles/aircraftProfiles.js';
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -43,24 +44,10 @@ export default class MainScene extends Phaser.Scene {
         this.bg2 = this.add.tileSprite(400, 300, 800, 600, 'bg_stars2');
         this.bg1 = this.add.tileSprite(400, 300, 800, 600, 'bg_stars1');
 
-        // 玩家紋理（科幻戰機）
-        graphics.fillStyle(0x0f172a, 1);
-        graphics.fillTriangle(4, 16, 28, 4, 28, 28);
-
-        graphics.fillStyle(0x2563eb, 1);
-        graphics.fillTriangle(8, 16, 24, 8, 24, 24);
-
-        graphics.fillStyle(0x38bdf8, 1);
-        graphics.fillTriangle(7, 16, 20, 2, 22, 10);
-        graphics.fillTriangle(7, 16, 20, 30, 22, 22);
-
-        graphics.fillStyle(0xe0f2fe, 1);
-        graphics.fillEllipse(20, 16, 7, 10);
-
-        graphics.fillStyle(0xf59e0b, 1);
-        graphics.fillRect(2, 12, 4, 8);
-
-        graphics.generateTexture('playerTexture', 32, 32);
+        // 玩家紋理（從 aircraft profile 繪製）
+        const aircraft = getAircraftProfile(DEFAULT_AIRCRAFT);
+        aircraft.draw(graphics);
+        graphics.generateTexture(aircraft.textureKey, aircraft.textureSize.width, aircraft.textureSize.height);
         graphics.clear();
 
         // 子彈紋理
@@ -99,19 +86,9 @@ export default class MainScene extends Phaser.Scene {
         // 加入玩家實體
         this.player = new Player(this, 100, 300, 'playerTexture');
 
-        // 玩家噴射尾焰
-        this.playerTrail = this.add.particles(0, 0, 'bullet', {
-            speed: { min: 30, max: 120 },
-            angle: { min: 150, max: 210 },
-            scale: { start: 0.35, end: 0 },
-            alpha: { start: 0.8, end: 0 },
-            tint: [0xfff59d, 0xffc107, 0xff6f00],
-            lifespan: 240,
-            quantity: 1,
-            frequency: 35,
-            blendMode: 'ADD'
-        });
-        this.playerTrail.startFollow(this.player, -14, 0);
+        // 玩家噴射尾焰（從 aircraft profile 設定）
+        this.playerTrail = this.add.particles(0, 0, 'bullet', aircraft.trail);
+        this.playerTrail.startFollow(this.player, aircraft.trailOffset.x, aircraft.trailOffset.y);
 
         // 鍵盤輸入
         this.keys = this.input.keyboard.addKeys({
