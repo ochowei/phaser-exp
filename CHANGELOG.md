@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - ESLint integration with flat config format for code style enforcement
 - `npm run lint` and `npm run lint:fix` scripts
 - Enforced rules: single quotes, semicolons, 4-space indentation, unused variable warnings
+- Lint step in GitHub Actions CI workflow
 
 ## [1.2.0] - 2026-03-17
 
