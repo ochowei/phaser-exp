@@ -52,6 +52,7 @@ export default class ModeSelectScene extends Phaser.Scene {
             endlessBtn.disableInteractive();
 
             this.cameras.main.once('camerafadeoutcomplete', () => {
+                this.sound.stopByKey('bgm_menu');
                 this.scene.start('MainScene');
             });
             this.cameras.main.fadeOut(300, 0, 0, 0);

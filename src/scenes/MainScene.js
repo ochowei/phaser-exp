@@ -10,6 +10,10 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
+        // 若音效尚未被 StartScene 載入（安全防護）
+        if (!this.cache.audio.exists('bgm_game')) {
+            this.load.audio('bgm_game', 'assets/audio/bgm_game.mp3');
+        }
     }
 
     create() {
@@ -194,6 +198,7 @@ export default class MainScene extends Phaser.Scene {
             .on('pointerout', () => this.pauseMenuBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
             .on('pointerdown', () => {
                 this.isPaused = false;
+                if (this.bgm) this.bgm.stop();
                 this.scene.start('StartScene');
             });
 
@@ -265,6 +270,10 @@ export default class MainScene extends Phaser.Scene {
                 this.joystickThumbGfx.setVisible(false);
             }
         });
+
+        // 播放遊戲背景音樂
+        this.bgm = this.sound.add('bgm_game', { loop: true, volume: 0.5 });
+        this.bgm.play();
     }
 
     update(time, delta) {
@@ -303,9 +312,11 @@ export default class MainScene extends Phaser.Scene {
         if (this.isPaused) {
             this.playerTrail.pause();
             this.pauseButton.setText('▶');
+            if (this.bgm) this.bgm.pause();
         } else {
             this.playerTrail.resume();
             this.pauseButton.setText('⏸');
+            if (this.bgm) this.bgm.resume();
         }
 
         this.pauseOverlay.setVisible(this.isPaused);
@@ -407,6 +418,7 @@ export default class MainScene extends Phaser.Scene {
             this.cameras.main.shake(300, 0.015);
             this.tripleShotText.setVisible(false);
             this.playerTrail.stop();
+            if (this.bgm) this.bgm.stop();
 
             let gameOverText = this.add.text(400, 250, 'GAME OVER', { fontSize: '64px', fill: '#ff3333', fontStyle: 'bold' });
             gameOverText.setOrigin(0.5);
