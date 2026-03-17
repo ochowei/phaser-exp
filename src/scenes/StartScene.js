@@ -6,6 +6,11 @@ export default class StartScene extends Phaser.Scene {
         this.isStarting = false;
     }
 
+    preload() {
+        this.load.audio('bgm_menu', 'assets/audio/bgm_menu.wav');
+        this.load.audio('bgm_game', 'assets/audio/bgm_game.wav');
+    }
+
     create() {
         this.isStarting = false;
         const width = this.cameras.main.width;
@@ -104,6 +109,12 @@ export default class StartScene extends Phaser.Scene {
 
             this.cameras.main.fadeOut(300, 0, 0, 0);
         });
+
+        // 播放選單背景音樂（若尚未播放）
+        if (!this.sound.get('bgm_menu') || !this.sound.get('bgm_menu').isPlaying) {
+            this.sound.stopAll();
+            this.sound.add('bgm_menu', { loop: true, volume: 0.5 }).play();
+        }
 
         // About Phaser Button
         const aboutBtn = this.add.text(width / 2, height / 2 + 80, 'About Phaser', {
