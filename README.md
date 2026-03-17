@@ -34,6 +34,9 @@
 
 ```
 phaser-exp/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # GitHub Actions CI（測試 + 建置）
 ├── index.html              # 頁面入口
 ├── package.json            # 依賴套件與腳本
 ├── public/
