@@ -1,0 +1,195 @@
+.stage-select-screen {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background-color: #090b22;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #444;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    transition: opacity 300ms ease-out;
+    gap: 16px;
+}
+
+.stage-select-screen.fading {
+    opacity: 0;
+}
+
+/* 三層星空背景 */
+.stage-select-screen .starfield {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.stage-select-screen .starfield-layer {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background-repeat: repeat;
+}
+
+.stage-select-screen .starfield-far {
+    background-image: radial-gradient(1.5px 1.5px at 10px 20px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 80px 150px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 200px 50px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 350px 120px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 450px 300px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 120px 400px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 300px 350px, #24306d 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 500px 80px, #24306d 50%, transparent 50%);
+    background-size: 512px 512px;
+    animation: ss-scroll-far 60s linear infinite;
+}
+
+.stage-select-screen .starfield-mid {
+    background-image: radial-gradient(1.5px 1.5px at 30px 60px, #6a4ab4 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 150px 200px, #6a4ab4 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 280px 100px, #6a4ab4 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 400px 280px, #6a4ab4 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 100px 350px, #6a4ab4 50%, transparent 50%),
+        radial-gradient(1.5px 1.5px at 480px 150px, #6a4ab4 50%, transparent 50%);
+    background-size: 512px 512px;
+    animation: ss-scroll-mid 30s linear infinite;
+}
+
+.stage-select-screen .starfield-near {
+    background-image: radial-gradient(2px 2px at 50px 100px, #e8e7ff 50%, transparent 50%),
+        radial-gradient(2px 2px at 250px 180px, #e8e7ff 50%, transparent 50%),
+        radial-gradient(2px 2px at 400px 250px, #e8e7ff 50%, transparent 50%),
+        radial-gradient(2px 2px at 150px 400px, #e8e7ff 50%, transparent 50%);
+    background-size: 512px 512px;
+    animation: ss-scroll-near 18s linear infinite;
+}
+
+@keyframes ss-scroll-far {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-3%, -5%); }
+}
+
+@keyframes ss-scroll-mid {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-7%, -12%); }
+}
+
+@keyframes ss-scroll-near {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-12%, -20%); }
+}
+
+/* 標題 */
+.stage-select-title {
+    position: relative;
+    z-index: 1;
+    font-size: 48px;
+    font-weight: bold;
+    color: #f4f8ff;
+    text-shadow:
+        0 0 7px #5368ff,
+        0 0 14px #5368ff,
+        0 8px 12px #101537;
+    -webkit-text-stroke: 2px #5368ff;
+    margin: 0;
+    user-select: none;
+}
+
+/* 關卡列表 */
+.stage-list {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 380px;
+}
+
+/* 關卡按鈕 */
+.stage-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid #f4a800;
+    background-color: #1a1f4e;
+    cursor: pointer;
+    font-family: sans-serif;
+    transition: background-color 0.15s;
+    text-align: left;
+}
+
+.stage-btn:hover:not(:disabled) {
+    background-color: #2a2f6e;
+}
+
+.stage-btn.locked {
+    border-color: #333366;
+    background-color: rgba(26, 31, 78, 0.5);
+    cursor: default;
+}
+
+.stage-btn.completed {
+    border-color: #22c55e;
+}
+
+.stage-num {
+    font-size: 22px;
+    font-weight: bold;
+    color: #f4a800;
+    min-width: 70px;
+}
+
+.stage-btn.locked .stage-num {
+    color: #555577;
+}
+
+.stage-btn.completed .stage-num {
+    color: #22c55e;
+}
+
+.stage-name {
+    font-size: 16px;
+    color: #c0c8e8;
+    flex: 1;
+}
+
+.stage-btn.locked .stage-name {
+    color: #444466;
+}
+
+.stage-status {
+    font-size: 14px;
+    margin-left: auto;
+}
+
+.stage-completed {
+    color: #22c55e;
+}
+
+.stage-locked {
+    color: #555577;
+}
+
+/* 返回按鈕 */
+.stage-back-btn {
+    position: relative;
+    z-index: 1;
+    font-size: 24px;
+    padding: 8px 18px;
+    border: none;
+    cursor: pointer;
+    font-family: sans-serif;
+    color: #a6afd9;
+    background-color: #000;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.stage-back-btn:hover {
+    color: #fff;
+    background-color: #333;
+}

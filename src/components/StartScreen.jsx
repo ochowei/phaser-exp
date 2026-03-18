@@ -55,7 +55,7 @@ export default function StartScreen({ onPlay, bgmRef }) {
 
             <button
                 className="start-btn start-btn-options"
-                onClick={() => handleClick('OptionScene')}
+                onClick={() => handleClick('options')}
             >
                 {t('options')}
             </button>
