@@ -22,7 +22,7 @@ export default class StageScene extends Phaser.Scene {
     }
 
     init(data) {
-        this.stageId = data.stageId || 1;
+        this.stageId = data.stageId || this.registry.get('stageId') || 1;
     }
 
     preload() {
@@ -81,7 +81,7 @@ export default class StageScene extends Phaser.Scene {
             fontSize: '20px', fill: '#fff', fontStyle: 'bold'
         }).setOrigin(0.5, 0);
 
-        setupPauseSystem(this, 'StageSelectScene');
+        setupPauseSystem(this, 'StartScene');
         setupJoystick(this);
         setupAudio(this);
 
@@ -381,7 +381,7 @@ export default class StageScene extends Phaser.Scene {
                 .setInteractive({ useHandCursor: true })
                 .on('pointerover', () => selectBtn.setStyle({ fill: '#fff', backgroundColor: '#333' }))
                 .on('pointerout', () => selectBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
-                .on('pointerdown', () => this.scene.start('StageSelectScene'));
+                .on('pointerdown', () => this.game.events.emit('returnToMenu'));
         } else {
             this.player.invincible = true;
             this.player.setTint(0xff6666);
@@ -459,7 +459,7 @@ export default class StageScene extends Phaser.Scene {
                 .on('pointerout', () => selectBtn.setStyle({ fill: '#0af', backgroundColor: '#000' }))
                 .on('pointerdown', () => {
                     if (this.bgm) this.bgm.stop();
-                    this.scene.start('StageSelectScene');
+                    this.game.events.emit('returnToMenu');
                 });
         });
     }

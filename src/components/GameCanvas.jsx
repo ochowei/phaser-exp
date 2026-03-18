@@ -1,18 +1,14 @@
 import React, { useEffect, useRef } from 'react';
 import * as Phaser from 'phaser';
-import OptionScene from '../scenes/OptionScene.js';
 import MainScene from '../scenes/MainScene.js';
-import StageSelectScene from '../scenes/StageSelectScene.js';
 import StageScene from '../scenes/StageScene.js';
 
 const sceneMap = {
-    OptionScene,
     MainScene,
-    StageSelectScene,
     StageScene,
 };
 
-export default function GameCanvas({ entry, onReturnToMenu, bgmRef }) {
+export default function GameCanvas({ entry, gameData, onReturnToMenu, bgmRef }) {
     const containerRef = useRef(null);
     const gameRef = useRef(null);
 
@@ -39,6 +35,11 @@ export default function GameCanvas({ entry, onReturnToMenu, bgmRef }) {
         };
 
         gameRef.current = new Phaser.Game(config);
+
+        // 將額外的場景資料（如 stageId）存入 registry，供場景的 init() 讀取
+        if (gameData) {
+            gameRef.current.registry.merge(gameData);
+        }
 
         // Phaser ready 後停止 React 側 BGM，實現無縫銜接
         gameRef.current.events.once('ready', () => {

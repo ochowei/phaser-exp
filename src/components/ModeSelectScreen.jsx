@@ -36,7 +36,7 @@ export default function ModeSelectScreen({ onSelectMode, onBack }) {
 
             <button
                 className="mode-btn mode-btn-stage"
-                onClick={() => handleClick('StageSelectScene')}
+                onClick={() => handleClick('stageSelect')}
             >
                 {t('stageMode')}
             </button>

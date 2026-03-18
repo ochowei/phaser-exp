@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.9.0] - 2026-03-18
+
+### Changed
+- Options screen (`OptionScene`) migrated from Phaser to React component (`OptionsScreen`); clicking "Options" no longer initialises the full Phaser engine
+- Stage select screen (`StageSelectScene`) migrated from Phaser to React component (`StageSelectScreen`); stage selection now handled entirely in React before Phaser starts
+- Removed dead Phaser scene `StartScene` (already superseded by React `StartScreen` in v1.7.0)
+- `StageScene` game-over and stage-clear "Stage Select" buttons now emit `returnToMenu` (returning to React `StageSelectScreen`) instead of starting `StageSelectScene`
+- `StageScene` pause menu "Main Menu" button now emits `returnToMenu` (consistent with endless mode)
+- `GameCanvas` accepts a `gameData` prop to pass initial scene data (e.g. `stageId`) into Phaser via the game registry
+
 ## [1.8.0] - 2026-03-18
 
 ### Changed
