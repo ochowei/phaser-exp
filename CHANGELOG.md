@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.7.0] - 2026-03-17
+
+### Added
+- React integration for StartScene — start screen is now a React component with CSS-animated starfield background
+- Phaser + React hybrid architecture: React manages the start screen, Phaser initializes on demand for gameplay
+- `GameCanvas` wrapper component for on-demand Phaser lifecycle management (create/destroy)
+- Vite React plugin (`@vitejs/plugin-react`) for JSX support
+
+### Changed
+- Entry point migrated from `src/main.js` to `src/main.jsx` (React root)
+- "Return to menu" navigation in ModeSelectScene, MainScene, OptionScene, and pause system now uses `game.events.emit('returnToMenu')` to communicate with the React layer
+- BGM on start screen now uses `HTMLAudioElement` instead of Phaser's sound system
+
+### Fixed
+- Smooth fade-out transition when navigating from React start screen to Phaser scenes (no more black flash)
+- BGM now plays continuously during React→Phaser transition, stopping only when Phaser is ready (no more audio gap)
+- Menu star textures and BGM now self-initialize in ModeSelectScene, OptionScene, and StageSelectScene (no longer depend on StartScene)
+
 ## [1.6.1] - 2026-03-17
 
 ### Added
