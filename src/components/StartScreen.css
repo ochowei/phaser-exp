@@ -10,6 +10,11 @@
     justify-content: center;
     border: 2px solid #444;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    transition: opacity 300ms ease-out;
+}
+
+.start-screen.fading {
+    opacity: 0;
 }
 
 /* 三層星空背景 */

@@ -8,11 +8,7 @@ export default function App() {
     const bgmRef = useRef(null);
 
     const handlePlay = useCallback((entry) => {
-        // 停止 React 側 BGM
-        if (bgmRef.current) {
-            bgmRef.current.pause();
-            bgmRef.current.currentTime = 0;
-        }
+        // BGM 不在此停止 — 由 GameCanvas 在 Phaser ready 後無縫銜接
         setGameEntry(entry);
         setScreen('game');
     }, []);
@@ -22,7 +18,7 @@ export default function App() {
     }, []);
 
     if (screen === 'game') {
-        return <GameCanvas entry={gameEntry} onReturnToMenu={handleReturnToMenu} />;
+        return <GameCanvas entry={gameEntry} onReturnToMenu={handleReturnToMenu} bgmRef={bgmRef} />;
     }
 
     return <StartScreen onPlay={handlePlay} bgmRef={bgmRef} />;

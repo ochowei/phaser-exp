@@ -14,7 +14,7 @@ const sceneMap = {
     StageScene,
 };
 
-export default function GameCanvas({ entry, onReturnToMenu }) {
+export default function GameCanvas({ entry, onReturnToMenu, bgmRef }) {
     const containerRef = useRef(null);
     const gameRef = useRef(null);
 
@@ -42,6 +42,14 @@ export default function GameCanvas({ entry, onReturnToMenu }) {
 
         gameRef.current = new Phaser.Game(config);
 
+        // Phaser ready 後停止 React 側 BGM，實現無縫銜接
+        gameRef.current.events.once('ready', () => {
+            if (bgmRef && bgmRef.current) {
+                bgmRef.current.pause();
+                bgmRef.current.currentTime = 0;
+            }
+        });
+
         gameRef.current.events.on('returnToMenu', () => {
             if (gameRef.current) {
                 gameRef.current.destroy(true);
@@ -58,5 +66,10 @@ export default function GameCanvas({ entry, onReturnToMenu }) {
         };
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    return <div ref={containerRef} />;
+    return (
+        <div
+            ref={containerRef}
+            style={{ width: 800, height: 600, backgroundColor: '#090b22' }}
+        />
+    );
 }

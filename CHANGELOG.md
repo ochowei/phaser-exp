@@ -18,6 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - "Return to menu" navigation in ModeSelectScene, MainScene, OptionScene, and pause system now uses `game.events.emit('returnToMenu')` to communicate with the React layer
 - BGM on start screen now uses `HTMLAudioElement` instead of Phaser's sound system
 
+### Fixed
+- Smooth fade-out transition when navigating from React start screen to Phaser scenes (no more black flash)
+- BGM now plays continuously during React→Phaser transition, stopping only when Phaser is ready (no more audio gap)
+- Menu star textures and BGM now self-initialize in ModeSelectScene, OptionScene, and StageSelectScene (no longer depend on StartScene)
+
 ## [1.6.1] - 2026-03-17
 
 ### Added
