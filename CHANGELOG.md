@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- Pause menu "Main Menu" button now returns to Start Screen instead of Mode Selection / Stage Selection screen
+
 ## [1.9.0] - 2026-03-18
 
 ### Changed

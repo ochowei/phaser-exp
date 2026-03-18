@@ -29,7 +29,7 @@ export default function App() {
         if (entry === 'stageSelect') {
             setScreen('stageSelect');
         } else {
-            setReturnScreen('modeSelect');
+            setReturnScreen('start');
             setGameEntry(entry);
             setGameData(null);
             setScreen('game');
@@ -37,7 +37,7 @@ export default function App() {
     }, []);
 
     const handleSelectStage = useCallback((stageId) => {
-        setReturnScreen('stageSelect');
+        setReturnScreen('start');
         setGameEntry('StageScene');
         setGameData({ stageId });
         setScreen('game');
