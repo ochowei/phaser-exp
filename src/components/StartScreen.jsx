@@ -16,18 +16,33 @@ export default function StartScreen({ onPlay, bgmRef }) {
         }
 
         bgmRef.current.volume = isMuted ? 0 : volume;
-        bgmRef.current.play().catch(() => {
-            // 瀏覽器 autoplay 限制 — 等使用者互動後再播放
-            const resumeAudio = () => {
-                bgmRef.current.play().catch(() => {});
-                document.removeEventListener('click', resumeAudio);
-            };
-            document.addEventListener('click', resumeAudio);
-        });
 
-        return () => {
-            // 不在 cleanup 停止 BGM — 由 GameCanvas 在 Phaser ready 後處理
+        const cleanup = () => {
+            document.removeEventListener('pointerdown', tryPlay);
+            document.removeEventListener('keydown', tryPlay);
+            document.removeEventListener('visibilitychange', onVisible);
         };
+
+        const tryPlay = () => {
+            bgmRef.current.play().then(() => {
+                cleanup();
+            }).catch(() => {});
+        };
+
+        const onVisible = () => {
+            if (document.visibilityState === 'visible') tryPlay();
+        };
+
+        // 嘗試自動播放（可能被瀏覽器擋下）
+        tryPlay();
+
+        // Fallback: pointerdown 比 click 更早觸發，確保點按鈕時音樂在導航前開始
+        document.addEventListener('pointerdown', tryPlay, { once: true });
+        document.addEventListener('keydown', tryPlay, { once: true });
+        // 切換到此分頁時嘗試播放
+        document.addEventListener('visibilitychange', onVisible);
+
+        return cleanup;
     }, [bgmRef]);
 
     const handleClick = (entry) => {

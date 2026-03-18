@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.10.1] - 2026-03-18
+
+### Fixed
+- Fix startup music not playing until clicking blank area; use `pointerdown` instead of `click` for earlier audio unlock
+- Attempt auto-play music when switching to game tab via `visibilitychange` listener
+
 ## [1.10.0] - 2026-03-18
 
 ### Changed
