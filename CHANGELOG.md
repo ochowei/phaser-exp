@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.8.1] - 2026-03-18
+
+### Changed
+- Options screen converted from Phaser scene (`OptionScene`) to React component (`OptionScreen`), matching the ModeSelectScreen architecture
+- Selecting "Options" now shows a React-based settings screen instead of initializing Phaser
+- Volume slider and mute toggle now control HTML Audio directly instead of Phaser sound manager
+- Language switching no longer requires scene restart — React re-renders instantly
+
 ## [1.8.0] - 2026-03-18
 
 ### Changed

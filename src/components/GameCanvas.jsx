@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import * as Phaser from 'phaser';
-import OptionScene from '../scenes/OptionScene.js';
 import MainScene from '../scenes/MainScene.js';
 import StageSelectScene from '../scenes/StageSelectScene.js';
 import StageScene from '../scenes/StageScene.js';
 
 const sceneMap = {
-    OptionScene,
     MainScene,
     StageSelectScene,
     StageScene,
