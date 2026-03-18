@@ -48,7 +48,7 @@ export default function StartScreen({ onPlay, bgmRef }) {
 
             <button
                 className="start-btn start-btn-play"
-                onClick={() => handleClick('ModeSelectScene')}
+                onClick={() => handleClick('modeSelect')}
             >
                 {t('startGame')}
             </button>

@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import * as Phaser from 'phaser';
-import ModeSelectScene from '../scenes/ModeSelectScene.js';
 import OptionScene from '../scenes/OptionScene.js';
 import MainScene from '../scenes/MainScene.js';
 import StageSelectScene from '../scenes/StageSelectScene.js';
 import StageScene from '../scenes/StageScene.js';
 
 const sceneMap = {
-    ModeSelectScene,
     OptionScene,
     MainScene,
     StageSelectScene,
@@ -20,7 +18,7 @@ export default function GameCanvas({ entry, onReturnToMenu, bgmRef }) {
 
     useEffect(() => {
         // 將目標場景排在第一位，使其成為 Phaser 初始場景
-        const EntryScene = sceneMap[entry] || ModeSelectScene;
+        const EntryScene = sceneMap[entry] || MainScene;
         const otherScenes = Object.values(sceneMap).filter(s => s !== EntryScene);
         const scenes = [EntryScene, ...otherScenes];
 

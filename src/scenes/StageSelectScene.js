@@ -71,7 +71,7 @@ export default class StageSelectScene extends Phaser.Scene {
                 backBtn.disableInteractive();
 
                 this.cameras.main.once('camerafadeoutcomplete', () => {
-                    this.scene.start('ModeSelectScene');
+                    this.game.events.emit('returnToMenu');
                 });
                 this.cameras.main.fadeOut(300, 0, 0, 0);
             });

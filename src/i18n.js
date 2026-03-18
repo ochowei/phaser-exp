@@ -16,7 +16,7 @@ const translations = {
         langEn: 'English',
         langZh: '中文',
 
-        // ModeSelectScene
+        // ModeSelectScreen
         selectMode: 'SELECT MODE',
         endlessMode: 'Endless Mode',
         stageMode: 'Stage Mode',
@@ -75,7 +75,7 @@ const translations = {
         langEn: 'English',
         langZh: '中文',
 
-        // ModeSelectScene
+        // ModeSelectScreen
         selectMode: '選擇模式',
         endlessMode: '無盡模式',
         stageMode: '關卡模式',
