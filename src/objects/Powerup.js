@@ -7,12 +7,12 @@ export default class Powerup extends Phaser.Physics.Arcade.Image {
         scene.add.existing(this);
         scene.physics.add.existing(this);
 
-        // 道具緩慢向左飄 (改由 MainScene add 後設定)
-        
-        // 加入上下浮動動畫
+        // 道具緩慢向下飄（改由 Scene add 後設定）
+
+        // 加入左右浮動動畫
         scene.tweens.add({
             targets: this,
-            y: this.y + Phaser.Math.Between(-20, 20),
+            x: this.x + Phaser.Math.Between(-20, 20),
             duration: 1000,
             yoyo: true,
             repeat: -1,
@@ -21,7 +21,7 @@ export default class Powerup extends Phaser.Physics.Arcade.Image {
     }
 
     update(time, delta) {
-        if (this.active && this.x < -32) {
+        if (this.active && this.y > 632) {
             this.destroy();
         }
     }

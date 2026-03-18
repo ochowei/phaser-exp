@@ -1,26 +1,26 @@
 # Phaser 射擊遊戲原型
 
-一款使用 [Phaser 3](https://phaser.io/) 框架開發的瀏覽器太空射擊遊戲，採用模組化架構設計。
+一款使用 [Phaser 3](https://phaser.io/) 框架開發的瀏覽器直向捲軸太空射擊遊戲，採用模組化架構設計。
 
 ## 截圖
 
 ```
-[ 開始畫面 ]      [ 模式選擇 ]        [ 遊戲畫面 ]
-  SPACE SHOOTER     無盡模式            ★  ★  ★  ★  ★
-  [Start Game]      [Endless Mode]      Score: 120  HP: ❤️❤️❤️
-  [Options]         [Stage Mode]           ▶ PLAYER
-                                        ●●●  ENEMY  ●●●
+[ 開始畫面 ]      [ 模式選擇 ]        [ 遊戲畫面（直向捲軸）]
+  SPACE SHOOTER     無盡模式            Score: 120  HP: ❤️❤️❤️
+  [Start Game]      [Endless Mode]        ●●● ENEMY ●●●
+  [Options]         [Stage Mode]             ▼ ▼ ▼
+                                           ▲ PLAYER ▲
 
 [ 關卡選擇 ]      [ 關卡模式 ]
-  SELECT STAGE      Wave 2/3    BOSS HP ████░░
-  [1] Asteroid Belt ✓   ▶ PLAYER
-  [2] Nebula Frontier   ●●● BOSS ●●●
-  [3] Dark Core 🔒      STAGE CLEAR!
+  SELECT STAGE      BOSS HP ████░░
+  [1] Asteroid Belt ✓    ●●● BOSS ●●●
+  [2] Nebula Frontier        ▼ ▼ ▼
+  [3] Dark Core 🔒       ▲ PLAYER ▲
 ```
 
 ## 功能特色
 
-- **視差捲動背景** — 三層星空以不同速度滾動，營造深度感
+- **直向視差捲動背景** — 三層星空由上往下以不同速度滾動，營造深度感
 - **遊戲模式** — 無盡模式與關卡模式（3 關，混合波次制 + Boss 戰）
 - **玩家移動** — 支援 WASD 或方向鍵操控；行動裝置支援虛擬搖桿
 - **射擊系統** — 預設單發，拾取道具可升級為三連發（持續 10 秒）

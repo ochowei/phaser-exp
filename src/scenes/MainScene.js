@@ -125,44 +125,44 @@ export default class MainScene extends Phaser.Scene {
         this.pauseMenuBtn.setVisible(this.isPaused);
     }
 
-    fireSingleBullet(velocityY) {
-        let bullet = this.bullets.get(this.player.x + 16, this.player.y);
+    fireSingleBullet(velocityX) {
+        let bullet = this.bullets.get(this.player.x, this.player.y - 16);
         if (bullet) {
-            bullet.fire(this.player.x + 16, this.player.y, velocityY);
+            bullet.fire(this.player.x, this.player.y - 16, velocityX);
         }
     }
 
     spawnEnemy() {
         if (this.gameOver) return;
 
-        let y = Phaser.Math.Between(50, 550);
+        let x = Phaser.Math.Between(50, 750);
 
         // 20% 機率生成帶著升級道具的紫色特殊敵人
         let isSpecialEnemy = Phaser.Math.Between(1, 100) <= 20;
         let profileKey = isSpecialEnemy ? 'EN_PURPLE' : 'EN_RED';
         let profile = getAircraftProfile(profileKey);
 
-        // 生成敵人物件並加進群組
-        let enemy = new Enemy(this, 850, y, profile.textureKey, { isSpecial: isSpecialEnemy, hp: profile.hp });
+        // 生成敵人物件並加進群組（從上方出現）
+        let enemy = new Enemy(this, x, -50, profile.textureKey, { isSpecial: isSpecialEnemy, hp: profile.hp });
         this.enemies.add(enemy);
 
         // 加入群組後再給予速度，避免被 group default override
-        let speed = Phaser.Math.Between(-150, -350);
-        enemy.setVelocityX(speed);
+        let speed = Phaser.Math.Between(150, 350);
+        enemy.setVelocityY(speed);
     }
 
     spawnMiniBoss() {
         if (this.gameOver) return;
 
-        const y = Phaser.Math.Between(80, 520);
+        const x = Phaser.Math.Between(80, 720);
         const bossProfile = getAircraftProfile('EN_BOSS_GREEN');
-        const enemy = new Enemy(this, 850, y, bossProfile.textureKey, {
+        const enemy = new Enemy(this, x, -50, bossProfile.textureKey, {
             isBoss: true,
             hp: bossProfile.hp,
             scoreValue: 100,
         });
         this.enemies.add(enemy);
-        enemy.setVelocityX(-60);
+        enemy.setVelocityY(60);
 
         // Boss尾焰粒子
         const trail = this.add.particles(0, 0, 'bullet', bossProfile.trail);
@@ -174,7 +174,7 @@ export default class MainScene extends Phaser.Scene {
             delay: 1500,
             callback: () => {
                 if (enemy.active) {
-                    this.spawnEnemyBullet(enemy.x - 24, enemy.y);
+                    this.spawnEnemyBullet(enemy.x, enemy.y + 24);
                 } else {
                     fireTimer.remove();
                 }
@@ -193,7 +193,7 @@ export default class MainScene extends Phaser.Scene {
     spawnEnemyBullet(x, y) {
         const bullet = this.add.image(x, y, 'enemy_bullet');
         this.physics.add.existing(bullet);
-        bullet.body.setVelocityX(-300);
+        bullet.body.setVelocityY(300);
         this.enemyBullets.add(bullet);
 
         // 離開畫面後自動銷毀
@@ -260,7 +260,7 @@ export default class MainScene extends Phaser.Scene {
     spawnPowerup(x, y) {
         let powerup = new Powerup(this, x, y, 'powerupTexture');
         this.powerups.add(powerup);
-        powerup.setVelocityX(-100);
+        powerup.setVelocityY(100);
     }
 
     onPlayerDamaged() {

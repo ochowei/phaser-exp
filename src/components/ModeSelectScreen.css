@@ -68,17 +68,17 @@
 
 @keyframes mode-scroll-far {
     from { transform: translate(0, 0); }
-    to { transform: translate(-3%, -5%); }
+    to { transform: translate(0, -5%); }
 }
 
 @keyframes mode-scroll-mid {
     from { transform: translate(0, 0); }
-    to { transform: translate(-7%, -12%); }
+    to { transform: translate(0, -12%); }
 }
 
 @keyframes mode-scroll-near {
     from { transform: translate(0, 0); }
-    to { transform: translate(-12%, -20%); }
+    to { transform: translate(0, -20%); }
 }
 
 /* 標題 */
