@@ -37,7 +37,7 @@
 - **暫停功能** — 按 P / ESC 或右上角按鈕暫停，暫停時可返回主選單
 - **背景音樂** — 選單與遊戲各有獨立 BGM，支援音量調節與靜音
 - **設定畫面** — 可調整 BGM 音量、靜音切換
-- **React + Phaser 混搭架構** — 開始畫面使用 React 組件渲染（CSS 動畫星空），進入遊戲後才初始化 Phaser
+- **React + Phaser 混搭架構** — 開始畫面與模式選擇畫面使用 React 組件渲染（CSS 動畫星空），進入遊戲後才初始化 Phaser
 - **載入提示** — 頁面開啟時顯示載入動畫，React 初始化完成後自動消失
 - **多語系** — 支援中文 / 英文切換，語言偏好存入 `localStorage`
 - **遊戲結束畫面** — 支援重新開始或返回主選單
@@ -60,12 +60,14 @@ phaser-exp/
 │           └── bgm_game.wav
 └── src/
     ├── main.jsx            # React 入口
-    ├── App.jsx             # 頂層路由（React 開始畫面 ↔ Phaser 遊戲）
+    ├── App.jsx             # 頂層路由（React 開始/模式選擇畫面 ↔ Phaser 遊戲）
     ├── main.js             # [已棄用] 舊 Phaser 入口（保留參考）
     ├── i18n.js             # 多語系（中 / 英）
     ├── components/
     │   ├── StartScreen.jsx      # React 開始畫面（CSS 星空動畫）
     │   ├── StartScreen.css      # 開始畫面樣式
+    │   ├── ModeSelectScreen.jsx # React 模式選擇畫面（無盡 / 關卡）
+    │   ├── ModeSelectScreen.css # 模式選擇畫面樣式
     │   └── GameCanvas.jsx       # Phaser 包裝器（按需初始化 / 銷毀）
     ├── profiles/
     │   └── aircraftProfiles.js  # 戰機外觀 Profile 定義（7 組：玩家、普通敵人、特殊敵人、迷你Boss、3 關卡Boss）
@@ -77,7 +79,6 @@ phaser-exp/
     │   └── sceneHelpers.js      # 場景共用函式（紋理、背景、輸入、暫停等）
     ├── scenes/
     │   ├── StartScene.js        # [已棄用] 舊 Phaser 開始畫面（保留參考）
-    │   ├── ModeSelectScene.js   # 模式選擇畫面（無盡 / 關卡）
     │   ├── OptionScene.js       # 設定畫面（音量 / 語言）
     │   ├── MainScene.js         # 無盡模式遊戲場景
     │   ├── StageSelectScene.js  # 關卡選擇畫面（解鎖 / 重玩）
@@ -172,7 +173,7 @@ npm run preview
 
 | 技術 | 版本 | 用途 |
 |------|------|------|
-| [React](https://react.dev/) | 19.2 | UI 框架（開始畫面） |
+| [React](https://react.dev/) | 19.2 | UI 框架（開始畫面、模式選擇） |
 | [Phaser 3](https://phaser.io/) | 3.90.0 | 遊戲框架（渲染、物理、輸入） |
 | [Vite](https://vitejs.dev/) | 7.3.1 | 開發伺服器與打包工具 |
 | [Vitest](https://vitest.dev/) | 4.1.0 | 單元測試框架 |

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.8.0] - 2026-03-18
+
+### Changed
+- Mode select screen converted from Phaser scene (`ModeSelectScene`) to React component (`ModeSelectScreen`), matching the StartScreen architecture
+- Selecting "Start Game" now shows a React-based mode select screen instead of initializing Phaser
+- Game exit (`returnToMenu`) now returns to mode select screen instead of start screen
+- StageSelectScene back button now exits to React mode select screen
+
 ## [1.7.0] - 2026-03-17
 
 ### Added
