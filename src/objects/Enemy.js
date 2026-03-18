@@ -22,7 +22,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
         this.isDropPowerup = isSpecial || isBoss;
         this.scoreValue = scoreValue ?? (isSpecial ? 20 : 10);
         this.powerupDropRate = (isSpecial || isBoss) ? 1 : 0;
-        this.startY = y;
+        this.startX = x;
         this.moveType = isBoss ? 2 : Phaser.Math.Between(0, 1); // 0:直線 1:曲線 2:Boss
         this.timeOffset = scene.time.now;
 
@@ -112,21 +112,22 @@ export default class Enemy extends Phaser.Physics.Arcade.Image {
     update(time, delta) {
         if (!this.active) return;
 
-        const boundaryX = this.isBoss ? -64 : -32;
-        if (this.x < boundaryX) {
+        // 飛出螢幕下方時銷毀
+        const boundaryY = this.isBoss ? 664 : 632;
+        if (this.y > boundaryY) {
             this._destroyHealthBar();
             this.destroy();
             return;
         }
 
         if (this.moveType === 1) {
-            // 正弦波曲線位移
-            this.y = this.startY + Math.sin((time - this.timeOffset) * 0.005) * 100;
+            // 正弦波曲線位移（水平擺動）
+            this.x = this.startX + Math.sin((time - this.timeOffset) * 0.005) * 100;
         } else if (this.moveType === 2) {
-            // Boss: 較慢的正弦波，較大振幅，限制在畫面內
-            this.y = Phaser.Math.Clamp(
-                this.startY + Math.sin((time - this.timeOffset) * 0.002) * 150,
-                40, 560
+            // Boss: 較慢的正弦波，較大振幅，限制在畫面內（水平擺動）
+            this.x = Phaser.Math.Clamp(
+                this.startX + Math.sin((time - this.timeOffset) * 0.002) * 150,
+                40, 760
             );
         }
 

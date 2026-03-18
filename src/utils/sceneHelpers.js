@@ -155,12 +155,12 @@ export function createParallaxBackground(scene) {
 }
 
 /**
- * 捲動視差背景（在 update 中呼叫）
+ * 捲動視差背景（在 update 中呼叫）— 由上往下捲動
  */
 export function scrollParallaxBackground(scene) {
-    scene.bg3.tilePositionX += 0.2;
-    scene.bg2.tilePositionX += 0.5;
-    scene.bg1.tilePositionX += 1.0;
+    scene.bg3.tilePositionY += 0.2;
+    scene.bg2.tilePositionY += 0.5;
+    scene.bg1.tilePositionY += 1.0;
 }
 
 /**
@@ -273,7 +273,7 @@ export function setupJoystick(scene) {
  */
 export function createPlayerWithTrail(scene) {
     const aircraft = getAircraftProfile(DEFAULT_AIRCRAFT);
-    scene.player = new Player(scene, 100, 300, 'playerTexture');
+    scene.player = new Player(scene, 400, 500, 'playerTexture');
     scene.playerTrail = scene.add.particles(0, 0, 'bullet', aircraft.trail);
     scene.playerTrail.startFollow(scene.player, aircraft.trailOffset.x, aircraft.trailOffset.y);
 }

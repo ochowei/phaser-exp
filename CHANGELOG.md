@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-03-18
+
 ### Changed
+- Converted game from horizontal scrolling to vertical scrolling (top-down shooter)
+- Player now spawns at bottom center and shoots upward
+- Enemies spawn from the top and move downward
+- Parallax background scrolls vertically (top to bottom)
+- All aircraft textures redrawn to face up (player) or down (enemies)
+- Enemy sinusoidal movement changed from vertical to horizontal oscillation
+- Boss scatter pattern fires downward instead of leftward
+- CSS starfield animations on menu screens changed to vertical scrolling
+- Powerups drift downward instead of leftward
 - Pause menu "Main Menu" button now returns to Start Screen instead of Mode Selection / Stage Selection screen
 
 ## [1.9.0] - 2026-03-18

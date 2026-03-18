@@ -183,10 +183,10 @@ export default class StageScene extends Phaser.Scene {
         this.pauseMenuBtn.setVisible(this.isPaused);
     }
 
-    fireSingleBullet(velocityY) {
-        let bullet = this.bullets.get(this.player.x + 16, this.player.y);
+    fireSingleBullet(velocityX) {
+        let bullet = this.bullets.get(this.player.x, this.player.y - 16);
         if (bullet) {
-            bullet.fire(this.player.x + 16, this.player.y, velocityY);
+            bullet.fire(this.player.x, this.player.y - 16, velocityX);
         }
     }
 
@@ -211,7 +211,7 @@ export default class StageScene extends Phaser.Scene {
     _fireBossAimed(boss) {
         const angle = Phaser.Math.Angle.Between(boss.x, boss.y, this.player.x, this.player.y);
         const speed = 300;
-        const bullet = this._createEnemyBullet(boss.x - 24, boss.y);
+        const bullet = this._createEnemyBullet(boss.x, boss.y + 24);
         bullet.body.setVelocity(
             Math.cos(angle) * speed,
             Math.sin(angle) * speed
@@ -219,13 +219,13 @@ export default class StageScene extends Phaser.Scene {
     }
 
     _fireBossScatter(boss) {
-        const baseAngle = Math.PI; // 向左
+        const baseAngle = Math.PI / 2; // 向下
         const angles = [-30, -15, 0, 15, 30];
         const speed = 250;
 
         for (const offset of angles) {
             const angle = baseAngle + Phaser.Math.DegToRad(offset);
-            const bullet = this._createEnemyBullet(boss.x - 24, boss.y);
+            const bullet = this._createEnemyBullet(boss.x, boss.y + 24);
             bullet.body.setVelocity(
                 Math.cos(angle) * speed,
                 Math.sin(angle) * speed
@@ -238,10 +238,10 @@ export default class StageScene extends Phaser.Scene {
         this.trackingBullets = this.trackingBullets.filter(b => b.active);
         if (this.trackingBullets.length >= 1) return;
 
-        const bullet = this._createEnemyBullet(boss.x - 24, boss.y);
+        const bullet = this._createEnemyBullet(boss.x, boss.y + 24);
         bullet.isTracking = true;
         bullet.trackSpeed = 200;
-        bullet.body.setVelocityX(-200);
+        bullet.body.setVelocityY(200);
         this.trackingBullets.push(bullet);
 
         // 4 秒後自毀
@@ -328,7 +328,7 @@ export default class StageScene extends Phaser.Scene {
     spawnPowerup(x, y) {
         let powerup = new Powerup(this, x, y, 'powerupTexture');
         this.powerups.add(powerup);
-        powerup.setVelocityX(-100);
+        powerup.setVelocityY(100);
     }
 
     updateScore(points) {

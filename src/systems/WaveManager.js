@@ -96,19 +96,19 @@ export default class WaveManager {
         const scene = this.scene;
         if (scene.gameOver) return;
 
-        const y = Phaser.Math.Between(50, 550);
+        const x = Phaser.Math.Between(50, 750);
         const profile = getAircraftProfile(profileKey);
         const isSpecial = profileKey === 'EN_PURPLE';
 
-        const enemy = new Enemy(scene, 850, y, profile.textureKey, {
+        const enemy = new Enemy(scene, x, -50, profile.textureKey, {
             isSpecial,
             hp: profile.hp,
         });
         enemy.isWaveEnemy = true;
         scene.enemies.add(enemy);
 
-        const speed = Phaser.Math.Between(-150, -350);
-        enemy.setVelocityX(speed);
+        const speed = Phaser.Math.Between(150, 350);
+        enemy.setVelocityY(speed);
 
         // 特殊敵人尾焰
         if (isSpecial) {
@@ -175,15 +175,15 @@ export default class WaveManager {
         const bossConfig = this.stageConfig.boss;
         const profile = getAircraftProfile(bossConfig.profileKey);
 
-        const y = 300;
-        const enemy = new Enemy(scene, 850, y, profile.textureKey, {
+        const x = 400;
+        const enemy = new Enemy(scene, x, -50, profile.textureKey, {
             isBoss: true,
             isStageBoss: true,
             hp: profile.hp,
             scoreValue: 200,
         });
         scene.enemies.add(enemy);
-        enemy.setVelocityX(-60);
+        enemy.setVelocityY(60);
 
         // Boss 尾焰粒子
         const trail = scene.add.particles(0, 0, 'bullet', profile.trail);
