@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-03-20
+
+### Added
+- Responsive design: game auto-scales to fit any viewport size while maintaining 4:3 aspect ratio
+- `GameWrapper` component using CSS `transform: scale()` for uniform scaling of all screens
+- Mobile-friendly viewport settings: disabled pinch-zoom, prevented overscroll/pull-to-refresh
+- Dynamic viewport height (`dvh`) support for mobile browser address bar
+
 ## [1.10.0] - 2026-03-18
 
 ### Changed

@@ -4,6 +4,7 @@ import ModeSelectScreen from './components/ModeSelectScreen.jsx';
 import OptionsScreen from './components/OptionsScreen.jsx';
 import StageSelectScreen from './components/StageSelectScreen.jsx';
 import GameCanvas from './components/GameCanvas.jsx';
+import GameWrapper from './components/GameWrapper.jsx';
 
 export default function App() {
     const [screen, setScreen] = useState('start');
@@ -47,8 +48,9 @@ export default function App() {
         setScreen(returnScreen);
     }, [returnScreen]);
 
+    let content;
     if (screen === 'game') {
-        return (
+        content = (
             <GameCanvas
                 entry={gameEntry}
                 gameData={gameData}
@@ -56,30 +58,26 @@ export default function App() {
                 bgmRef={bgmRef}
             />
         );
-    }
-
-    if (screen === 'options') {
-        return <OptionsScreen onBack={() => setScreen('start')} bgmRef={bgmRef} />;
-    }
-
-    if (screen === 'stageSelect') {
-        return (
+    } else if (screen === 'options') {
+        content = <OptionsScreen onBack={() => setScreen('start')} bgmRef={bgmRef} />;
+    } else if (screen === 'stageSelect') {
+        content = (
             <StageSelectScreen
                 onSelectStage={handleSelectStage}
                 onBack={() => setScreen('modeSelect')}
             />
         );
-    }
-
-    if (screen === 'modeSelect') {
-        return (
+    } else if (screen === 'modeSelect') {
+        content = (
             <ModeSelectScreen
                 onSelectMode={handleSelectMode}
                 onBack={() => setScreen('start')}
                 bgmRef={bgmRef}
             />
         );
+    } else {
+        content = <StartScreen onPlay={handlePlay} bgmRef={bgmRef} />;
     }
 
-    return <StartScreen onPlay={handlePlay} bgmRef={bgmRef} />;
+    return <GameWrapper>{content}</GameWrapper>;
 }

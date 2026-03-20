@@ -24,8 +24,7 @@ export default function GameCanvas({ entry, gameData, onReturnToMenu, bgmRef }) 
             height: 600,
             parent: containerRef.current,
             scale: {
-                mode: Phaser.Scale.FIT,
-                autoCenter: Phaser.Scale.CENTER_BOTH,
+                mode: Phaser.Scale.NONE,
             },
             physics: {
                 default: 'arcade',

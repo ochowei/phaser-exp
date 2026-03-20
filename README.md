@@ -38,6 +38,7 @@
 - **背景音樂** — 選單與遊戲各有獨立 BGM，支援音量調節與靜音
 - **設定畫面** — 可調整 BGM 音量、靜音切換
 - **React + Phaser 混搭架構** — 開始畫面、模式選擇、設定、關卡選擇畫面均使用 React 組件渲染（CSS 動畫星空），進入遊戲後才初始化 Phaser
+- **響應式設計** — 遊戲畫面自動縮放以適應任何視窗大小（桌面、平板、手機），維持 4:3 比例
 - **載入提示** — 頁面開啟時顯示載入動畫，React 初始化完成後自動消失
 - **多語系** — 支援中文 / 英文切換，語言偏好存入 `localStorage`
 - **遊戲結束畫面** — 支援重新開始或返回主選單
@@ -72,6 +73,7 @@ phaser-exp/
     │   ├── OptionsScreen.css    # 設定畫面樣式
     │   ├── StageSelectScreen.jsx  # React 關卡選擇畫面（解鎖 / 重玩）
     │   ├── StageSelectScreen.css  # 關卡選擇畫面樣式
+    │   ├── GameWrapper.jsx       # 響應式縮放包裝器（CSS transform scale）
     │   └── GameCanvas.jsx       # Phaser 包裝器（按需初始化 / 銷毀）
     ├── profiles/
     │   └── aircraftProfiles.js  # 戰機外觀 Profile 定義（7 組：玩家、普通敵人、特殊敵人、迷你Boss、3 關卡Boss）
