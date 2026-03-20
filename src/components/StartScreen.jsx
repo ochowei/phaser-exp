@@ -54,6 +54,13 @@ export default function StartScreen({ onPlay, bgmRef }) {
             </button>
 
             <button
+                className="start-btn start-btn-bestiary"
+                onClick={() => handleClick('bestiary')}
+            >
+                {t('bestiary')}
+            </button>
+
+            <button
                 className="start-btn start-btn-options"
                 onClick={() => handleClick('options')}
             >

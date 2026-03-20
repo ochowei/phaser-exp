@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import StartScreen from './components/StartScreen.jsx';
 import ModeSelectScreen from './components/ModeSelectScreen.jsx';
 import OptionsScreen from './components/OptionsScreen.jsx';
+import BestiaryScreen from './components/BestiaryScreen.jsx';
 import StageSelectScreen from './components/StageSelectScreen.jsx';
 import GameCanvas from './components/GameCanvas.jsx';
 import GameWrapper from './components/GameWrapper.jsx';
@@ -18,6 +19,8 @@ export default function App() {
             setScreen('modeSelect');
         } else if (entry === 'options') {
             setScreen('options');
+        } else if (entry === 'bestiary') {
+            setScreen('bestiary');
         } else {
             setReturnScreen('start');
             setGameEntry(entry);
@@ -58,6 +61,8 @@ export default function App() {
                 bgmRef={bgmRef}
             />
         );
+    } else if (screen === 'bestiary') {
+        content = <BestiaryScreen onBack={() => setScreen('start')} />;
     } else if (screen === 'options') {
         content = <OptionsScreen onBack={() => setScreen('start')} bgmRef={bgmRef} />;
     } else if (screen === 'stageSelect') {
