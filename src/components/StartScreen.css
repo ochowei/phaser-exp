@@ -126,6 +126,16 @@
     background-color: #333;
 }
 
+.start-btn-bestiary {
+    color: #0ff;
+    background-color: #000;
+}
+
+.start-btn-bestiary:hover {
+    color: #fff;
+    background-color: #333;
+}
+
 .start-btn-options {
     color: #f80;
     background-color: #000;

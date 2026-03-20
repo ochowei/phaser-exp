@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.12.0] - 2026-03-20
+
+### Added
+- Enemy Bestiary screen accessible from the main menu, displaying all 6 enemy types with visual previews, stats (HP, score, attack pattern), and i18n descriptions
+- Phaser-to-Canvas renderer utility for drawing aircraft profiles without a Phaser instance
+- Enemy metadata data file for bestiary display information
+
 ## [1.11.0] - 2026-03-20
 
 ### Added

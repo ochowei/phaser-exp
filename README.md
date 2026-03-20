@@ -8,8 +8,8 @@
 [ 開始畫面 ]      [ 模式選擇 ]        [ 遊戲畫面（直向捲軸）]
   SPACE SHOOTER     無盡模式            Score: 120  HP: ❤️❤️❤️
   [Start Game]      [Endless Mode]        ●●● ENEMY ●●●
-  [Options]         [Stage Mode]             ▼ ▼ ▼
-                                           ▲ PLAYER ▲
+  [Bestiary]        [Stage Mode]             ▼ ▼ ▼
+  [Options]                                ▲ PLAYER ▲
 
 [ 關卡選擇 ]      [ 關卡模式 ]
   SELECT STAGE      BOSS HP ████░░
@@ -36,6 +36,7 @@
 - **分數系統** — 即時計分，最高分存入瀏覽器 `localStorage` 持久保存
 - **暫停功能** — 按 P / ESC 或右上角按鈕暫停，暫停時可返回主選單
 - **背景音樂** — 選單與遊戲各有獨立 BGM，支援音量調節與靜音
+- **敵人圖鑑** — 可從主選單瀏覽所有 6 種敵人的外觀預覽、血量、分數與攻擊方式
 - **設定畫面** — 可調整 BGM 音量、靜音切換
 - **React + Phaser 混搭架構** — 開始畫面、模式選擇、設定、關卡選擇畫面均使用 React 組件渲染（CSS 動畫星空），進入遊戲後才初始化 Phaser
 - **響應式設計** — 遊戲畫面自動縮放以適應任何視窗大小（桌面、平板、手機），維持 4:3 比例
@@ -71,6 +72,8 @@ phaser-exp/
     │   ├── ModeSelectScreen.css # 模式選擇畫面樣式
     │   ├── OptionsScreen.jsx    # React 設定畫面（音量 / 語言）
     │   ├── OptionsScreen.css    # 設定畫面樣式
+    │   ├── BestiaryScreen.jsx     # React 敵人圖鑑畫面
+    │   ├── BestiaryScreen.css     # 敵人圖鑑畫面樣式
     │   ├── StageSelectScreen.jsx  # React 關卡選擇畫面（解鎖 / 重玩）
     │   ├── StageSelectScreen.css  # 關卡選擇畫面樣式
     │   ├── GameWrapper.jsx       # 響應式縮放包裝器（CSS transform scale）
@@ -78,10 +81,12 @@ phaser-exp/
     ├── profiles/
     │   └── aircraftProfiles.js  # 戰機外觀 Profile 定義（7 組：玩家、普通敵人、特殊敵人、迷你Boss、3 關卡Boss）
     ├── data/
+    │   ├── enemyData.js         # 敵人圖鑑資料（名稱、分數、類型）
     │   └── stageData.js         # 關卡模式設定資料（波次、Boss）
     ├── systems/
     │   └── WaveManager.js       # 波次進行控制器
     ├── utils/
+    │   ├── canvasRenderer.js    # Phaser Graphics → Canvas 2D 轉譯器（圖鑑預覽用）
     │   └── sceneHelpers.js      # 場景共用函式（紋理、背景、輸入、暫停等）
     ├── scenes/
     │   ├── MainScene.js         # 無盡模式遊戲場景
