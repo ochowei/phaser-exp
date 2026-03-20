@@ -68,37 +68,70 @@ const aircraftProfiles = {
         hp: 1,
 
         draw(graphics) {
-            // 深色機身外殼（面朝下）
-            graphics.fillStyle(0x1a0000, 1);
-            graphics.fillTriangle(16, 4, 4, 28, 28, 28);
+            // 外部黑色輪廓
+            graphics.fillStyle(0x0d0000, 1);
+            graphics.fillTriangle(16, 3, 1, 30, 31, 30);
 
-            // 紅色核心機體
-            graphics.fillStyle(0xdc2626, 1);
-            graphics.fillTriangle(16, 8, 8, 24, 24, 24);
+            // 深紅主機身裝甲
+            graphics.fillStyle(0x7f1d1d, 1);
+            graphics.fillTriangle(16, 7, 5, 27, 27, 27);
 
-            // 暗紅色機翼（左翼 + 右翼）
+            // 銳角後掠翼（左）
+            graphics.fillStyle(0xb91c1c, 1);
+            graphics.fillTriangle(16, 9, 0, 28, 11, 17);
+
+            // 銳角後掠翼（右）
+            graphics.fillStyle(0xb91c1c, 1);
+            graphics.fillTriangle(16, 9, 32, 28, 21, 17);
+
+            // 翼端裝甲塊（左）
+            graphics.fillStyle(0x450a0a, 1);
+            graphics.fillRect(0, 22, 5, 7);
+
+            // 翼端裝甲塊（右）
+            graphics.fillRect(27, 22, 5, 7);
+
+            // 核心機身（亮紅）
             graphics.fillStyle(0xef4444, 1);
-            graphics.fillTriangle(16, 7, 2, 20, 10, 12);
-            graphics.fillTriangle(16, 7, 30, 20, 22, 12);
+            graphics.fillTriangle(16, 11, 9, 24, 23, 24);
 
-            // 淺紅駕駛艙 / 感測器
+            // 翼端砲管，指向下方（左）
+            graphics.fillStyle(0xff6000, 1);
+            graphics.fillRect(1, 28, 3, 4);
+
+            // 翼端砲管，指向下方（右）
+            graphics.fillRect(28, 28, 3, 4);
+
+            // 機頭感測器（發光）
             graphics.fillStyle(0xfca5a5, 1);
-            graphics.fillEllipse(16, 20, 10, 7);
+            graphics.fillEllipse(16, 22, 9, 6);
 
-            // 橙色排氣口（頂部）
-            graphics.fillStyle(0xf59e0b, 1);
-            graphics.fillRect(12, 0, 8, 4);
+            // 引擎噴口外框（頂部）
+            graphics.fillStyle(0x4a0000, 1);
+            graphics.fillRect(10, 0, 12, 5);
+
+            // 引擎噴焰
+            graphics.fillStyle(0xff4500, 1);
+            graphics.fillRect(11, 0, 10, 4);
+
+            // 引擎光芯（橙色）
+            graphics.fillStyle(0xffa500, 1);
+            graphics.fillRect(13, 0, 6, 2);
+
+            // 引擎最亮核心（黃色）
+            graphics.fillStyle(0xffee00, 1);
+            graphics.fillRect(14, 0, 4, 1);
         },
 
         trail: {
-            speed: { min: 30, max: 120 },
+            speed: { min: 40, max: 140 },
             angle: { min: 240, max: 300 },
-            scale: { start: 0.3, end: 0 },
-            alpha: { start: 0.7, end: 0 },
-            tint: [0xff6666, 0xff3333, 0xcc0000],
-            lifespan: 200,
-            quantity: 1,
-            frequency: 45,
+            scale: { start: 0.35, end: 0 },
+            alpha: { start: 0.85, end: 0 },
+            tint: [0xffcc44, 0xff4400, 0xcc0000],
+            lifespan: 220,
+            quantity: 2,
+            frequency: 35,
             blendMode: 'ADD',
         },
 
@@ -114,37 +147,79 @@ const aircraftProfiles = {
         hp: 3,
 
         draw(graphics) {
-            // 深紫機身外殼（面朝下，更寬的掠翼輪廓）
-            graphics.fillStyle(0x1a002e, 1);
-            graphics.fillTriangle(16, 4, 2, 28, 30, 28);
+            // 超寬三角輪廓（大δ翼）
+            graphics.fillStyle(0x0d0018, 1);
+            graphics.fillTriangle(16, 3, 0, 30, 32, 30);
 
-            // 紫色核心機體
-            graphics.fillStyle(0x9333ea, 1);
-            graphics.fillTriangle(16, 8, 7, 24, 25, 24);
+            // 深紫主機身
+            graphics.fillStyle(0x4c1d95, 1);
+            graphics.fillTriangle(16, 7, 5, 28, 27, 28);
 
-            // 洋紅色機翼（展幅更大）
+            // 大展弦比後掠翼（左）
+            graphics.fillStyle(0x6d28d9, 1);
+            graphics.fillTriangle(16, 8, 0, 26, 12, 16);
+
+            // 大展弦比後掠翼（右）
+            graphics.fillStyle(0x6d28d9, 1);
+            graphics.fillTriangle(16, 8, 32, 26, 20, 16);
+
+            // 翼端推進器艙（左）
+            graphics.fillStyle(0x2e1065, 1);
+            graphics.fillRect(0, 20, 7, 9);
+
+            // 翼端推進器艙（右）
+            graphics.fillRect(25, 20, 7, 9);
+
+            // 推進器噴口光（左）
+            graphics.fillStyle(0xd946ef, 1);
+            graphics.fillRect(1, 20, 5, 3);
+
+            // 推進器噴口光（右）
+            graphics.fillRect(26, 20, 5, 3);
+
+            // 核心能量艙（亮紫）
+            graphics.fillStyle(0xa855f7, 1);
+            graphics.fillTriangle(16, 11, 9, 25, 23, 25);
+
+            // 能量核心感測器（發光）
+            graphics.fillStyle(0xe879f9, 1);
+            graphics.fillEllipse(16, 21, 10, 7);
+
+            // 核心光點（最亮）
+            graphics.fillStyle(0xfaf5ff, 1);
+            graphics.fillEllipse(16, 21, 5, 3);
+
+            // 雙引擎噴口（頂部左）
+            graphics.fillStyle(0x3b0764, 1);
+            graphics.fillRect(7, 0, 7, 6);
+
+            // 雙引擎噴口（頂部右）
+            graphics.fillRect(18, 0, 7, 6);
+
+            // 引擎光（左）
             graphics.fillStyle(0xc026d3, 1);
-            graphics.fillTriangle(16, 6, 0, 22, 10, 10);
-            graphics.fillTriangle(16, 6, 32, 22, 22, 10);
+            graphics.fillRect(8, 0, 5, 4);
 
-            // 淺紫駕駛艙 / 感測器
+            // 引擎光（右）
+            graphics.fillRect(19, 0, 5, 4);
+
+            // 引擎核心（左）
             graphics.fillStyle(0xf0abfc, 1);
-            graphics.fillEllipse(16, 20, 8, 6);
+            graphics.fillRect(9, 0, 3, 2);
 
-            // 粉紅排氣口（頂部，略大）
-            graphics.fillStyle(0xf472b6, 1);
-            graphics.fillRect(11, 0, 10, 5);
+            // 引擎核心（右）
+            graphics.fillRect(20, 0, 3, 2);
         },
 
         trail: {
-            speed: { min: 30, max: 120 },
+            speed: { min: 35, max: 130 },
             angle: { min: 240, max: 300 },
-            scale: { start: 0.35, end: 0 },
-            alpha: { start: 0.8, end: 0 },
-            tint: [0xf0abfc, 0xc026d3, 0x7e22ce],
-            lifespan: 240,
-            quantity: 1,
-            frequency: 35,
+            scale: { start: 0.4, end: 0 },
+            alpha: { start: 0.85, end: 0 },
+            tint: [0xf0abfc, 0xd946ef, 0x7e22ce],
+            lifespan: 260,
+            quantity: 2,
+            frequency: 30,
             blendMode: 'ADD',
         },
 
@@ -160,37 +235,92 @@ const aircraftProfiles = {
         hp: 10,
 
         draw(graphics) {
-            // 深色重裝甲外殼（面朝下，更大輪廓）
-            graphics.fillStyle(0x003300, 1);
-            graphics.fillTriangle(24, 6, 4, 42, 44, 42);
+            // 外部黑色輪廓
+            graphics.fillStyle(0x001400, 1);
+            graphics.fillTriangle(24, 4, 2, 44, 46, 44);
 
-            // 綠色核心機體
-            graphics.fillStyle(0x22c55e, 1);
-            graphics.fillTriangle(24, 12, 10, 36, 38, 36);
+            // 深綠主裝甲機身
+            graphics.fillStyle(0x14532d, 1);
+            graphics.fillTriangle(24, 10, 9, 40, 39, 40);
 
-            // 淺綠色機翼（左翼 + 右翼，展幅更大）
+            // 主翼（左）
+            graphics.fillStyle(0x166534, 1);
+            graphics.fillTriangle(24, 12, 0, 38, 14, 20);
+
+            // 主翼（右）
+            graphics.fillStyle(0x166534, 1);
+            graphics.fillTriangle(24, 12, 48, 38, 34, 20);
+
+            // 側翼砲台平台（左）
+            graphics.fillStyle(0x052e16, 1);
+            graphics.fillRect(0, 26, 10, 14);
+
+            // 側翼砲台平台（右）
+            graphics.fillRect(38, 26, 10, 14);
+
+            // 側砲管（左）
             graphics.fillStyle(0x4ade80, 1);
-            graphics.fillTriangle(24, 10, 2, 34, 14, 14);
-            graphics.fillTriangle(24, 10, 46, 34, 34, 14);
+            graphics.fillRect(1, 38, 4, 8);
 
-            // 淺色駕駛艙
+            // 側砲管（右）
+            graphics.fillRect(43, 38, 4, 8);
+
+            // 核心艙體（亮綠）
+            graphics.fillStyle(0x22c55e, 1);
+            graphics.fillTriangle(24, 16, 13, 37, 35, 37);
+
+            // 駕駛艙（發光）
             graphics.fillStyle(0xbbf7d0, 1);
-            graphics.fillEllipse(24, 30, 14, 9);
+            graphics.fillEllipse(24, 30, 16, 10);
 
-            // 金色排氣口（頂部，較大）
+            // 能量爐核心
+            graphics.fillStyle(0x4ade80, 1);
+            graphics.fillEllipse(24, 30, 9, 6);
+
+            // 金色橫向裝甲紋路
             graphics.fillStyle(0xfbbf24, 1);
-            graphics.fillRect(17, 2, 14, 6);
+            graphics.fillRect(10, 20, 28, 2);
+
+            // 三聯引擎外框（頂部左）
+            graphics.fillStyle(0x022c22, 1);
+            graphics.fillRect(7, 0, 9, 8);
+
+            // 三聯引擎外框（頂部中）
+            graphics.fillRect(20, 0, 8, 8);
+
+            // 三聯引擎外框（頂部右）
+            graphics.fillRect(32, 0, 9, 8);
+
+            // 引擎光芯（左）
+            graphics.fillStyle(0x86efac, 1);
+            graphics.fillRect(9, 0, 5, 5);
+
+            // 引擎光芯（中）
+            graphics.fillRect(22, 0, 4, 5);
+
+            // 引擎光芯（右）
+            graphics.fillRect(34, 0, 5, 5);
+
+            // 引擎最亮點（左）
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillRect(10, 0, 3, 2);
+
+            // 引擎最亮點（中）
+            graphics.fillRect(23, 0, 2, 2);
+
+            // 引擎最亮點（右）
+            graphics.fillRect(35, 0, 3, 2);
         },
 
         trail: {
-            speed: { min: 40, max: 150 },
+            speed: { min: 40, max: 160 },
             angle: { min: 240, max: 300 },
-            scale: { start: 0.45, end: 0 },
-            alpha: { start: 0.8, end: 0 },
-            tint: [0x4ade80, 0x22c55e, 0x166534],
-            lifespan: 280,
-            quantity: 2,
-            frequency: 35,
+            scale: { start: 0.5, end: 0 },
+            alpha: { start: 0.85, end: 0 },
+            tint: [0x86efac, 0x22c55e, 0x166534],
+            lifespan: 300,
+            quantity: 3,
+            frequency: 30,
             blendMode: 'ADD',
         },
 
@@ -207,37 +337,94 @@ const aircraftProfiles = {
         attackPattern: 'aimed',
 
         draw(graphics) {
-            // 深紅重裝甲外殼（面朝下）
-            graphics.fillStyle(0x4a0000, 1);
-            graphics.fillTriangle(24, 6, 4, 42, 44, 42);
+            // 厚重裝甲輪廓
+            graphics.fillStyle(0x1c0000, 1);
+            graphics.fillTriangle(24, 4, 2, 44, 46, 44);
 
-            // 赤紅核心機體
-            graphics.fillStyle(0xdc2626, 1);
-            graphics.fillTriangle(24, 12, 10, 36, 38, 36);
+            // 深紅主裝甲機身
+            graphics.fillStyle(0x7f1d1d, 1);
+            graphics.fillTriangle(24, 10, 9, 40, 39, 40);
 
-            // 亮紅機翼
-            graphics.fillStyle(0xef4444, 1);
-            graphics.fillTriangle(24, 10, 2, 34, 14, 14);
-            graphics.fillTriangle(24, 10, 46, 34, 34, 14);
+            // 後掠主翼（左）
+            graphics.fillStyle(0xb91c1c, 1);
+            graphics.fillTriangle(24, 11, 0, 40, 15, 19);
 
-            // 淺紅駕駛艙
-            graphics.fillStyle(0xfca5a5, 1);
-            graphics.fillEllipse(24, 30, 14, 9);
+            // 後掠主翼（右）
+            graphics.fillStyle(0xb91c1c, 1);
+            graphics.fillTriangle(24, 11, 48, 40, 33, 19);
 
-            // 橙紅排氣口（頂部）
+            // 翼端重型砲台（左）
+            graphics.fillStyle(0x450a0a, 1);
+            graphics.fillRect(0, 28, 11, 14);
+
+            // 翼端重型砲台（右）
+            graphics.fillRect(37, 28, 11, 14);
+
+            // 主砲管（底部中央，指向玩家）
             graphics.fillStyle(0xff4500, 1);
-            graphics.fillRect(17, 2, 14, 6);
+            graphics.fillRect(20, 40, 8, 8);
+
+            // 副砲管（左砲台）
+            graphics.fillStyle(0xff6600, 1);
+            graphics.fillRect(2, 40, 4, 6);
+
+            // 副砲管（右砲台）
+            graphics.fillRect(42, 40, 4, 6);
+
+            // 裝甲核心機身
+            graphics.fillStyle(0xdc2626, 1);
+            graphics.fillTriangle(24, 16, 13, 38, 35, 38);
+
+            // 指揮艙（發光）
+            graphics.fillStyle(0xfca5a5, 1);
+            graphics.fillEllipse(24, 30, 16, 10);
+
+            // 瞄準器核心（紅色發光）
+            graphics.fillStyle(0xff0000, 1);
+            graphics.fillEllipse(24, 30, 8, 5);
+
+            // 橫向裝甲加強條
+            graphics.fillStyle(0x991b1b, 1);
+            graphics.fillRect(9, 22, 30, 3);
+
+            // 雙引擎組外框（頂部左）
+            graphics.fillStyle(0x4a0000, 1);
+            graphics.fillRect(7, 0, 11, 9);
+
+            // 雙引擎組外框（頂部右）
+            graphics.fillRect(30, 0, 11, 9);
+
+            // 引擎噴焰（左）
+            graphics.fillStyle(0xff4500, 1);
+            graphics.fillRect(9, 0, 7, 6);
+
+            // 引擎噴焰（右）
+            graphics.fillRect(32, 0, 7, 6);
+
+            // 引擎光芯（左）
+            graphics.fillStyle(0xff8c00, 1);
+            graphics.fillRect(10, 0, 5, 4);
+
+            // 引擎光芯（右）
+            graphics.fillRect(33, 0, 5, 4);
+
+            // 引擎核心最亮（左）
+            graphics.fillStyle(0xffee00, 1);
+            graphics.fillRect(12, 0, 2, 2);
+
+            // 引擎核心最亮（右）
+            graphics.fillRect(34, 0, 2, 2);
         },
 
         trail: {
-            speed: { min: 40, max: 150 },
+            speed: { min: 40, max: 160 },
             angle: { min: 240, max: 300 },
-            scale: { start: 0.45, end: 0 },
-            alpha: { start: 0.8, end: 0 },
-            tint: [0xff6666, 0xdc2626, 0x8b0000],
-            lifespan: 280,
-            quantity: 2,
-            frequency: 35,
+            scale: { start: 0.5, end: 0 },
+            alpha: { start: 0.85, end: 0 },
+            tint: [0xff8844, 0xdc2626, 0x8b0000],
+            lifespan: 300,
+            quantity: 3,
+            frequency: 30,
             blendMode: 'ADD',
         },
 
@@ -254,37 +441,91 @@ const aircraftProfiles = {
         attackPattern: 'scatter',
 
         draw(graphics) {
-            // 深紫重裝甲外殼（面朝下）
-            graphics.fillStyle(0x2d0054, 1);
-            graphics.fillTriangle(24, 6, 4, 42, 44, 42);
+            // 超寬機體輪廓
+            graphics.fillStyle(0x0f0020, 1);
+            graphics.fillTriangle(24, 4, 0, 44, 48, 44);
 
-            // 紫色核心機體
-            graphics.fillStyle(0x7c3aed, 1);
-            graphics.fillTriangle(24, 12, 10, 36, 38, 36);
+            // 深紫主機身
+            graphics.fillStyle(0x3b0764, 1);
+            graphics.fillTriangle(24, 9, 8, 41, 40, 41);
 
-            // 亮紫機翼
-            graphics.fillStyle(0xa855f7, 1);
-            graphics.fillTriangle(24, 10, 2, 34, 14, 14);
-            graphics.fillTriangle(24, 10, 46, 34, 34, 14);
+            // 超大後掠翼（左，達邊緣）
+            graphics.fillStyle(0x5b21b6, 1);
+            graphics.fillTriangle(24, 10, 0, 42, 16, 18);
 
-            // 淺紫駕駛艙
-            graphics.fillStyle(0xe0b0ff, 1);
-            graphics.fillEllipse(24, 30, 14, 9);
+            // 超大後掠翼（右，達邊緣）
+            graphics.fillStyle(0x5b21b6, 1);
+            graphics.fillTriangle(24, 10, 48, 42, 32, 18);
 
-            // 紫色排氣口（頂部）
+            // 散射砲座（左）
+            graphics.fillStyle(0x2e1065, 1);
+            graphics.fillRect(0, 29, 13, 15);
+
+            // 散射砲座（右）
+            graphics.fillRect(35, 29, 13, 15);
+
+            // 多管散射砲（左外）
             graphics.fillStyle(0xc084fc, 1);
-            graphics.fillRect(17, 2, 14, 6);
+            graphics.fillRect(1, 42, 4, 6);
+
+            // 多管散射砲（左內）
+            graphics.fillRect(7, 40, 4, 6);
+
+            // 多管散射砲（右內）
+            graphics.fillRect(37, 40, 4, 6);
+
+            // 多管散射砲（右外）
+            graphics.fillRect(43, 42, 4, 6);
+
+            // 核心機身（亮紫）
+            graphics.fillStyle(0x7c3aed, 1);
+            graphics.fillTriangle(24, 15, 12, 39, 36, 39);
+
+            // 能量充能核心（大）
+            graphics.fillStyle(0xe0b0ff, 1);
+            graphics.fillEllipse(24, 30, 20, 13);
+
+            // 充能核心光點
+            graphics.fillStyle(0xfaf5ff, 1);
+            graphics.fillEllipse(24, 30, 10, 6);
+
+            // 散射能量導管（水平橫線）
+            graphics.fillStyle(0xa855f7, 1);
+            graphics.fillRect(0, 27, 48, 3);
+
+            // 四聯引擎（頂部，等距排列）
+            graphics.fillStyle(0x1e1b4b, 1);
+            graphics.fillRect(4, 0, 8, 7);
+            graphics.fillRect(14, 0, 8, 7);
+            graphics.fillRect(26, 0, 8, 7);
+            graphics.fillRect(36, 0, 8, 7);
+
+            // 引擎發光（左兩組）
+            graphics.fillStyle(0xa78bfa, 1);
+            graphics.fillRect(5, 0, 6, 5);
+            graphics.fillRect(15, 0, 6, 5);
+
+            // 引擎發光（右兩組）
+            graphics.fillRect(27, 0, 6, 5);
+            graphics.fillRect(37, 0, 6, 5);
+
+            // 引擎核心
+            graphics.fillStyle(0xe0b0ff, 1);
+            graphics.fillRect(7, 0, 2, 3);
+            graphics.fillRect(17, 0, 2, 3);
+            graphics.fillRect(29, 0, 2, 3);
+            graphics.fillRect(39, 0, 2, 3);
         },
 
         trail: {
-            speed: { min: 40, max: 150 },
+            speed: { min: 40, max: 160 },
             angle: { min: 240, max: 300 },
-            scale: { start: 0.45, end: 0 },
-            alpha: { start: 0.8, end: 0 },
-            tint: [0xe0b0ff, 0x7c3aed, 0x2d0054],
-            lifespan: 280,
-            quantity: 2,
-            frequency: 35,
+            scale: { start: 0.5, end: 0 },
+            alpha: { start: 0.85, end: 0 },
+            tint: [0xe0b0ff, 0x7c3aed, 0x3b0764],
+            lifespan: 310,
+            quantity: 3,
+            frequency: 28,
             blendMode: 'ADD',
         },
 
@@ -301,40 +542,103 @@ const aircraftProfiles = {
         attackPattern: 'tracking',
 
         draw(graphics) {
-            // 墨綠重裝甲外殼（面朝下）
-            graphics.fillStyle(0x003d00, 1);
-            graphics.fillTriangle(24, 6, 4, 42, 44, 42);
+            // 流線型輪廓
+            graphics.fillStyle(0x001a00, 1);
+            graphics.fillTriangle(24, 4, 3, 44, 45, 44);
 
-            // 翠綠核心機體
+            // 深綠主機身
+            graphics.fillStyle(0x064e3b, 1);
+            graphics.fillTriangle(24, 9, 11, 40, 37, 40);
+
+            // 主翼（左）
+            graphics.fillStyle(0x047857, 1);
+            graphics.fillTriangle(24, 11, 0, 38, 15, 19);
+
+            // 主翼（右）
+            graphics.fillStyle(0x047857, 1);
+            graphics.fillTriangle(24, 11, 48, 38, 33, 19);
+
+            // 追蹤飛彈艙（左翼下掛架）
+            graphics.fillStyle(0x022c22, 1);
+            graphics.fillRect(0, 25, 9, 17);
+
+            // 追蹤飛彈艙（右翼下掛架）
+            graphics.fillRect(39, 25, 9, 17);
+
+            // 飛彈彈頭（金色，左）
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillRect(1, 40, 7, 4);
+
+            // 飛彈彈頭（金色，右）
+            graphics.fillRect(40, 40, 7, 4);
+
+            // 核心機身（翠綠）
             graphics.fillStyle(0x16a34a, 1);
-            graphics.fillTriangle(24, 12, 10, 36, 38, 36);
+            graphics.fillTriangle(24, 16, 14, 38, 34, 38);
 
-            // 亮綠機翼
+            // 追蹤雷達艙（大橢圓，發光）
+            graphics.fillStyle(0x86efac, 1);
+            graphics.fillEllipse(24, 30, 20, 13);
+
+            // 雷達核心（金色）
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillEllipse(24, 30, 10, 6);
+
+            // 雷達掃描核（最亮）
+            graphics.fillStyle(0xfef9c3, 1);
+            graphics.fillEllipse(24, 30, 4, 3);
+
+            // 中央能量脊線（縱向）
             graphics.fillStyle(0x4ade80, 1);
-            graphics.fillTriangle(24, 10, 2, 34, 14, 14);
-            graphics.fillTriangle(24, 10, 46, 34, 34, 14);
+            graphics.fillRect(22, 10, 4, 28);
 
-            // 淺綠駕駛艙
-            graphics.fillStyle(0xbbf7d0, 1);
-            graphics.fillEllipse(24, 30, 14, 9);
+            // 金色橫向裝甲條（上）
+            graphics.fillStyle(0xfbbf24, 1);
+            graphics.fillRect(11, 21, 26, 2);
 
-            // 金色排氣口（頂部，加大 + 金色裝飾線）
+            // 金色橫向裝甲條（下）
+            graphics.fillRect(11, 35, 26, 2);
+
+            // 三重引擎外框（頂部左）
+            graphics.fillStyle(0x022c22, 1);
+            graphics.fillRect(7, 0, 9, 9);
+
+            // 三重引擎外框（頂部中）
+            graphics.fillRect(20, 0, 8, 9);
+
+            // 三重引擎外框（頂部右）
+            graphics.fillRect(32, 0, 9, 9);
+
+            // 引擎內核（左）
+            graphics.fillStyle(0x4ade80, 1);
+            graphics.fillRect(9, 0, 5, 6);
+
+            // 引擎內核（中）
+            graphics.fillRect(22, 0, 4, 6);
+
+            // 引擎內核（右）
+            graphics.fillRect(34, 0, 5, 6);
+
+            // 引擎金色光芯（左）
             graphics.fillStyle(0xfbbf24, 1);
-            graphics.fillRect(15, 1, 18, 7);
-            // 金色裝飾條（水平）
-            graphics.fillStyle(0xfbbf24, 1);
-            graphics.fillRect(22, 8, 4, 30);
+            graphics.fillRect(10, 0, 3, 3);
+
+            // 引擎金色光芯（中）
+            graphics.fillRect(23, 0, 2, 3);
+
+            // 引擎金色光芯（右）
+            graphics.fillRect(35, 0, 3, 3);
         },
 
         trail: {
-            speed: { min: 40, max: 150 },
+            speed: { min: 45, max: 170 },
             angle: { min: 240, max: 300 },
-            scale: { start: 0.5, end: 0 },
-            alpha: { start: 0.85, end: 0 },
-            tint: [0x4ade80, 0xfbbf24, 0x166534],
-            lifespan: 320,
-            quantity: 2,
-            frequency: 30,
+            scale: { start: 0.55, end: 0 },
+            alpha: { start: 0.9, end: 0 },
+            tint: [0x86efac, 0xfbbf24, 0x16a34a],
+            lifespan: 340,
+            quantity: 3,
+            frequency: 25,
             blendMode: 'ADD',
         },
 
