@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Improved enemy visual designs with more detailed and distinctive silhouettes:
+  - EN_RED: Added swept-back delta wings, wingtip cannon barrels, layered armor panels, and triple-glow engine exhaust
+  - EN_PURPLE: Redesigned with wide delta wing, twin side thruster pods, dual engine exhausts, and glowing energy core
+  - EN_BOSS_GREEN: Added triple engine bank, side gun platforms with cannon barrels, gold armor stripe, and energy reactor core
+  - EN_BOSS_STAGE1: Added heavy dual engine pods, wing-mounted cannon turrets, central main gun, and targeting sensor
+  - EN_BOSS_STAGE2: Redesigned with ultra-wide body, four-engine bank, quad scatter cannons, energy conduit, and charging core
+  - EN_BOSS_STAGE3: Added missile pods with gold warheads, tracking radar dome, central spine, gold armor stripes, and triple engines with gold cores
+- Enhanced particle trails for all enemies with more vibrant colors, higher particle count, and improved brightness
+
 ## [1.12.0] - 2026-03-20
 
 ### Added
