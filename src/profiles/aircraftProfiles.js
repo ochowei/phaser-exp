@@ -11,6 +11,7 @@ const aircraftProfiles = {
     S63HP: {
         name: 'R-82 Ironwing',
         description: '紅棕色重裝戰鬥機，寬翼設計配備雙砲管與大型推進器（面朝上）',
+        imageUrl: 'assets/image/player.png',
         textureKey: 'playerTexture',
         textureSize: { width: 48, height: 48 },
 

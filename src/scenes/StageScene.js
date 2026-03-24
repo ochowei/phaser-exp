@@ -26,6 +26,10 @@ export default class StageScene extends Phaser.Scene {
     }
 
     preload() {
+        // 玩家戰機圖片
+        if (!this.textures.exists('playerTexture')) {
+            this.load.image('playerTexture', 'assets/image/player.png');
+        }
         if (!this.cache.audio.exists('bgm_game')) {
             this.load.audio('bgm_game', 'assets/audio/bgm_game.wav');
         }
