@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-03-24
+
+### Changed
+- Replaced player aircraft from S-63 Hornet Plus (blue, 32×32) to R-82 Ironwing (red-brown heavy fighter, 48×48)
+- New player aircraft features: wide swept wings, dual wingtip gun turrets, antenna tower, large engine nozzle, detailed multi-layer armor plating
+- Updated player thruster trail to red-orange tones matching the new aircraft color scheme
+
 ## [1.13.1] - 2026-03-24
 
 ### Fixed
