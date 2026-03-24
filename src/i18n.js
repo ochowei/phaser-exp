@@ -34,6 +34,9 @@ const translations = {
         gameOver: 'GAME OVER',
         restart: 'Restart',
         miniBossWarning: 'MINI-BOSS INCOMING!',
+        shieldActive: 'SHIELD ACTIVE!',
+        shieldHit: 'SHIELD BLOCKED!',
+        bombCount: 'Bombs',
 
         // StageSelectScene
         stageSelect: 'SELECT STAGE',
@@ -117,6 +120,9 @@ const translations = {
         gameOver: '遊戲結束',
         restart: '重新開始',
         miniBossWarning: '迷你Boss來襲！',
+        shieldActive: '護盾啟動！',
+        shieldHit: '護盾抵擋！',
+        bombCount: '炸彈',
 
         // StageSelectScene
         stageSelect: '選擇關卡',

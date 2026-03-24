@@ -14,10 +14,17 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.health = 3;
         this.maxBankAngle = 20;
         this.invincible = false;
+        this.hasShield = false;
     }
 
     receiveDamage() {
         if (this.invincible || !this.active) return;
+
+        if (this.hasShield) {
+            this.hasShield = false;
+            this.scene.onShieldBroken();
+            return;
+        }
 
         this.health -= 1;
         this.scene.onPlayerDamaged();

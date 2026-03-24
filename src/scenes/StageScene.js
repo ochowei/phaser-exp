@@ -50,6 +50,8 @@ export default class StageScene extends Phaser.Scene {
         this.fireRate = 380;
         this.trackingBullets = [];
         this.stageBoss = null;
+        this.hasBombs = 0;
+        this.shieldVisual = null;
 
         createPlayerWithTrail(this);
         setupKeyboardInput(this);
@@ -70,6 +72,12 @@ export default class StageScene extends Phaser.Scene {
             fontSize: '20px', fill: '#ff4444'
         });
 
+        // HUD — 護盾 / 炸彈
+        this.shieldIndicatorText = this.add.text(16, 91, '🛡️ ' + t('shieldActive'), { fontSize: '16px', fill: '#44aaff', fontStyle: 'bold' });
+        this.shieldIndicatorText.setVisible(false);
+        this.bombCountText = this.add.text(16, 111, '💣 x0', { fontSize: '16px', fill: '#ffaa00', fontStyle: 'bold' });
+        this.bombCountText.setVisible(false);
+
         // HUD — 三連射
         this.tripleShotText = this.add.text(16, 560, t('tripleShotActive'), {
             fontSize: '20px', fill: '#00ff00', fontStyle: 'bold'
@@ -82,6 +90,11 @@ export default class StageScene extends Phaser.Scene {
         }).setOrigin(0.5, 0);
 
         setupPauseSystem(this, 'StartScene');
+
+        // 炸彈快捷鍵（Space）
+        this.input.keyboard.on('keydown-SPACE', () => {
+            if (!this.gameOver && !this.isPaused) this.activateBomb();
+        });
         setupJoystick(this);
         setupAudio(this);
 
@@ -131,6 +144,11 @@ export default class StageScene extends Phaser.Scene {
 
         scrollParallaxBackground(this);
         this.player.update(this.keys, this.joystick);
+
+        // 護盾視覺跟隨玩家
+        if (this.shieldVisual && this.player.hasShield) {
+            this.shieldVisual.setPosition(this.player.x, this.player.y);
+        }
 
         // 自動發射子彈
         if (time > this.lastFired) {
@@ -309,24 +327,123 @@ export default class StageScene extends Phaser.Scene {
     }
 
     collectPowerup(player, powerup) {
+        const type = powerup.type;
         powerup.destroy();
-        this.hasTripleShot = true;
-        this.tripleShotText.setVisible(true);
 
-        this.cameras.main.flash(200, 0, 255, 0);
+        switch (type) {
+        case 'shield':
+            this.activateShield();
+            break;
+        case 'bomb':
+            this.addBomb();
+            break;
+        default: // tripleshot
+            this.hasTripleShot = true;
+            this.tripleShotText.setVisible(true);
+            this.cameras.main.flash(200, 0, 255, 0);
+            if (this.tripleShotTimer) this.tripleShotTimer.remove();
+            this.tripleShotTimer = this.time.delayedCall(10000, () => {
+                this.hasTripleShot = false;
+                this.tripleShotText.setVisible(false);
+            }, [], this);
+            this.updateScore(50);
+        }
+    }
 
-        if (this.tripleShotTimer) this.tripleShotTimer.remove();
+    activateShield() {
+        this.player.hasShield = true;
+        this.shieldIndicatorText.setVisible(true);
+        this.cameras.main.flash(200, 0, 100, 255);
 
-        this.tripleShotTimer = this.time.delayedCall(10000, () => {
-            this.hasTripleShot = false;
-            this.tripleShotText.setVisible(false);
-        }, [], this);
+        if (this.shieldVisual) this.shieldVisual.destroy();
+        this.shieldVisual = this.add.graphics();
+        this.shieldVisual.lineStyle(3, 0x44aaff, 1);
+        this.shieldVisual.strokeCircle(0, 0, 32);
+        this.shieldVisual.setPosition(this.player.x, this.player.y).setDepth(5);
+        this.tweens.add({
+            targets: this.shieldVisual,
+            alpha: 0.4,
+            duration: 600,
+            yoyo: true,
+            repeat: -1
+        });
+    }
 
-        this.updateScore(50);
+    onShieldBroken() {
+        this.shieldIndicatorText.setVisible(false);
+        if (this.shieldVisual) {
+            this.shieldVisual.destroy();
+            this.shieldVisual = null;
+        }
+        this.cameras.main.flash(150, 0, 150, 255);
+        this.cameras.main.shake(100, 0.005);
+    }
+
+    addBomb() {
+        if (this.hasBombs < 3) {
+            this.hasBombs++;
+            this.updateBombText();
+            this.cameras.main.flash(200, 255, 150, 0);
+        }
+    }
+
+    updateBombText() {
+        this.bombCountText.setText('💣 x' + this.hasBombs);
+        this.bombCountText.setVisible(this.hasBombs > 0);
+    }
+
+    activateBomb() {
+        if (this.hasBombs <= 0) return;
+
+        this.hasBombs--;
+        this.updateBombText();
+
+        this.cameras.main.flash(300, 255, 200, 50);
+        this.cameras.main.shake(300, 0.015);
+
+        // 消滅所有普通敵人（保留關卡Boss）
+        let kills = 0;
+        this.enemies.getChildren().slice().forEach(enemy => {
+            if (enemy.active && !enemy.isStageBoss) {
+                kills++;
+                enemy.destroy();
+            }
+        });
+
+        // 清除敵方子彈
+        this.enemyBullets.getChildren().slice().forEach(bullet => {
+            if (bullet.active) bullet.destroy();
+        });
+
+        if (kills > 0) this.updateScore(kills * 5);
+
+        // 爆炸圓環特效
+        [0, 100, 200].forEach(delay => {
+            this.time.delayedCall(delay, () => {
+                const ring = this.add.graphics();
+                ring.lineStyle(4, 0xffaa00, 1);
+                ring.strokeCircle(this.player.x, this.player.y, 10);
+                this.tweens.add({
+                    targets: ring,
+                    scaleX: 30,
+                    scaleY: 30,
+                    alpha: 0,
+                    duration: 500,
+                    ease: 'Cubic.easeOut',
+                    onComplete: () => ring.destroy()
+                });
+            });
+        });
     }
 
     spawnPowerup(x, y) {
-        let powerup = new Powerup(this, x, y, 'powerupTexture');
+        const rand = Phaser.Math.Between(1, 4);
+        let type, texture;
+        if (rand <= 2) { type = 'tripleshot'; texture = 'powerupTexture'; }
+        else if (rand === 3) { type = 'shield'; texture = 'shieldTexture'; }
+        else { type = 'bomb'; texture = 'bombTexture'; }
+
+        const powerup = new Powerup(this, x, y, texture, type);
         this.powerups.add(powerup);
         powerup.setVelocityY(100);
     }
@@ -356,6 +473,9 @@ export default class StageScene extends Phaser.Scene {
 
             this.cameras.main.shake(300, 0.015);
             this.tripleShotText.setVisible(false);
+            this.shieldIndicatorText.setVisible(false);
+            this.bombCountText.setVisible(false);
+            if (this.shieldVisual) { this.shieldVisual.destroy(); this.shieldVisual = null; }
             this.playerTrail.stop();
             if (this.bgm) this.bgm.stop();
 
