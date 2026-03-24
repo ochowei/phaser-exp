@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.13.1] - 2026-03-24
+
+### Fixed
+- Bomb now correctly drops power-ups from destroyed enemies (special/boss enemies with 100% drop rate)
+- Bomb now awards full score values per enemy instead of flat 5 points each
+- Bomb now properly cleans up enemy health bars on destruction
+
 ## [1.13.0] - 2026-03-24
 
 ### Added
