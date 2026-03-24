@@ -47,13 +47,13 @@ describe('aircraftProfiles', () => {
 
         it('returns the default profile for an unknown key', () => {
             const profile = getAircraftProfile('NONEXISTENT');
-            expect(profile.name).toBe('S-63 Hornet Plus');
+            expect(profile.name).toBe('R-82 Ironwing');
             expect(profile.textureKey).toBe('playerTexture');
         });
 
         it('returns the default profile when key is undefined', () => {
             const profile = getAircraftProfile(undefined);
-            expect(profile.name).toBe('S-63 Hornet Plus');
+            expect(profile.name).toBe('R-82 Ironwing');
         });
 
         it('returns the default profile for the DEFAULT_AIRCRAFT key', () => {
