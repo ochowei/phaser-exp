@@ -401,11 +401,15 @@ export default class StageScene extends Phaser.Scene {
         this.cameras.main.flash(300, 255, 200, 50);
         this.cameras.main.shake(300, 0.015);
 
-        // 消滅所有普通敵人（保留關卡Boss）
-        let kills = 0;
+        // 消滅所有普通敵人（保留關卡Boss），並結算分數與掉落
+        let totalScore = 0;
         this.enemies.getChildren().slice().forEach(enemy => {
             if (enemy.active && !enemy.isStageBoss) {
-                kills++;
+                totalScore += enemy.scoreValue;
+                if (enemy.shouldDropPowerup()) {
+                    this.spawnPowerup(enemy.x, enemy.y);
+                }
+                enemy._destroyHealthBar();
                 enemy.destroy();
             }
         });
@@ -415,7 +419,7 @@ export default class StageScene extends Phaser.Scene {
             if (bullet.active) bullet.destroy();
         });
 
-        if (kills > 0) this.updateScore(kills * 5);
+        if (totalScore > 0) this.updateScore(totalScore);
 
         // 爆炸圓環特效
         [0, 100, 200].forEach(delay => {
