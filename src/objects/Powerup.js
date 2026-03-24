@@ -1,8 +1,9 @@
 import * as Phaser from 'phaser';
 
 export default class Powerup extends Phaser.Physics.Arcade.Image {
-    constructor(scene, x, y, texture) {
+    constructor(scene, x, y, texture, type = 'tripleshot') {
         super(scene, x, y, texture);
+        this.type = type;
 
         scene.add.existing(this);
         scene.physics.add.existing(this);

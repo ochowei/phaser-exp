@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.13.0] - 2026-03-24
+
+### Added
+- Shield power-up (blue): absorbs the next hit, displayed as a pulsing cyan ring around the player; shown in HUD as 🛡️
+- Bomb power-up (orange): collectable up to 3, deployed with Space key; destroys all non-boss enemies and clears enemy bullets, with expanding ring visual effect; shown in HUD as 💣 x[n]
+- Power-up drops now randomly select between triple shot (50%), shield (25%), and bomb (25%)
+
 ### Changed
 - Improved enemy visual designs with more detailed and distinctive silhouettes:
   - EN_RED: Added swept-back delta wings, wingtip cannon barrels, layered armor panels, and triple-glow engine exhaust

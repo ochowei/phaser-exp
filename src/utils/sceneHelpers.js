@@ -81,11 +81,31 @@ export function createGameTextures(scene) {
         graphics.clear();
     }
 
-    // 道具紋理
+    // 三連射道具紋理
     if (!scene.textures.exists('powerupTexture')) {
         graphics.fillStyle(0x00ff00, 1);
         graphics.fillCircle(10, 10, 10);
         graphics.generateTexture('powerupTexture', 20, 20);
+        graphics.clear();
+    }
+
+    // 護盾道具紋理（藍色帶白色內環）
+    if (!scene.textures.exists('shieldTexture')) {
+        graphics.fillStyle(0x2266ff, 1);
+        graphics.fillCircle(10, 10, 10);
+        graphics.lineStyle(2, 0xffffff, 0.9);
+        graphics.strokeCircle(10, 10, 6);
+        graphics.generateTexture('shieldTexture', 20, 20);
+        graphics.clear();
+    }
+
+    // 炸彈道具紋理（橙色帶黃色核心）
+    if (!scene.textures.exists('bombTexture')) {
+        graphics.fillStyle(0xff5500, 1);
+        graphics.fillCircle(10, 10, 10);
+        graphics.fillStyle(0xffdd00, 1);
+        graphics.fillCircle(10, 10, 4);
+        graphics.generateTexture('bombTexture', 20, 20);
         graphics.clear();
     }
 
