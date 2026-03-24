@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-03-24
+
+### Changed
+- Player aircraft now uses a high-quality PNG sprite (`assets/image/player.png`) instead of procedurally generated graphics
+
 ## [1.14.0] - 2026-03-24
 
 ### Changed

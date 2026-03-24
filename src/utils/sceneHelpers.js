@@ -294,6 +294,8 @@ export function setupJoystick(scene) {
 export function createPlayerWithTrail(scene) {
     const aircraft = getAircraftProfile(DEFAULT_AIRCRAFT);
     scene.player = new Player(scene, 400, 500, 'playerTexture');
+    scene.player.setDisplaySize(aircraft.textureSize.width, aircraft.textureSize.height);
+    scene.player.baseScaleX = scene.player.scaleX;
     scene.playerTrail = scene.add.particles(0, 0, 'bullet', aircraft.trail);
     scene.playerTrail.startFollow(scene.player, aircraft.trailOffset.x, aircraft.trailOffset.y);
 }

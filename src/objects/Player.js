@@ -12,7 +12,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.speed = 300;
         this.maxHealth = 3;
         this.health = 3;
-        this.maxBankAngle = 20;
+        this.baseScaleX = this.scaleX;
         this.invincible = false;
         this.hasShield = false;
     }
@@ -49,8 +49,9 @@ export default class Player extends Phaser.Physics.Arcade.Image {
         this.setVelocityX(vx);
         this.setVelocityY(vy);
 
-        // 左右移動時機身傾斜，停止後平滑回正
-        const targetAngle = Phaser.Math.Clamp((vx / this.speed) * this.maxBankAngle, -this.maxBankAngle, this.maxBankAngle);
-        this.setAngle(Phaser.Math.Linear(this.angle, targetAngle, 0.25));
+        // 左右移動時機身翻滾（壓縮 scaleX 模擬俯視翻滾），機首保持朝上
+        const roll = Math.abs(vx / this.speed); // 0 ~ 1
+        const targetScaleX = this.baseScaleX * (1 - roll * 0.4);
+        this.scaleX = Phaser.Math.Linear(this.scaleX, targetScaleX, 0.25);
     }
 }
