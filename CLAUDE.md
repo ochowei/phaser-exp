@@ -73,7 +73,7 @@ Any code change — whether it's a new feature, bug fix, or refactor — **must 
 - Gameplay scenes extend `Phaser.Scene`, game objects extend `Phaser.Physics.Arcade.Image`
 - Phaser is wrapped in `GameCanvas.jsx` and initialized on demand (create/destroy pattern)
 - Scenes return to React via `this.game.events.emit('returnToMenu')`
-- Textures are procedurally generated via `Phaser.GameObjects.Graphics` (no image assets)
+- Textures are procedurally generated via `Phaser.GameObjects.Graphics`; the player aircraft uses a PNG sprite (`public/assets/image/player.png`)
 - User preferences (high score, volume, mute, language) are persisted in `localStorage`
 - Comments and variable names may be in Chinese or English
 - Unit tests use [Vitest](https://vitest.dev/) and live in `src/__tests__/`
